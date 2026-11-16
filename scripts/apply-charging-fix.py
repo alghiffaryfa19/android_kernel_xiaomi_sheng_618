@@ -14,7 +14,14 @@ def factory_interface_matches(name, got):
     if not path.exists():
         return False
     item = json.loads(path.read_text())['files'].get(name)
-    return bool(item and item['after'] == got)
+    return bool(item and item['after'] == got) or android_interface_matches(name, got)
+
+
+# Exact device-owned Android downstream source, following the factory overlay.
+# Never accept an arbitrary source edit or disable inherited hash checks.
+def android_interface_matches(name, got):
+    from android_source_contract import android_interface_matches as validated_match
+    return validated_match(name, got)
 
 
 project = Path(os.environ['PROJECT_ROOT']).resolve()

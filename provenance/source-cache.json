@@ -1,7 +1,7 @@
 {
-  "path": "assets/sheng-kernel-build-inputs.tar.gz",
-  "sha256": "06400886b7d6572c4e2440811e991525eeda88e491804e4e8a26d9dd3577e04f",
-  "prefix": "sheng-6.18.32-release-r71-source",
-  "mode": "complete-adapted-release-snapshot",
-  "revision": "release-r71"
+  "path": "sources",
+  "kind": "complete-adapted-r2-tree",
+  "manifest": "SOURCE-SHA256.json",
+  "manifest_sha256": "da80a62e82c55104ab06318a7d826e96990ef7782c46687b2a6b57f215c59ba8",
+  "kernel_release": "6.18.39-android17-0-peiyuesheng-sheng-kernel"
 }

@@ -1,11 +1,1 @@
-* text=auto eol=lf
-*.tar.gz -text
-*.tar.zst -text
-
-# Preserve audited vendor bytes and unified-patch context exactly.
-*.patch -whitespace
-kernel/charging/* -whitespace
-
-# Preserve SHA-checked vendor review files and patch bytes.
-kernel/** -text -whitespace
-patches/** -text
+* -text

@@ -43,7 +43,7 @@ CONFIG_INIT_ENV_ARG_LIMIT=32
 # CONFIG_COMPILE_TEST is not set
 CONFIG_WERROR=y
 # CONFIG_UAPI_HEADER_TEST is not set
-CONFIG_LOCALVERSION="-peiyuesheng-sheng-kernel"
+CONFIG_LOCALVERSION="-android17-0-peiyuesheng-sheng-kernel"
 # CONFIG_LOCALVERSION_AUTO is not set
 CONFIG_BUILD_SALT=""
 CONFIG_DEFAULT_INIT=""
@@ -5807,7 +5807,6 @@ CONFIG_USB_CONFIGFS_ACM=y
 CONFIG_USB_CONFIGFS_NCM=y
 CONFIG_USB_CONFIGFS_ECM=y
 # CONFIG_USB_CONFIGFS_ECM_SUBSET is not set
-# CONFIG_USB_CONFIGFS_RNDIS is not set
 CONFIG_USB_CONFIGFS_EEM=y
 CONFIG_USB_CONFIGFS_MASS_STORAGE=y
 # CONFIG_USB_CONFIGFS_F_LB_SS is not set
@@ -8604,3 +8603,8 @@ CONFIG_RUST_INLINE_HELPERS=y
 CONFIG_IO_URING_ZCRX=y
 CONFIG_IPC_NS=y
 CONFIG_IP6_NF_TARGET_MASQUERADE=y
+
+# SPDX-License-Identifier: GPL-2.0-only
+# sheng's shipping init.qcom.usb.rc selects functions/rndis.rndis explicitly.
+# The reference kernel exported only GSI; retain the board's real USB function.
+CONFIG_USB_CONFIGFS_RNDIS=y

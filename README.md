@@ -1,15 +1,14 @@
-# Xiaomi Pad 6S Pro kernel sources
+# 小米平板 6S Pro 内核源码
 
-Linux 6.18.32 for Xiaomi Pad 6S Pro (sheng, Snapdragon 8 Gen 2), targeting HyperOS OS4.0.2.0.XPYCNXM.
+Android 官方 `android17-6.18-lts`，Linux 6.18.39，设备 sheng。
+内核版本名：`6.18.39-android17-0-peiyuesheng-sheng-kernel`。
 
-[中文说明](README.zh-CN.md) · [Latest sources](https://github.com/peiyuesheng666/android_kernel_xiaomi_sheng_618/releases/latest) · [Build guide](docs/BUILD.zh-CN.md)
+`sources/k618/` 是 R2 已适配的完整内核、Qualcomm SoC、厂商模块与平板驱动源码。
+其中包含 SMMU IOTLB gather 修复、直接霍尔中断，以及当前 Android 硬件适配。
+构建脚本从这些源码建立独立目录；默认使用 release 配置。
 
-- Qualcomm WALT scheduling and CPU frequency scaling.
-- Stylus fixes and stock pen charging status interfaces.
-- Necessary thermal and charging interfaces.
-- CPU deep-idle compatibility fixes.
+[构建说明](docs/BUILD.zh-CN.md) · [来源与目录](docs/SOURCE.zh-CN.md)
 
-Download sheng-kernel-source.tar.gz for the current project, complete fixed source input and Git history.
-The archive includes git-history.bundle; restore it with git clone -b main git-history.bundle restored-kernel.
-
-[Features](docs/FEATURES.zh-CN.md) · [Source provenance](docs/PROVENANCE.zh-CN.md) · [Change history](docs/HISTORY.md)
+构建与验证结果保存在 `validation/` 的 JSON 文件。
+工具链是外部依赖，固定版本见 `provenance/toolchains.json`。
+各上游目录的许可证、版权说明与 MAINTAINERS 文件随源码保留。

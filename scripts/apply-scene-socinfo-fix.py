@@ -10,6 +10,9 @@ import sys
 
 # Factory interface overlay: allow only its pinned final source, never an arbitrary edit.
 def factory_interface_matches(name, got):
+    from android_source_contract import android_interface_matches
+    if android_interface_matches(name, got):
+        return True
     path = Path(os.environ['PROJECT_ROOT']) / 'provenance/factory-interfaces.json'
     if not path.exists():
         return False

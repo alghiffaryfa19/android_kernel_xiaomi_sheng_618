@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: GPL-2.0-only
+obj-m += nanosic_driver.o
+nanosic_driver-y := sheng_nanosic.o
+obj-m += xiaomi_keyboard_driver.o
+xiaomi_keyboard_driver-y := sheng_touchpad_filter.o

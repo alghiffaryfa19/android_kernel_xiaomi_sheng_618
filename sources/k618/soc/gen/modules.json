@@ -1,0 +1,6130 @@
+{
+ "arch/arm64/gunyah/gh_arm_drv": {
+  "name": "arch/arm64/gunyah/gh_arm_drv",
+  "out": "gh_arm_drv.ko",
+  "config": "CONFIG_GH_ARM64_DRV",
+  "srcs": [
+   "arch/arm64/gunyah/gh_arm.c",
+   "arch/arm64/gunyah/irq.c",
+   "arch/arm64/gunyah/reset.c",
+   "arch/arm64/gunyah/reset.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/base/regmap/qti-regmap-debugfs": {
+  "name": "drivers/base/regmap/qti-regmap-debugfs",
+  "out": "qti-regmap-debugfs.ko",
+  "config": "CONFIG_REGMAP_QTI_DEBUGFS",
+  "srcs": [
+   "drivers/base/regmap/qti-regmap-debugfs.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/bus/mhi/devices/mhi_dev_satellite": {
+  "name": "drivers/bus/mhi/devices/mhi_dev_satellite",
+  "out": "mhi_dev_satellite.ko",
+  "config": "CONFIG_MHI_SATELLITE",
+  "srcs": [
+   "drivers/bus/mhi/devices/mhi_satellite.c"
+  ],
+  "deps": [
+   "drivers/bus/mhi/host/mhi",
+   "drivers/pci/controller/pci-msm-drv",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "drivers/soc/qcom/pcie-pdc",
+   "drivers/pinctrl/qcom/pinctrl-msm",
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/bus/mhi/devices/mhi_dev_uci": {
+  "name": "drivers/bus/mhi/devices/mhi_dev_uci",
+  "out": "mhi_dev_uci.ko",
+  "config": "CONFIG_MHI_UCI",
+  "srcs": [
+   "drivers/bus/mhi/devices/mhi_uci.c"
+  ],
+  "deps": [
+   "drivers/bus/mhi/host/mhi",
+   "drivers/pci/controller/pci-msm-drv",
+   "drivers/soc/qcom/pcie-pdc",
+   "drivers/pinctrl/qcom/pinctrl-msm",
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv",
+   "kernel/trace/qcom_ipc_logging"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/bus/mhi/host/mhi": {
+  "name": "drivers/bus/mhi/host/mhi",
+  "out": "mhi.ko",
+  "config": "CONFIG_MHI_BUS",
+  "srcs": [
+   "drivers/bus/mhi/common.h",
+   "drivers/bus/mhi/host/internal.h",
+   "drivers/bus/mhi/host/boot.c",
+   "drivers/bus/mhi/host/init.c",
+   "drivers/bus/mhi/host/main.c",
+   "drivers/bus/mhi/host/misc.h",
+   "drivers/bus/mhi/host/pm.c",
+   "drivers/bus/mhi/host/trace.h"
+  ],
+  "deps": [
+   "drivers/pci/controller/pci-msm-drv",
+   "drivers/soc/qcom/pcie-pdc",
+   "drivers/pinctrl/qcom/pinctrl-msm",
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv",
+   "kernel/trace/qcom_ipc_logging"
+  ],
+  "conditional_srcs": {
+   "CONFIG_MHI_BUS_MISC": {
+    "true": [
+     "drivers/bus/mhi/host/misc.c"
+    ]
+   },
+   "CONFIG_MHI_BUS_DEBUG": {
+    "true": [
+     "drivers/bus/mhi/host/debugfs.c"
+    ]
+   }
+  },
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/char/rdbg": {
+  "name": "drivers/char/rdbg",
+  "out": "rdbg.ko",
+  "config": "CONFIG_MSM_RDBG",
+  "srcs": [
+   "drivers/char/rdbg.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/smem"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/char/xlogchar": {
+  "name": "drivers/char/xlogchar",
+  "out": "xlogchar.ko",
+  "config": "CONFIG_XLOGCHAR",
+  "srcs": [
+   "drivers/char/xlogchar.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/clk/qcom/camcc-kalama": {
+  "name": "drivers/clk/qcom/camcc-kalama",
+  "out": "camcc-kalama.ko",
+  "config": "CONFIG_SM_CAMCC_KALAMA",
+  "srcs": [
+   "drivers/clk/qcom/camcc-kalama.c",
+   "drivers/clk/qcom/clk-alpha-pll.h",
+   "drivers/clk/qcom/clk-branch.h",
+   "drivers/clk/qcom/clk-pll.h",
+   "drivers/clk/qcom/clk-rcg.h",
+   "drivers/clk/qcom/clk-regmap-divider.h",
+   "drivers/clk/qcom/clk-regmap-mux.h",
+   "drivers/clk/qcom/clk-regmap.h",
+   "drivers/clk/qcom/common.h",
+   "drivers/clk/qcom/reset.h",
+   "drivers/clk/qcom/vdd-class.h",
+   "drivers/clk/qcom/vdd-level.h"
+  ],
+  "deps": [
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/clk/qcom/clk-dummy": {
+  "name": "drivers/clk/qcom/clk-dummy",
+  "out": "clk-dummy.ko",
+  "config": "CONFIG_COMMON_CLK_QCOM",
+  "srcs": [
+   "drivers/clk/qcom/clk-debug.h",
+   "drivers/clk/qcom/clk-dummy.c",
+   "drivers/clk/qcom/common.h"
+  ],
+  "deps": [
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/clk/qcom/clk-qcom": {
+  "name": "drivers/clk/qcom/clk-qcom",
+  "out": "clk-qcom.ko",
+  "config": "CONFIG_COMMON_CLK_QCOM",
+  "srcs": [
+   "drivers/clk/qcom/clk-alpha-pll.c",
+   "drivers/clk/qcom/clk-alpha-pll.h",
+   "drivers/clk/qcom/clk-branch.c",
+   "drivers/clk/qcom/clk-branch.h",
+   "drivers/clk/qcom/clk-debug.c",
+   "drivers/clk/qcom/clk-debug.h",
+   "drivers/clk/qcom/clk-hfpll.c",
+   "drivers/clk/qcom/clk-hfpll.h",
+   "drivers/clk/qcom/clk-opp.c",
+   "drivers/clk/qcom/clk-opp.h",
+   "drivers/clk/qcom/clk-pll.c",
+   "drivers/clk/qcom/clk-pll.h",
+   "drivers/clk/qcom/clk-pm.c",
+   "drivers/clk/qcom/clk-pm.h",
+   "drivers/clk/qcom/clk-rcg.c",
+   "drivers/clk/qcom/clk-rcg.h",
+   "drivers/clk/qcom/clk-rcg2.c",
+   "drivers/clk/qcom/clk-regmap-divider.c",
+   "drivers/clk/qcom/clk-regmap-divider.h",
+   "drivers/clk/qcom/clk-regmap-mux-div.c",
+   "drivers/clk/qcom/clk-regmap-mux-div.h",
+   "drivers/clk/qcom/clk-regmap-mux.c",
+   "drivers/clk/qcom/clk-regmap-mux.h",
+   "drivers/clk/qcom/clk-regmap-phy-mux.c",
+   "drivers/clk/qcom/clk-regmap-phy-mux.h",
+   "drivers/clk/qcom/clk-regmap.c",
+   "drivers/clk/qcom/clk-regmap.h",
+   "drivers/clk/qcom/common.c",
+   "drivers/clk/qcom/common.h",
+   "drivers/clk/qcom/gdsc-debug.h",
+   "drivers/clk/qcom/gdsc.h",
+   "drivers/clk/qcom/reset.c",
+   "drivers/clk/qcom/reset.h",
+   "drivers/clk/qcom/trace.h",
+   "drivers/clk/qcom/vdd-class.c",
+   "drivers/clk/qcom/vdd-class.h",
+   "drivers/clk/qcom/vdd-level.h"
+  ],
+  "deps": [
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/interconnect/icc-clk",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {
+   "CONFIG_KRAIT_CLOCKS": {
+    "true": [
+     "drivers/clk/qcom/clk-krait.c",
+     "drivers/clk/qcom/clk-krait.h"
+    ]
+   },
+   "CONFIG_QCOM_GDSC": {
+    "true": [
+     "drivers/clk/qcom/gdsc.c",
+     "drivers/clk/qcom/gdsc-debug.c"
+    ]
+   }
+  },
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/clk/qcom/clk-rpmh": {
+  "name": "drivers/clk/qcom/clk-rpmh",
+  "out": "clk-rpmh.ko",
+  "config": "CONFIG_QCOM_CLK_RPMH",
+  "srcs": [
+   "drivers/clk/qcom/clk-rpmh.c",
+   "drivers/clk/qcom/common.h",
+   "drivers/clk/qcom/clk-debug.h"
+  ],
+  "deps": [
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/soc/qcom/qcom_rpmh",
+   "drivers/soc/qcom/cmd-db",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/clk/qcom/debugcc-kalama": {
+  "name": "drivers/clk/qcom/debugcc-kalama",
+  "out": "debugcc-kalama.ko",
+  "config": "CONFIG_SM_DEBUGCC_KALAMA",
+  "srcs": [
+   "drivers/clk/qcom/clk-debug.h",
+   "drivers/clk/qcom/common.h",
+   "drivers/clk/qcom/debugcc-kalama.c"
+  ],
+  "deps": [
+   "drivers/clk/qcom/clk-dummy",
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/clk/qcom/dispcc-kalama": {
+  "name": "drivers/clk/qcom/dispcc-kalama",
+  "out": "dispcc-kalama.ko",
+  "config": "CONFIG_SM_DISPCC_KALAMA",
+  "srcs": [
+   "drivers/clk/qcom/clk-alpha-pll.h",
+   "drivers/clk/qcom/clk-branch.h",
+   "drivers/clk/qcom/clk-pll.h",
+   "drivers/clk/qcom/clk-rcg.h",
+   "drivers/clk/qcom/clk-regmap-divider.h",
+   "drivers/clk/qcom/clk-regmap-mux.h",
+   "drivers/clk/qcom/clk-regmap.h",
+   "drivers/clk/qcom/common.h",
+   "drivers/clk/qcom/dispcc-kalama.c",
+   "drivers/clk/qcom/gdsc.h",
+   "drivers/clk/qcom/reset.h",
+   "drivers/clk/qcom/vdd-class.h",
+   "drivers/clk/qcom/vdd-level.h"
+  ],
+  "deps": [
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/clk/qcom/gcc-kalama": {
+  "name": "drivers/clk/qcom/gcc-kalama",
+  "out": "gcc-kalama.ko",
+  "config": "CONFIG_SM_GCC_KALAMA",
+  "srcs": [
+   "drivers/clk/qcom/clk-alpha-pll.h",
+   "drivers/clk/qcom/clk-branch.h",
+   "drivers/clk/qcom/clk-pll.h",
+   "drivers/clk/qcom/clk-rcg.h",
+   "drivers/clk/qcom/clk-regmap-divider.h",
+   "drivers/clk/qcom/clk-regmap-mux.h",
+   "drivers/clk/qcom/clk-regmap.h",
+   "drivers/clk/qcom/common.h",
+   "drivers/clk/qcom/gcc-kalama.c",
+   "drivers/clk/qcom/reset.h",
+   "drivers/clk/qcom/vdd-class.h",
+   "drivers/clk/qcom/vdd-level.h"
+  ],
+  "deps": [
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/clk/qcom/gdsc-regulator": {
+  "name": "drivers/clk/qcom/gdsc-regulator",
+  "out": "gdsc-regulator.ko",
+  "config": "CONFIG_QCOM_GDSC_REGULATOR",
+  "srcs": [
+   "drivers/clk/qcom/gdsc-debug.h",
+   "drivers/clk/qcom/gdsc-regulator.c",
+   "drivers/clk/qcom/trace-gdsc.h"
+  ],
+  "deps": [
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/clk/qcom/gpucc-kalama": {
+  "name": "drivers/clk/qcom/gpucc-kalama",
+  "out": "gpucc-kalama.ko",
+  "config": "CONFIG_SM_GPUCC_KALAMA",
+  "srcs": [
+   "drivers/clk/qcom/clk-alpha-pll.h",
+   "drivers/clk/qcom/clk-branch.h",
+   "drivers/clk/qcom/clk-pll.h",
+   "drivers/clk/qcom/clk-rcg.h",
+   "drivers/clk/qcom/clk-regmap-divider.h",
+   "drivers/clk/qcom/clk-regmap-mux.h",
+   "drivers/clk/qcom/clk-regmap.h",
+   "drivers/clk/qcom/common.h",
+   "drivers/clk/qcom/gdsc.h",
+   "drivers/clk/qcom/gpucc-kalama.c",
+   "drivers/clk/qcom/reset.h",
+   "drivers/clk/qcom/vdd-class.h",
+   "drivers/clk/qcom/vdd-level.h"
+  ],
+  "deps": [
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/clk/qcom/tcsrcc-kalama": {
+  "name": "drivers/clk/qcom/tcsrcc-kalama",
+  "out": "tcsrcc-kalama.ko",
+  "config": "CONFIG_SM_TCSRCC_KALAMA",
+  "srcs": [
+   "drivers/clk/qcom/clk-alpha-pll.h",
+   "drivers/clk/qcom/clk-branch.h",
+   "drivers/clk/qcom/clk-pll.h",
+   "drivers/clk/qcom/clk-rcg.h",
+   "drivers/clk/qcom/clk-regmap-divider.h",
+   "drivers/clk/qcom/clk-regmap-mux.h",
+   "drivers/clk/qcom/clk-regmap.h",
+   "drivers/clk/qcom/common.h",
+   "drivers/clk/qcom/reset.h",
+   "drivers/clk/qcom/tcsrcc-kalama.c",
+   "drivers/clk/qcom/vdd-class.h",
+   "drivers/clk/qcom/vdd-level.h"
+  ],
+  "deps": [
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/clk/qcom/videocc-kalama": {
+  "name": "drivers/clk/qcom/videocc-kalama",
+  "out": "videocc-kalama.ko",
+  "config": "CONFIG_SM_VIDEOCC_KALAMA",
+  "srcs": [
+   "drivers/clk/qcom/clk-alpha-pll.h",
+   "drivers/clk/qcom/clk-branch.h",
+   "drivers/clk/qcom/clk-pll.h",
+   "drivers/clk/qcom/clk-rcg.h",
+   "drivers/clk/qcom/clk-regmap-divider.h",
+   "drivers/clk/qcom/clk-regmap-mux.h",
+   "drivers/clk/qcom/clk-regmap.h",
+   "drivers/clk/qcom/common.h",
+   "drivers/clk/qcom/gdsc.h",
+   "drivers/clk/qcom/reset.h",
+   "drivers/clk/qcom/vdd-class.h",
+   "drivers/clk/qcom/vdd-level.h",
+   "drivers/clk/qcom/videocc-kalama.c"
+  ],
+  "deps": [
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/cpufreq/qcom-cpufreq-hw": {
+  "name": "drivers/cpufreq/qcom-cpufreq-hw",
+  "out": "qcom-cpufreq-hw.ko",
+  "config": "CONFIG_ARM_QCOM_CPUFREQ_HW",
+  "srcs": [
+   "drivers/cpufreq/qcom-cpufreq-hw.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/cpufreq/qcom-cpufreq-hw-debug": {
+  "name": "drivers/cpufreq/qcom-cpufreq-hw-debug",
+  "out": "qcom-cpufreq-hw-debug.ko",
+  "config": "CONFIG_ARM_QCOM_CPUFREQ_HW_DEBUG",
+  "srcs": [
+   "drivers/cpufreq/qcom-cpufreq-hw-debug.c"
+  ],
+  "deps": [
+   "drivers/cpufreq/qcom-cpufreq-hw"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/cpuidle/governors/qcom_lpm": {
+  "name": "drivers/cpuidle/governors/qcom_lpm",
+  "out": "qcom_lpm.ko",
+  "config": "CONFIG_CPU_IDLE_GOV_QCOM_LPM",
+  "srcs": [
+   "drivers/cpuidle/governors/qcom-cluster-lpm.c",
+   "drivers/cpuidle/governors/qcom-lpm-sysfs.c",
+   "drivers/cpuidle/governors/qcom-lpm.c",
+   "drivers/cpuidle/governors/qcom-lpm.h",
+   "drivers/cpuidle/governors/trace-cluster-lpm.h",
+   "drivers/cpuidle/governors/trace-qcom-lpm.h"
+  ],
+  "deps": [
+   "kernel/sched/walt/sched-walt",
+   "drivers/soc/qcom/socinfo",
+   "drivers/soc/qcom/smem"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/dma-buf/heaps/deferred-free-helper": {
+  "name": "drivers/dma-buf/heaps/deferred-free-helper",
+  "out": "deferred-free-helper.ko",
+  "config": "CONFIG_QCOM_DMABUF_HEAPS_DEFERRED_FREE",
+  "srcs": [
+   "drivers/dma-buf/heaps/deferred-free-helper.c",
+   "drivers/dma-buf/heaps/deferred-free-helper.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/dma-buf/heaps/qcom_dma_heaps": {
+  "name": "drivers/dma-buf/heaps/qcom_dma_heaps",
+  "out": "qcom_dma_heaps.ko",
+  "config": "CONFIG_QCOM_DMABUF_HEAPS",
+  "srcs": [
+   "drivers/dma-buf/heaps/qcom_carveout_heap.h",
+   "drivers/dma-buf/heaps/qcom_cma_heap.h",
+   "drivers/dma-buf/heaps/qcom_dma_heap.c",
+   "drivers/dma-buf/heaps/qcom_dma_heap_priv.h",
+   "drivers/dma-buf/heaps/qcom_dt_parser.c",
+   "drivers/dma-buf/heaps/qcom_dt_parser.h",
+   "drivers/dma-buf/heaps/qcom_dynamic_page_pool.h",
+   "drivers/dma-buf/heaps/qcom_secure_system_heap.h",
+   "drivers/dma-buf/heaps/qcom_sg_ops.c",
+   "drivers/dma-buf/heaps/qcom_sg_ops.h",
+   "drivers/dma-buf/heaps/qcom_system_heap.h",
+   "drivers/dma-buf/heaps/qcom_system_movable_heap.h",
+   "drivers/dma-buf/heaps/deferred-free-helper.h",
+   "drivers/dma-buf/heaps/qcom_dma_trace.h",
+   "drivers/dma-buf/heaps/aizerofs/aizerofs_shrink.h",
+   "drivers/soc/qcom/mem_buf/mem-buf-dev.h"
+  ],
+  "deps": [
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv",
+   "drivers/dma-buf/heaps/deferred-free-helper",
+   "//vendor/oplus/kernel/mm:oplus_bsp_mm_osvelte",
+   "drivers/dma-buf/heaps/aizerofs"
+  ],
+  "conditional_srcs": {
+   "CONFIG_QCOM_DMABUF_HEAPS_SYSTEM": {
+    "true": [
+     "drivers/dma-buf/heaps/qcom_system_heap.c",
+     "drivers/dma-buf/heaps/qcom_dynamic_page_pool.c",
+     "drivers/dma-buf/heaps/qcom_dma_heap_secure_utils.h"
+    ]
+   },
+   "CONFIG_QCOM_DMABUF_HEAPS_SYSTEM_SECURE": {
+    "true": [
+     "drivers/dma-buf/heaps/qcom_secure_system_heap.c",
+     "drivers/dma-buf/heaps/qcom_dynamic_page_pool.c",
+     "drivers/dma-buf/heaps/qcom_dma_heap_secure_utils.c",
+     "drivers/dma-buf/heaps/qcom_dma_heap_secure_utils.h"
+    ]
+   },
+   "CONFIG_QCOM_DMABUF_HEAPS_CMA": {
+    "true": [
+     "drivers/dma-buf/heaps/qcom_cma_heap.c"
+    ]
+   },
+   "CONFIG_QCOM_DMABUF_HEAPS_CARVEOUT": {
+    "true": [
+     "drivers/dma-buf/heaps/qcom_carveout_heap.c",
+     "drivers/dma-buf/heaps/qcom_dma_heap_secure_utils.c",
+     "drivers/dma-buf/heaps/qcom_dma_heap_secure_utils.h"
+    ]
+   },
+   "CONFIG_QCOM_DMABUF_HEAPS_UBWCP": {
+    "true": [
+     "drivers/dma-buf/heaps/qcom_ubwcp_heap.c"
+    ]
+   },
+   "CONFIG_QCOM_DMABUF_HEAPS_TVM_CARVEOUT": {
+    "true": [
+     "drivers/dma-buf/heaps/qcom_tvm_carveout_heap.c"
+    ]
+   },
+   "CONFIG_QCOM_DMABUF_HEAPS_SYSTEM_MOVABLE": {
+    "true": [
+     "drivers/dma-buf/heaps/qcom_system_movable_heap.c"
+    ]
+   },
+   "CONFIG_OPLUS_FEATURE_MM_BOOSTPOOL": {
+    "true": [
+     "drivers/dma-buf/heaps/mm_boost_pool/oplus_boost_pool.c",
+     "drivers/dma-buf/heaps/mm_boost_pool/oplus_boost_pool.h",
+     "drivers/dma-buf/heaps/mm_boost_pool/trace_dma_buf.h"
+    ]
+   },
+   "CONFIG_OPLUS_FEATURE_MM_TA_CMA_RSV": {
+    "true": [
+     "drivers/dma-buf/heaps/mm_boost_pool/oplus_mm_cma_rsv.h"
+    ]
+   }
+  },
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/dma/qcom/bam_dma": {
+  "name": "drivers/dma/qcom/bam_dma",
+  "out": "bam_dma.ko",
+  "config": "CONFIG_QCOM_BAM_DMA",
+  "srcs": [
+   "drivers/dma/qcom/bam_dma.c",
+   "drivers/dma/qcom/bam_dma_trace.h"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/dma/qcom/msm_gpi": {
+  "name": "drivers/dma/qcom/msm_gpi",
+  "out": "msm_gpi.ko",
+  "config": "CONFIG_MSM_GPI_DMA",
+  "srcs": [
+   "drivers/dma/qcom/msm_gpi.c",
+   "drivers/dma/qcom/msm_gpi_mmio.h"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/edac/qcom_edac": {
+  "name": "drivers/edac/qcom_edac",
+  "out": "qcom_edac.ko",
+  "config": "CONFIG_EDAC_QCOM",
+  "srcs": [
+   "drivers/edac/qcom_edac.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/firmware/arm_scmi/c1dcvs_vendor": {
+  "name": "drivers/firmware/arm_scmi/c1dcvs_vendor",
+  "out": "c1dcvs_vendor.ko",
+  "config": "CONFIG_QTI_SCMI_C1DCVS_PROTOCOL",
+  "srcs": [
+   "drivers/firmware/arm_scmi/c1dcvs_vendor.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/firmware/arm_scmi/memlat_vendor": {
+  "name": "drivers/firmware/arm_scmi/memlat_vendor",
+  "out": "memlat_vendor.ko",
+  "config": "CONFIG_QTI_SCMI_MEMLAT_PROTOCOL",
+  "srcs": [
+   "drivers/firmware/arm_scmi/memlat_vendor.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/firmware/arm_scmi/pmu_vendor": {
+  "name": "drivers/firmware/arm_scmi/pmu_vendor",
+  "out": "pmu_vendor.ko",
+  "config": "CONFIG_QTI_SCMI_PMU_PROTOCOL",
+  "srcs": [
+   "drivers/firmware/arm_scmi/pmu_vendor.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/firmware/qcom/qcom-scm": {
+  "name": "drivers/firmware/qcom/qcom-scm",
+  "out": "qcom-scm.ko",
+  "config": "CONFIG_QCOM_SCM",
+  "srcs": [
+   "drivers/firmware/qcom/qcom_scm-legacy.c",
+   "drivers/firmware/qcom/qcom_scm-smc.c",
+   "drivers/firmware/qcom/qcom_scm.c",
+   "drivers/firmware/qcom/qcom_tzmem.h",
+   "drivers/firmware/qcom/qcom_scm.h",
+   "drivers/firmware/qcom/qtee_shmbridge_internal.h",
+   "drivers/firmware/qcom/lcp-ppddr-internal.h",
+   "drivers/firmware/qcom/qcom_tzmem.c"
+  ],
+  "deps": [
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/soc/qcom/hab/msm_hab"
+  ],
+  "conditional_srcs": {
+   "CONFIG_QTEE_SHM_BRIDGE": {
+    "true": [
+     "drivers/firmware/qcom/qtee_shmbridge.c"
+    ]
+   },
+   "CONFIG_MSM_HAB": {
+    "true": [
+     "drivers/firmware/qcom/qcom_scm_hab.c"
+    ]
+   }
+  },
+  "includes": [
+   "include/linux"
+  ],
+  "local_defines": [],
+  "copts": [],
+  "extra": [
+   "hdrs"
+  ]
+ },
+ "drivers/gpu/drm/bridge/lt9611uxc": {
+  "name": "drivers/gpu/drm/bridge/lt9611uxc",
+  "out": "lt9611uxc.ko",
+  "config": "CONFIG_DRM_LT9611UXC",
+  "srcs": [
+   "drivers/gpu/drm/bridge/lt9611uxc.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwspinlock/qcom_hwspinlock": {
+  "name": "drivers/hwspinlock/qcom_hwspinlock",
+  "out": "qcom_hwspinlock.ko",
+  "config": "CONFIG_HWSPINLOCK_QCOM",
+  "srcs": [
+   "drivers/hwspinlock/qcom_hwspinlock.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/coresight/coresight": {
+  "name": "drivers/hwtracing/coresight/coresight",
+  "out": "coresight.ko",
+  "config": "CONFIG_CORESIGHT",
+  "srcs": [
+   "drivers/hwtracing/coresight/coresight-cfg-afdo.c",
+   "drivers/hwtracing/coresight/coresight-cfg-preload.c",
+   "drivers/hwtracing/coresight/coresight-cfg-preload.h",
+   "drivers/hwtracing/coresight/coresight-common.h",
+   "drivers/hwtracing/coresight/coresight-config.c",
+   "drivers/hwtracing/coresight/coresight-config.h",
+   "drivers/hwtracing/coresight/coresight-core.c",
+   "drivers/hwtracing/coresight/coresight-etm-perf.c",
+   "drivers/hwtracing/coresight/coresight-etm-perf.h",
+   "drivers/hwtracing/coresight/coresight-etm4x-cfg.h",
+   "drivers/hwtracing/coresight/coresight-etm4x.h",
+   "drivers/hwtracing/coresight/coresight-platform.c",
+   "drivers/hwtracing/coresight/coresight-priv.h",
+   "drivers/hwtracing/coresight/coresight-syscfg-configfs.c",
+   "drivers/hwtracing/coresight/coresight-syscfg-configfs.h",
+   "drivers/hwtracing/coresight/coresight-syscfg.c",
+   "drivers/hwtracing/coresight/coresight-syscfg.h",
+   "drivers/hwtracing/coresight/coresight-sysfs.c",
+   "drivers/hwtracing/coresight/coresight-trace-id.c",
+   "drivers/hwtracing/coresight/coresight-trace-id.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/coresight/coresight-csr": {
+  "name": "drivers/hwtracing/coresight/coresight-csr",
+  "out": "coresight-csr.ko",
+  "config": "CONFIG_CORESIGHT_CSR",
+  "srcs": [
+   "drivers/hwtracing/coresight/coresight-common.h",
+   "drivers/hwtracing/coresight/coresight-csr.c",
+   "drivers/hwtracing/coresight/coresight-priv.h"
+  ],
+  "deps": [
+   "drivers/hwtracing/coresight/coresight"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/coresight/coresight-cti": {
+  "name": "drivers/hwtracing/coresight/coresight-cti",
+  "out": "coresight-cti.ko",
+  "config": "CONFIG_CORESIGHT_CTI",
+  "srcs": [
+   "drivers/hwtracing/coresight/coresight-cti-core.c",
+   "drivers/hwtracing/coresight/coresight-cti-platform.c",
+   "drivers/hwtracing/coresight/coresight-cti-sysfs.c",
+   "drivers/hwtracing/coresight/coresight-cti.h",
+   "drivers/hwtracing/coresight/coresight-priv.h"
+  ],
+  "deps": [
+   "drivers/hwtracing/coresight/coresight"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/coresight/coresight-dummy": {
+  "name": "drivers/hwtracing/coresight/coresight-dummy",
+  "out": "coresight-dummy.ko",
+  "config": "CONFIG_CORESIGHT_DUMMY",
+  "srcs": [
+   "drivers/hwtracing/coresight/coresight-dummy.c",
+   "drivers/hwtracing/coresight/coresight-priv.h",
+   "drivers/hwtracing/coresight/coresight-trace-id.h",
+   "drivers/hwtracing/coresight/coresight-common.h",
+   "drivers/hwtracing/coresight/coresight-qmi.h"
+  ],
+  "deps": [
+   "drivers/hwtracing/coresight/coresight-qmi",
+   "drivers/hwtracing/coresight/coresight-csr",
+   "drivers/hwtracing/coresight/coresight",
+   "drivers/soc/qcom/qmi_helpers"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/coresight/coresight-funnel": {
+  "name": "drivers/hwtracing/coresight/coresight-funnel",
+  "out": "coresight-funnel.ko",
+  "config": "CONFIG_CORESIGHT_LINKS_AND_SINKS",
+  "srcs": [
+   "drivers/hwtracing/coresight/coresight-funnel.c",
+   "drivers/hwtracing/coresight/coresight-priv.h"
+  ],
+  "deps": [
+   "drivers/hwtracing/coresight/coresight"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/coresight/coresight-qmi": {
+  "name": "drivers/hwtracing/coresight/coresight-qmi",
+  "out": "coresight-qmi.ko",
+  "config": "CONFIG_CORESIGHT_QMI",
+  "srcs": [
+   "drivers/hwtracing/coresight/coresight-priv.h",
+   "drivers/hwtracing/coresight/coresight-qmi.c",
+   "drivers/hwtracing/coresight/coresight-qmi.h"
+  ],
+  "deps": [
+   "drivers/hwtracing/coresight/coresight",
+   "drivers/soc/qcom/qmi_helpers"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/coresight/coresight-remote-etm": {
+  "name": "drivers/hwtracing/coresight/coresight-remote-etm",
+  "out": "coresight-remote-etm.ko",
+  "config": "CONFIG_CORESIGHT_REMOTE_ETM",
+  "srcs": [
+   "drivers/hwtracing/coresight/coresight-common.h",
+   "drivers/hwtracing/coresight/coresight-qmi.h",
+   "drivers/hwtracing/coresight/coresight-remote-etm.c",
+   "drivers/hwtracing/coresight/coresight-trace-id.h"
+  ],
+  "deps": [
+   "drivers/hwtracing/coresight/coresight-qmi",
+   "drivers/hwtracing/coresight/coresight-csr",
+   "drivers/hwtracing/coresight/coresight",
+   "drivers/soc/qcom/qmi_helpers"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/coresight/coresight-replicator": {
+  "name": "drivers/hwtracing/coresight/coresight-replicator",
+  "out": "coresight-replicator.ko",
+  "config": "CONFIG_CORESIGHT_LINKS_AND_SINKS",
+  "srcs": [
+   "drivers/hwtracing/coresight/coresight-priv.h",
+   "drivers/hwtracing/coresight/coresight-replicator.c"
+  ],
+  "deps": [
+   "drivers/hwtracing/coresight/coresight"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/coresight/coresight-stm": {
+  "name": "drivers/hwtracing/coresight/coresight-stm",
+  "out": "coresight-stm.ko",
+  "config": "CONFIG_CORESIGHT_STM",
+  "srcs": [
+   "drivers/hwtracing/coresight/coresight-common.h",
+   "drivers/hwtracing/coresight/coresight-priv.h",
+   "drivers/hwtracing/coresight/coresight-stm.c",
+   "drivers/hwtracing/coresight/coresight-trace-id.h",
+   "drivers/hwtracing/stm/stm.h"
+  ],
+  "deps": [
+   "drivers/hwtracing/stm/stm_core",
+   "drivers/hwtracing/coresight/coresight-csr",
+   "drivers/hwtracing/coresight/coresight"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [
+   "-D__DISABLE_TRACE_MMIO__"
+  ],
+  "extra": []
+ },
+ "drivers/hwtracing/coresight/coresight-tgu": {
+  "name": "drivers/hwtracing/coresight/coresight-tgu",
+  "out": "coresight-tgu.ko",
+  "config": "CONFIG_CORESIGHT_TGU",
+  "srcs": [
+   "drivers/hwtracing/coresight/coresight-priv.h",
+   "drivers/hwtracing/coresight/coresight-tgu.c"
+  ],
+  "deps": [
+   "drivers/hwtracing/coresight/coresight"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/coresight/coresight-tmc": {
+  "name": "drivers/hwtracing/coresight/coresight-tmc",
+  "out": "coresight-tmc.ko",
+  "config": "CONFIG_CORESIGHT_LINK_AND_SINK_TMC",
+  "srcs": [
+   "drivers/hwtracing/coresight/coresight-catu.h",
+   "drivers/hwtracing/coresight/coresight-common.h",
+   "drivers/hwtracing/coresight/coresight-byte-cntr.c",
+   "drivers/hwtracing/coresight/coresight-byte-cntr.h",
+   "drivers/hwtracing/coresight/coresight-etm-perf.h",
+   "drivers/hwtracing/coresight/coresight-priv.h",
+   "drivers/hwtracing/coresight/coresight-tmc-core.c",
+   "drivers/hwtracing/coresight/coresight-tmc-etf.c",
+   "drivers/hwtracing/coresight/coresight-tmc-etr.c",
+   "drivers/hwtracing/coresight/coresight-tmc-usb.h",
+   "drivers/hwtracing/coresight/coresight-tmc-usb.c",
+   "drivers/hwtracing/coresight/coresight-tmc.h"
+  ],
+  "deps": [
+   "drivers/usb/gadget/function/usb_f_qdss",
+   "drivers/hwtracing/coresight/coresight-csr",
+   "drivers/hwtracing/coresight/coresight",
+   "drivers/usb/dwc3/dwc3-msm",
+   "drivers/soc/qcom/wcd_usbss_i2c",
+   "drivers/usb/typec/ucsi/ucsi_qti_glink",
+   "drivers/usb/redriver/redriver",
+   "drivers/usb/repeater/repeater",
+   "drivers/base/regmap/qti-regmap-debugfs",
+   "drivers/iommu/qcom_iommu_util",
+   "drivers/soc/qcom/qti_pmic_glink",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/coresight/coresight-tpda": {
+  "name": "drivers/hwtracing/coresight/coresight-tpda",
+  "out": "coresight-tpda.ko",
+  "config": "CONFIG_CORESIGHT_TPDA",
+  "srcs": [
+   "drivers/hwtracing/coresight/coresight-priv.h",
+   "drivers/hwtracing/coresight/coresight-tpda.c",
+   "drivers/hwtracing/coresight/coresight-tpda.h",
+   "drivers/hwtracing/coresight/coresight-tpdm.h",
+   "drivers/hwtracing/coresight/coresight-trace-id.h"
+  ],
+  "deps": [
+   "drivers/hwtracing/coresight/coresight"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/coresight/coresight-tpdm": {
+  "name": "drivers/hwtracing/coresight/coresight-tpdm",
+  "out": "coresight-tpdm.ko",
+  "config": "CONFIG_CORESIGHT_TPDM",
+  "srcs": [
+   "drivers/hwtracing/coresight/coresight-tpda.h",
+   "drivers/hwtracing/coresight/coresight-trace-noc.h",
+   "drivers/hwtracing/coresight/coresight-common.h",
+   "drivers/hwtracing/coresight/coresight-priv.h",
+   "drivers/hwtracing/coresight/coresight-tpdm.c",
+   "drivers/hwtracing/coresight/coresight-tpdm.h"
+  ],
+  "deps": [
+   "drivers/hwtracing/coresight/coresight-csr",
+   "drivers/hwtracing/coresight/coresight",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/stm/stm_console": {
+  "name": "drivers/hwtracing/stm/stm_console",
+  "out": "stm_console.ko",
+  "config": "CONFIG_STM_SOURCE_CONSOLE",
+  "srcs": [
+   "drivers/hwtracing/stm/console.c"
+  ],
+  "deps": [
+   "drivers/hwtracing/stm/stm_core"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/stm/stm_core": {
+  "name": "drivers/hwtracing/stm/stm_core",
+  "out": "stm_core.ko",
+  "config": "CONFIG_STM",
+  "srcs": [
+   "drivers/hwtracing/stm/core.c",
+   "drivers/hwtracing/stm/policy.c",
+   "drivers/hwtracing/stm/stm.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/stm/stm_ftrace": {
+  "name": "drivers/hwtracing/stm/stm_ftrace",
+  "out": "stm_ftrace.ko",
+  "config": "CONFIG_STM_SOURCE_FTRACE",
+  "srcs": [
+   "drivers/hwtracing/stm/ftrace.c"
+  ],
+  "deps": [
+   "drivers/hwtracing/stm/stm_core"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/stm/stm_p_basic": {
+  "name": "drivers/hwtracing/stm/stm_p_basic",
+  "out": "stm_p_basic.ko",
+  "config": "CONFIG_STM_PROTO_BASIC",
+  "srcs": [
+   "drivers/hwtracing/stm/p_basic.c"
+  ],
+  "deps": [
+   "drivers/hwtracing/stm/stm_core"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/hwtracing/stm/stm_p_ost": {
+  "name": "drivers/hwtracing/stm/stm_p_ost",
+  "out": "stm_p_ost.ko",
+  "config": "CONFIG_STM_PROTO_OST",
+  "srcs": [
+   "drivers/hwtracing/stm/p_ost.c",
+   "drivers/hwtracing/stm/stm.h"
+  ],
+  "deps": [
+   "drivers/hwtracing/stm/stm_core"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/i2c/busses/i2c-msm-geni": {
+  "name": "drivers/i2c/busses/i2c-msm-geni",
+  "out": "i2c-msm-geni.ko",
+  "config": "CONFIG_I2C_MSM_GENI",
+  "srcs": [
+   "drivers/i2c/busses/i2c-msm-geni.c",
+   "drivers/i2c/busses/i2c-qup-trace.h"
+  ],
+  "deps": [
+   "drivers/dma/qcom/msm_gpi",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [
+   "OPLUS_FEATURE_CHG_BASIC"
+  ],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/i3c/master/i3c-master-msm-geni": {
+  "name": "drivers/i3c/master/i3c-master-msm-geni",
+  "out": "i3c-master-msm-geni.ko",
+  "config": "CONFIG_I3C_MASTER_MSM_GENI",
+  "srcs": [
+   "drivers/i3c/master/i3c-master-msm-geni.c",
+   "drivers/i3c/master/i3c-qup-trace.h"
+  ],
+  "deps": [
+   "drivers/dma/qcom/msm_gpi",
+   "drivers/pinctrl/qcom/pinctrl-msm",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/iio/adc/qcom-spmi-adc5-gen3": {
+  "name": "drivers/iio/adc/qcom-spmi-adc5-gen3",
+  "out": "qcom-spmi-adc5-gen3.ko",
+  "config": "CONFIG_QCOM_SPMI_ADC5_GEN3",
+  "srcs": [
+   "drivers/iio/adc/qcom-spmi-adc5-gen3.c"
+  ],
+  "deps": [
+   "drivers/iio/adc/qcom-vadc-common",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/iio/adc/qcom-vadc-common": {
+  "name": "drivers/iio/adc/qcom-vadc-common",
+  "out": "qcom-vadc-common.ko",
+  "config": "CONFIG_QCOM_VADC_COMMON",
+  "srcs": [
+   "drivers/iio/adc/qcom-vadc-common.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/input/fingerprint/goodix_fod/goodix_fod": {
+  "name": "drivers/input/fingerprint/goodix_fod/goodix_fod",
+  "out": "goodix_fod.ko",
+  "config": "CONFIG_FINGERPRINT_GOODIX_FOD",
+  "srcs": [
+   "drivers/input/fingerprint/goodix_fod/gf_spi.c",
+   "drivers/input/fingerprint/goodix_fod/gf_spi.h",
+   "drivers/input/fingerprint/goodix_fod/platform.c",
+   "drivers/input/fingerprint/goodix_fod/netlink.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/input/misc/pm8941-pwrkey": {
+  "name": "drivers/input/misc/pm8941-pwrkey",
+  "out": "pm8941-pwrkey.ko",
+  "config": "CONFIG_INPUT_PM8941_PWRKEY",
+  "srcs": [
+   "drivers/input/misc/pm8941-pwrkey.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/input/misc/qcom-hv-haptics": {
+  "name": "drivers/input/misc/qcom-hv-haptics",
+  "out": "qcom-hv-haptics.ko",
+  "config": "CONFIG_INPUT_QCOM_HV_HAPTICS",
+  "srcs": [
+   "drivers/input/misc/qcom-hv-haptics.c",
+   "drivers/input/misc/qcom-hv-haptics-debugfs.h"
+  ],
+  "deps": [
+   "//vendor/oplus/kernel/charger/bazel:{target_variant}_oplus_chg_v2",
+   "drivers/soc/qcom/panel_event_notifier",
+   "drivers/soc/qcom/qti_pmic_glink",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/interconnect/icc-clk": {
+  "name": "drivers/interconnect/icc-clk",
+  "out": "icc-clk.ko",
+  "config": "CONFIG_INTERCONNECT_CLK",
+  "srcs": [
+   "drivers/interconnect/icc-clk.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/interconnect/qcom/icc-bcm-voter": {
+  "name": "drivers/interconnect/qcom/icc-bcm-voter",
+  "out": "icc-bcm-voter.ko",
+  "config": "CONFIG_INTERCONNECT_QCOM_BCM_VOTER",
+  "srcs": [
+   "drivers/interconnect/qcom/bcm-voter.c",
+   "drivers/interconnect/qcom/bcm-voter.h",
+   "drivers/interconnect/qcom/icc-rpmh.h",
+   "drivers/interconnect/qcom/trace.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qcom_rpmh",
+   "drivers/soc/qcom/cmd-db",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/interconnect/qcom/icc-debug": {
+  "name": "drivers/interconnect/qcom/icc-debug",
+  "out": "icc-debug.ko",
+  "config": "CONFIG_INTERCONNECT_QCOM_DEBUG",
+  "srcs": [
+   "drivers/interconnect/qcom/icc-debug.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/interconnect/qcom/icc-rpmh": {
+  "name": "drivers/interconnect/qcom/icc-rpmh",
+  "out": "icc-rpmh.ko",
+  "config": "CONFIG_INTERCONNECT_QCOM_RPMH",
+  "srcs": [
+   "drivers/interconnect/qcom/bcm-voter.h",
+   "drivers/interconnect/qcom/icc-debug.h",
+   "drivers/interconnect/qcom/icc-rpmh.c",
+   "drivers/interconnect/qcom/icc-rpmh.h",
+   "drivers/interconnect/qcom/qnoc-qos.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/socinfo",
+   "drivers/interconnect/qcom/icc-debug",
+   "drivers/interconnect/qcom/icc-bcm-voter",
+   "drivers/soc/qcom/qcom_rpmh",
+   "drivers/soc/qcom/cmd-db",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/interconnect/qcom/qnoc-kalama": {
+  "name": "drivers/interconnect/qcom/qnoc-kalama",
+  "out": "qnoc-kalama.ko",
+  "config": "CONFIG_INTERCONNECT_QCOM_KALAMA",
+  "srcs": [
+   "drivers/interconnect/qcom/icc-rpmh.h",
+   "drivers/interconnect/qcom/qnoc-qos.h",
+   "drivers/interconnect/qcom/kalama.c"
+  ],
+  "deps": [
+   "drivers/interconnect/qcom/qnoc-qos",
+   "drivers/interconnect/qcom/icc-rpmh",
+   "drivers/interconnect/qcom/icc-debug",
+   "drivers/interconnect/qcom/icc-bcm-voter",
+   "drivers/soc/qcom/socinfo",
+   "drivers/soc/qcom/qcom_rpmh",
+   "drivers/soc/qcom/cmd-db",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/interconnect/qcom/qnoc-qos": {
+  "name": "drivers/interconnect/qcom/qnoc-qos",
+  "out": "qnoc-qos.ko",
+  "config": "CONFIG_INTERCONNECT_QCOM_QOS",
+  "srcs": [
+   "drivers/interconnect/qcom/icc-rpmh.h",
+   "drivers/interconnect/qcom/qnoc-qos.c",
+   "drivers/interconnect/qcom/qnoc-qos.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/iommu/arm/arm-smmu/arm_smmu": {
+  "name": "drivers/iommu/arm/arm-smmu/arm_smmu",
+  "out": "arm_smmu.ko",
+  "config": "CONFIG_ARM_SMMU",
+  "srcs": [
+   "drivers/iommu/arm/arm-smmu/arm-smmu-impl.c",
+   "drivers/iommu/arm/arm-smmu/arm-smmu-nvidia.c",
+   "drivers/iommu/arm/arm-smmu/arm-smmu-trace.h",
+   "drivers/iommu/arm/arm-smmu/arm-smmu.c",
+   "drivers/iommu/arm/arm-smmu/arm-smmu.h",
+   "drivers/iommu/iommu-logger.h",
+   "drivers/iommu/qcom-dma-iommu-generic.h",
+   "drivers/iommu/qcom-io-pgtable-alloc.h"
+  ],
+  "deps": [
+   "drivers/iommu/iommu-logger",
+   "drivers/iommu/qcom_iommu_util",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {
+   "CONFIG_ARM_SMMU_QCOM": {
+    "true": [
+     "drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c",
+     "drivers/iommu/arm/arm-smmu/arm-smmu-qcom-pm.c",
+     "drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h"
+    ]
+   },
+   "CONFIG_ARM_SMMU_QCOM_DEBUG": {
+    "true": [
+     "drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c",
+     "drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h"
+    ]
+   }
+  },
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/iommu/iommu-logger": {
+  "name": "drivers/iommu/iommu-logger",
+  "out": "iommu-logger.ko",
+  "config": "CONFIG_QTI_IOMMU_SUPPORT",
+  "srcs": [
+   "drivers/iommu/iommu-logger.c",
+   "drivers/iommu/iommu-logger.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/iommu/msm_dma_iommu_mapping": {
+  "name": "drivers/iommu/msm_dma_iommu_mapping",
+  "out": "msm_dma_iommu_mapping.ko",
+  "config": "CONFIG_QCOM_LAZY_MAPPING",
+  "srcs": [
+   "drivers/iommu/msm_dma_iommu_mapping.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/iommu/qcom_iommu_debug": {
+  "name": "drivers/iommu/qcom_iommu_debug",
+  "out": "qcom_iommu_debug.ko",
+  "config": "CONFIG_QCOM_IOMMU_DEBUG",
+  "srcs": [
+   "drivers/iommu/qcom-iommu-debug-user.c",
+   "drivers/iommu/qcom-iommu-debug.c",
+   "drivers/iommu/qcom-iommu-debug.h"
+  ],
+  "deps": [
+   "drivers/iommu/qcom_iommu_util",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/iommu/qcom_iommu_util": {
+  "name": "drivers/iommu/qcom_iommu_util",
+  "out": "qcom_iommu_util.ko",
+  "config": "CONFIG_QCOM_IOMMU_UTIL",
+  "srcs": [
+   "drivers/iommu/qcom-dma-iommu-generic.h",
+   "drivers/iommu/qcom-io-pgtable-alloc.h",
+   "drivers/iommu/qcom-iommu-util.c"
+  ],
+  "deps": [
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {
+   "CONFIG_IOMMU_IO_PGTABLE_FAST": {
+    "true": [
+     "drivers/iommu/qcom-dma-iommu-generic.c",
+     "drivers/iommu/io-pgtable-fast.c",
+     "drivers/iommu/dma-mapping-fast.c"
+    ]
+   },
+   "CONFIG_IOMMU_IO_PGTABLE_LPAE": {
+    "true": [
+     "drivers/iommu/qcom-io-pgtable-arm.c",
+     "drivers/iommu/qcom-io-pgtable-alloc.c"
+    ]
+   }
+  },
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/irqchip/msm_show_resume_irq": {
+  "name": "drivers/irqchip/msm_show_resume_irq",
+  "out": "msm_show_resume_irq.ko",
+  "config": "CONFIG_QCOM_SHOW_RESUME_IRQ",
+  "srcs": [
+   "drivers/irqchip/msm_show_resume_irq.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/irqchip/qcom-pdc": {
+  "name": "drivers/irqchip/qcom-pdc",
+  "out": "qcom-pdc.ko",
+  "config": "CONFIG_QCOM_PDC",
+  "srcs": [
+   "drivers/irqchip/qcom-pdc.c"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/leds/leds-qti-flash": {
+  "name": "drivers/leds/leds-qti-flash",
+  "out": "leds-qti-flash.ko",
+  "config": "CONFIG_LEDS_QTI_FLASH",
+  "srcs": [
+   "drivers/leds/leds-qti-flash.c"
+  ],
+  "deps": [
+   "//vendor/oplus/kernel/charger/bazel:{target_variant}_oplus_chg_v2",
+   "drivers/soc/qcom/panel_event_notifier",
+   "drivers/soc/qcom/qti_pmic_glink",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/leds/leds-qti-tri-led": {
+  "name": "drivers/leds/leds-qti-tri-led",
+  "out": "leds-qti-tri-led.ko",
+  "config": "CONFIG_LEDS_QTI_TRI_LED",
+  "srcs": [
+   "drivers/leds/leds-qti-tri-led.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/mailbox/msm_qmp": {
+  "name": "drivers/mailbox/msm_qmp",
+  "out": "msm_qmp.ko",
+  "config": "CONFIG_MSM_QMP",
+  "srcs": [
+   "drivers/mailbox/msm_qmp.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qcom_aoss",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/mailbox/qcom-ipcc": {
+  "name": "drivers/mailbox/qcom-ipcc",
+  "out": "qcom-ipcc.ko",
+  "config": "CONFIG_QCOM_IPCC",
+  "srcs": [
+   "drivers/mailbox/qcom-ipcc.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/mfd/qcom-i2c-pmic": {
+  "name": "drivers/mfd/qcom-i2c-pmic",
+  "out": "qcom-i2c-pmic.ko",
+  "config": "CONFIG_MFD_I2C_PMIC",
+  "srcs": [
+   "drivers/mfd/qcom-i2c-pmic.c"
+  ],
+  "deps": [
+   "drivers/base/regmap/qti-regmap-debugfs"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/mfd/qcom-spmi-pmic": {
+  "name": "drivers/mfd/qcom-spmi-pmic",
+  "out": "qcom-spmi-pmic.ko",
+  "config": "CONFIG_MFD_SPMI_PMIC",
+  "srcs": [
+   "drivers/mfd/qcom-spmi-pmic.c"
+  ],
+  "deps": [
+   "drivers/base/regmap/qti-regmap-debugfs"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/misc/qseecom_proxy": {
+  "name": "drivers/misc/qseecom_proxy",
+  "out": "qseecom_proxy.ko",
+  "config": "CONFIG_QSEECOM_PROXY",
+  "srcs": [
+   "drivers/misc/qseecom_proxy.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/nvmem/nvmem_qcom-spmi-sdam": {
+  "name": "drivers/nvmem/nvmem_qcom-spmi-sdam",
+  "out": "nvmem_qcom-spmi-sdam.ko",
+  "config": "CONFIG_NVMEM_SPMI_SDAM",
+  "srcs": [
+   "drivers/nvmem/qcom-spmi-sdam.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/nvmem/nvmem_qfprom": {
+  "name": "drivers/nvmem/nvmem_qfprom",
+  "out": "nvmem_qfprom.ko",
+  "config": "CONFIG_NVMEM_QCOM_QFPROM",
+  "srcs": [
+   "drivers/nvmem/qfprom.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/pci/controller/pci-msm-drv": {
+  "name": "drivers/pci/controller/pci-msm-drv",
+  "out": "pci-msm-drv.ko",
+  "config": "CONFIG_PCI_MSM",
+  "srcs": [
+   "drivers/pci/controller/pci-msm-msi.c",
+   "drivers/pci/controller/pci-msm.c"
+  ],
+  "deps": [
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "drivers/soc/qcom/pcie-pdc",
+   "drivers/pinctrl/qcom/pinctrl-msm",
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/perf/qcom_llcc_pmu": {
+  "name": "drivers/perf/qcom_llcc_pmu",
+  "out": "qcom_llcc_pmu.ko",
+  "config": "CONFIG_QCOM_LLCC_PMU",
+  "srcs": [
+   "drivers/perf/qcom_llcc_pmu.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/cpu_phys_log_map"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/phy/qualcomm/phy-qcom-ufs": {
+  "name": "drivers/phy/qualcomm/phy-qcom-ufs",
+  "out": "phy-qcom-ufs.ko",
+  "config": "CONFIG_PHY_QCOM_UFS",
+  "srcs": [
+   "drivers/phy/qualcomm/phy-qcom-ufs-i.h",
+   "drivers/phy/qualcomm/phy-qcom-ufs.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/phy/qualcomm/phy-qcom-ufs-qmp-v4-kalama": {
+  "name": "drivers/phy/qualcomm/phy-qcom-ufs-qmp-v4-kalama",
+  "out": "phy-qcom-ufs-qmp-v4-kalama.ko",
+  "config": "CONFIG_PHY_QCOM_UFS_V4_KALAMA",
+  "srcs": [
+   "drivers/phy/qualcomm/phy-qcom-ufs-i.h",
+   "drivers/phy/qualcomm/phy-qcom-ufs-qmp-v4-kalama.c",
+   "drivers/phy/qualcomm/phy-qcom-ufs-qmp-v4-kalama.h"
+  ],
+  "deps": [
+   "drivers/phy/qualcomm/phy-qcom-ufs"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/phy/qualcomm/phy-qcom-ufs-qrbtc-sdm845": {
+  "name": "drivers/phy/qualcomm/phy-qcom-ufs-qrbtc-sdm845",
+  "out": "phy-qcom-ufs-qrbtc-sdm845.ko",
+  "config": "CONFIG_PHY_QCOM_UFS_QRBTC_SDM845",
+  "srcs": [
+   "drivers/phy/qualcomm/phy-qcom-ufs-i.h",
+   "drivers/phy/qualcomm/phy-qcom-ufs-qrbtc-sdm845.c",
+   "drivers/phy/qualcomm/phy-qcom-ufs-qrbtc-sdm845.h"
+  ],
+  "deps": [
+   "drivers/phy/qualcomm/phy-qcom-ufs"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/pinctrl/qcom/pinctrl-kalama": {
+  "name": "drivers/pinctrl/qcom/pinctrl-kalama",
+  "out": "pinctrl-kalama.ko",
+  "config": "CONFIG_PINCTRL_KALAMA",
+  "srcs": [
+   "drivers/pinctrl/qcom/pinctrl-msm.h",
+   "drivers/pinctrl/qcom/pinctrl-kalama.c"
+  ],
+  "deps": [
+   "drivers/pinctrl/qcom/pinctrl-msm",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/pinctrl/qcom/pinctrl-msm": {
+  "name": "drivers/pinctrl/qcom/pinctrl-msm",
+  "out": "pinctrl-msm.ko",
+  "config": "CONFIG_PINCTRL_MSM",
+  "srcs": [
+   "drivers/pinctrl/qcom/pinctrl-msm.c",
+   "drivers/pinctrl/qcom/pinctrl-msm.h"
+  ],
+  "deps": [
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/pinctrl/qcom/pinctrl-spmi-gpio": {
+  "name": "drivers/pinctrl/qcom/pinctrl-spmi-gpio",
+  "out": "pinctrl-spmi-gpio.ko",
+  "config": "CONFIG_PINCTRL_QCOM_SPMI_PMIC",
+  "srcs": [
+   "drivers/pinctrl/qcom/pinctrl-spmi-gpio.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/pinctrl/qcom/pinctrl-spmi-mpp": {
+  "name": "drivers/pinctrl/qcom/pinctrl-spmi-mpp",
+  "out": "pinctrl-spmi-mpp.ko",
+  "config": "CONFIG_PINCTRL_QCOM_SPMI_PMIC",
+  "srcs": [
+   "drivers/pinctrl/qcom/pinctrl-spmi-mpp.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/power/reset/qcom-dload-mode": {
+  "name": "drivers/power/reset/qcom-dload-mode",
+  "out": "qcom-dload-mode.ko",
+  "config": "CONFIG_POWER_RESET_QCOM_DOWNLOAD_MODE",
+  "srcs": [
+   "drivers/power/reset/qcom-dload-mode.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/power/reset/qcom-pon": {
+  "name": "drivers/power/reset/qcom-pon",
+  "out": "qcom-pon.ko",
+  "config": "CONFIG_POWER_RESET_QCOM_PON",
+  "srcs": [
+   "drivers/power/reset/qcom-pon.c"
+  ],
+  "deps": [
+   "drivers/power/reset/reboot-mode"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/power/reset/qcom-reboot-reason": {
+  "name": "drivers/power/reset/qcom-reboot-reason",
+  "out": "qcom-reboot-reason.ko",
+  "config": "CONFIG_POWER_RESET_QCOM_REBOOT_REASON",
+  "srcs": [
+   "drivers/power/reset/qcom-reboot-reason.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/power/reset/reboot-mode": {
+  "name": "drivers/power/reset/reboot-mode",
+  "out": "reboot-mode.ko",
+  "config": "CONFIG_REBOOT_MODE",
+  "srcs": [
+   "drivers/power/reset/reboot-mode.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/power/supply/qti_battery_charger": {
+  "name": "drivers/power/supply/qti_battery_charger",
+  "out": "qti_battery_charger.ko",
+  "config": "CONFIG_QTI_BATTERY_CHARGER",
+  "srcs": [
+   "drivers/power/supply/qti_battery_charger.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/panel_event_notifier",
+   "drivers/soc/qcom/qti_pmic_glink",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/pwm/pwm-qti-lpg": {
+  "name": "drivers/pwm/pwm-qti-lpg",
+  "out": "pwm-qti-lpg.ko",
+  "config": "CONFIG_PWM_QTI_LPG",
+  "srcs": [
+   "drivers/pwm/pwm-qti-lpg.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/regulator/debug-regulator": {
+  "name": "drivers/regulator/debug-regulator",
+  "out": "debug-regulator.ko",
+  "config": "CONFIG_REGULATOR_DEBUG_CONTROL",
+  "srcs": [
+   "drivers/regulator/debug-regulator.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/regulator/proxy-consumer": {
+  "name": "drivers/regulator/proxy-consumer",
+  "out": "proxy-consumer.ko",
+  "config": "CONFIG_REGULATOR_PROXY_CONSUMER",
+  "srcs": [
+   "drivers/regulator/proxy-consumer.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/regulator/qcom_pm8008-regulator": {
+  "name": "drivers/regulator/qcom_pm8008-regulator",
+  "out": "qcom_pm8008-regulator.ko",
+  "config": "CONFIG_REGULATOR_QCOM_PM8008",
+  "srcs": [
+   "drivers/regulator/qcom_pm8008-regulator.c"
+  ],
+  "deps": [
+   "drivers/regulator/debug-regulator"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/regulator/qti-fixed-regulator": {
+  "name": "drivers/regulator/qti-fixed-regulator",
+  "out": "qti-fixed-regulator.ko",
+  "config": "CONFIG_REGULATOR_QTI_FIXED_VOLTAGE",
+  "srcs": [
+   "drivers/regulator/qti_fixed_regulator.c"
+  ],
+  "deps": [
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [
+   "-DQTI_FIXED_REGULATOR"
+  ],
+  "extra": []
+ },
+ "drivers/regulator/qti-ocp-notifier": {
+  "name": "drivers/regulator/qti-ocp-notifier",
+  "out": "qti-ocp-notifier.ko",
+  "config": "CONFIG_REGULATOR_QTI_OCP_NOTIFIER",
+  "srcs": [
+   "drivers/regulator/qti-ocp-notifier.c"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/regulator/rpmh-regulator": {
+  "name": "drivers/regulator/rpmh-regulator",
+  "out": "rpmh-regulator.ko",
+  "config": "CONFIG_REGULATOR_RPMH",
+  "srcs": [
+   "drivers/regulator/rpmh-regulator.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qcom_rpmh",
+   "drivers/soc/qcom/cmd-db",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/regulator/stub-regulator": {
+  "name": "drivers/regulator/stub-regulator",
+  "out": "stub-regulator.ko",
+  "config": "CONFIG_REGULATOR_STUB",
+  "srcs": [
+   "drivers/regulator/stub-regulator.c"
+  ],
+  "deps": [
+   "drivers/regulator/debug-regulator"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/remoteproc/qcom_pil_info": {
+  "name": "drivers/remoteproc/qcom_pil_info",
+  "out": "qcom_pil_info.ko",
+  "config": "CONFIG_QCOM_PIL_INFO",
+  "srcs": [
+   "drivers/remoteproc/qcom_pil_info.c",
+   "drivers/remoteproc/qcom_pil_info.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/remoteproc/qcom_q6v5": {
+  "name": "drivers/remoteproc/qcom_q6v5",
+  "out": "qcom_q6v5.ko",
+  "config": "CONFIG_QCOM_Q6V5_COMMON",
+  "srcs": [
+   "drivers/remoteproc/qcom_common.h",
+   "drivers/remoteproc/qcom_q6v5.c",
+   "drivers/remoteproc/qcom_q6v5.h"
+  ],
+  "deps": [
+   "drivers/remoteproc/qcom_sysmon",
+   "drivers/soc/qcom/qcom_aoss",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/smem",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv",
+   "//vendor/oplus/kernel/multimedia/feedback/bazel:oplus_mm_kevent_fb",
+   "//vendor/oplus/hardware/radio/mdmrst/bazel:oplus_mdmrst"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [
+   "-DCONFIG_OPLUS_FEATURE_MM_FEEDBACK",
+   "-DOPLUS_FEATURE_RECORD_MDMRST"
+  ],
+  "extra": []
+ },
+ "drivers/remoteproc/qcom_q6v5_pas": {
+  "name": "drivers/remoteproc/qcom_q6v5_pas",
+  "out": "qcom_q6v5_pas.ko",
+  "config": "CONFIG_QCOM_Q6V5_PAS",
+  "srcs": [
+   "drivers/remoteproc/qcom_common.h",
+   "drivers/remoteproc/qcom_pil_info.h",
+   "drivers/remoteproc/qcom_q6v5.h",
+   "drivers/remoteproc/qcom_q6v5_pas.c"
+  ],
+  "deps": [
+   "drivers/remoteproc/qcom_pil_info",
+   "drivers/soc/qcom/mdt_loader",
+   "drivers/soc/qcom/qcom_ramdump",
+   "drivers/remoteproc/qcom_q6v5",
+   "drivers/remoteproc/qcom_sysmon",
+   "drivers/soc/qcom/qcom_aoss",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/remoteproc/qcom_sysmon": {
+  "name": "drivers/remoteproc/qcom_sysmon",
+  "out": "qcom_sysmon.ko",
+  "config": "CONFIG_QCOM_SYSMON",
+  "srcs": [
+   "drivers/remoteproc/qcom_common.h",
+   "drivers/remoteproc/qcom_sysmon.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/remoteproc/rproc_qcom_common": {
+  "name": "drivers/remoteproc/rproc_qcom_common",
+  "out": "rproc_qcom_common.ko",
+  "config": "CONFIG_QCOM_RPROC_COMMON",
+  "srcs": [
+   "drivers/remoteproc/qcom_common.c",
+   "drivers/remoteproc/qcom_common.h",
+   "drivers/remoteproc/qcom_tracepoints.c"
+  ],
+  "deps": [
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/rpmsg/glink_pkt": {
+  "name": "drivers/rpmsg/glink_pkt",
+  "out": "glink_pkt.ko",
+  "config": "CONFIG_QCOM_GLINK_PKT",
+  "srcs": [
+   "drivers/rpmsg/glink_pkt.c",
+   "drivers/rpmsg/qcom_glink_native.h"
+  ],
+  "deps": [
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/rpmsg/qcom_glink": {
+  "name": "drivers/rpmsg/qcom_glink",
+  "out": "qcom_glink.ko",
+  "config": "CONFIG_RPMSG_QCOM_GLINK",
+  "srcs": [
+   "drivers/rpmsg/qcom_glink_memshare.c",
+   "drivers/rpmsg/qcom_glink_native.c",
+   "drivers/rpmsg/qcom_glink_native.h",
+   "drivers/rpmsg/qcom_glink_ssr.c"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/rpmsg/qcom_glink_smem": {
+  "name": "drivers/rpmsg/qcom_glink_smem",
+  "out": "qcom_glink_smem.ko",
+  "config": "CONFIG_RPMSG_QCOM_GLINK_SMEM",
+  "srcs": [
+   "drivers/rpmsg/qcom_glink_native.h",
+   "drivers/rpmsg/qcom_glink_smem.c"
+  ],
+  "deps": [
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/rpmsg/qcom_glink_spss": {
+  "name": "drivers/rpmsg/qcom_glink_spss",
+  "out": "qcom_glink_spss.ko",
+  "config": "CONFIG_RPMSG_QCOM_GLINK_SPSS",
+  "srcs": [
+   "drivers/rpmsg/qcom_glink_native.h",
+   "drivers/rpmsg/qcom_glink_spss.c"
+  ],
+  "deps": [
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/rpmsg/qcom_smd": {
+  "name": "drivers/rpmsg/qcom_smd",
+  "out": "qcom_smd.ko",
+  "config": "CONFIG_RPMSG_QCOM_SMD",
+  "srcs": [
+   "drivers/rpmsg/qcom_smd.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/smem"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/rtc/rtc-pm8xxx": {
+  "name": "drivers/rtc/rtc-pm8xxx",
+  "out": "rtc-pm8xxx.ko",
+  "config": "CONFIG_RTC_DRV_PM8XXX",
+  "srcs": [
+   "drivers/rtc/rtc-pm8xxx.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/scsi/sg": {
+  "name": "drivers/scsi/sg",
+  "out": "sg.ko",
+  "config": "CONFIG_CHR_DEV_SG",
+  "srcs": [
+   "drivers/scsi/sg.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/slimbus/slim-qcom-ngd-ctrl": {
+  "name": "drivers/slimbus/slim-qcom-ngd-ctrl",
+  "out": "slim-qcom-ngd-ctrl.ko",
+  "config": "CONFIG_SLIM_QCOM_NGD_CTRL",
+  "srcs": [
+   "drivers/slimbus/qcom-ngd-ctrl.c",
+   "drivers/slimbus/slimbus.h",
+   "drivers/slimbus/trace.h"
+  ],
+  "deps": [
+   "drivers/slimbus/slimbus",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/slimbus/slimbus": {
+  "name": "drivers/slimbus/slimbus",
+  "out": "slimbus.ko",
+  "config": "CONFIG_SLIMBUS",
+  "srcs": [
+   "drivers/slimbus/core.c",
+   "drivers/slimbus/messaging.c",
+   "drivers/slimbus/sched.c",
+   "drivers/slimbus/slimbus.h",
+   "drivers/slimbus/stream.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/adsp_sleepmon": {
+  "name": "drivers/soc/qcom/adsp_sleepmon",
+  "out": "adsp_sleepmon.ko",
+  "config": "CONFIG_QCOM_ADSP_SLEEPMON",
+  "srcs": [
+   "drivers/soc/qcom/adsp_sleepmon.c",
+   "drivers/remoteproc/qcom_common.h"
+  ],
+  "deps": [
+   "drivers/remoteproc/qcom_q6v5_pas",
+   "drivers/remoteproc/qcom_pil_info",
+   "drivers/soc/qcom/mdt_loader",
+   "drivers/soc/qcom/qcom_ramdump",
+   "drivers/remoteproc/qcom_q6v5",
+   "drivers/remoteproc/qcom_sysmon",
+   "drivers/soc/qcom/qcom_aoss",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/altmode-glink": {
+  "name": "drivers/soc/qcom/altmode-glink",
+  "out": "altmode-glink.ko",
+  "config": "CONFIG_QTI_ALTMODE_GLINK",
+  "srcs": [
+   "drivers/soc/qcom/altmode-glink.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qti_pmic_glink",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/boot_stats": {
+  "name": "drivers/soc/qcom/boot_stats",
+  "out": "boot_stats.ko",
+  "config": "CONFIG_MSM_BOOT_STATS",
+  "srcs": [
+   "drivers/soc/qcom/boot_stats.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/cdsprm": {
+  "name": "drivers/soc/qcom/cdsprm",
+  "out": "cdsprm.ko",
+  "config": "CONFIG_QCOM_CDSP_RM",
+  "srcs": [
+   "drivers/soc/qcom/cdsprm.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/charger-ulog-glink": {
+  "name": "drivers/soc/qcom/charger-ulog-glink",
+  "out": "charger-ulog-glink.ko",
+  "config": "CONFIG_QTI_CHARGER_ULOG_GLINK",
+  "srcs": [
+   "drivers/soc/qcom/charger-ulog-glink.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qti_pmic_glink",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv",
+   "//vendor/oplus/kernel/boot:oplus_bsp_bootmode"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [
+   "OPLUS_FEATURE_CHG_BASIC"
+  ],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/cmd-db": {
+  "name": "drivers/soc/qcom/cmd-db",
+  "out": "cmd-db.ko",
+  "config": "CONFIG_QCOM_COMMAND_DB",
+  "srcs": [
+   "drivers/soc/qcom/cmd-db.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/core_hang_detect": {
+  "name": "drivers/soc/qcom/core_hang_detect",
+  "out": "core_hang_detect.ko",
+  "config": "CONFIG_MSM_CORE_HANG_DETECT",
+  "srcs": [
+   "drivers/soc/qcom/core_hang_detect.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/crm-v2": {
+  "name": "drivers/soc/qcom/crm-v2",
+  "out": "crm-v2.ko",
+  "config": "CONFIG_QCOM_CRM_V2",
+  "srcs": [
+   "drivers/soc/qcom/crm-v2.c",
+   "drivers/soc/qcom/trace-crm.h"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/dcc_v2": {
+  "name": "drivers/soc/qcom/dcc_v2",
+  "out": "dcc_v2.ko",
+  "config": "CONFIG_QCOM_DCC_V2",
+  "srcs": [
+   "drivers/soc/qcom/dcc_v2.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/dcvs/bwmon": {
+  "name": "drivers/soc/qcom/dcvs/bwmon",
+  "out": "bwmon.ko",
+  "config": "CONFIG_QCOM_BWMON",
+  "srcs": [
+   "drivers/soc/qcom/dcvs/bwmon.c",
+   "drivers/soc/qcom/dcvs/bwmon.h",
+   "drivers/soc/qcom/dcvs/trace-dcvs.h"
+  ],
+  "deps": [
+   "kernel/sched/walt/sched-walt",
+   "drivers/soc/qcom/socinfo",
+   "drivers/soc/qcom/dcvs/qcom-dcvs",
+   "drivers/soc/qcom/dcvs/dcvs_fp",
+   "drivers/soc/qcom/qcom_rpmh",
+   "drivers/soc/qcom/cmd-db",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [
+   "-DCONFIG_OPLUS_FEATURE_GEAS_FDRIVE"
+  ],
+  "extra": []
+ },
+ "drivers/soc/qcom/dcvs/c1dcvs_scmi": {
+  "name": "drivers/soc/qcom/dcvs/c1dcvs_scmi",
+  "out": "c1dcvs_scmi.ko",
+  "config": "CONFIG_QTI_C1DCVS_SCMI_CLIENT",
+  "srcs": [
+   "drivers/soc/qcom/dcvs/c1dcvs_scmi.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/dcvs/dcvs_fp": {
+  "name": "drivers/soc/qcom/dcvs/dcvs_fp",
+  "out": "dcvs_fp.ko",
+  "config": "CONFIG_QCOM_DCVS_FP",
+  "srcs": [
+   "drivers/soc/qcom/dcvs/dcvs_fp.c",
+   "drivers/soc/qcom/dcvs/dcvs_private.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qcom_rpmh",
+   "drivers/soc/qcom/cmd-db",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/dcvs/memlat": {
+  "name": "drivers/soc/qcom/dcvs/memlat",
+  "out": "memlat.ko",
+  "config": "CONFIG_QCOM_MEMLAT",
+  "srcs": [
+   "drivers/soc/qcom/dcvs/memlat.c",
+   "drivers/soc/qcom/dcvs/trace-dcvs.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/dcvs/qcom-pmu-lib",
+   "drivers/perf/qcom_llcc_pmu",
+   "drivers/soc/qcom/cpu_phys_log_map",
+   "drivers/soc/qcom/dcvs/qcom-dcvs",
+   "drivers/soc/qcom/dcvs/dcvs_fp",
+   "drivers/soc/qcom/dcvs/qcom_scmi_client",
+   "drivers/soc/qcom/qcom_rpmh",
+   "drivers/soc/qcom/cmd-db",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [
+   "-DCONFIG_OPLUS_FEATURE_GEAS_MEMLAT"
+  ],
+  "extra": []
+ },
+ "drivers/soc/qcom/dcvs/memlat_scmi": {
+  "name": "drivers/soc/qcom/dcvs/memlat_scmi",
+  "out": "memlat_scmi.ko",
+  "config": "CONFIG_QTI_HW_MEMLAT_SCMI_CLIENT",
+  "srcs": [
+   "drivers/soc/qcom/dcvs/memlat_scmi.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/dcvs/memlat"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/dcvs/pmu_scmi": {
+  "name": "drivers/soc/qcom/dcvs/pmu_scmi",
+  "out": "pmu_scmi.ko",
+  "config": "CONFIG_QTI_PMU_SCMI_CLIENT",
+  "srcs": [
+   "drivers/soc/qcom/dcvs/pmu_scmi.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/dcvs/qcom-pmu-lib"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/dcvs/qcom-dcvs": {
+  "name": "drivers/soc/qcom/dcvs/qcom-dcvs",
+  "out": "qcom-dcvs.ko",
+  "config": "CONFIG_QCOM_DCVS",
+  "srcs": [
+   "drivers/soc/qcom/dcvs/dcvs.c",
+   "drivers/soc/qcom/dcvs/dcvs_epss.c",
+   "drivers/soc/qcom/dcvs/dcvs_icc.c",
+   "drivers/soc/qcom/dcvs/dcvs_private.h",
+   "drivers/soc/qcom/dcvs/trace-dcvs.c",
+   "drivers/soc/qcom/dcvs/trace-dcvs.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/dcvs/dcvs_fp",
+   "drivers/soc/qcom/qcom_rpmh",
+   "drivers/soc/qcom/cmd-db",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/dcvs/qcom-pmu-lib": {
+  "name": "drivers/soc/qcom/dcvs/qcom-pmu-lib",
+  "out": "qcom-pmu-lib.ko",
+  "config": "CONFIG_QCOM_PMU_LIB",
+  "srcs": [
+   "drivers/soc/qcom/dcvs/pmu_lib.c"
+  ],
+  "deps": [
+   "drivers/perf/qcom_llcc_pmu",
+   "drivers/soc/qcom/cpu_phys_log_map",
+   "drivers/soc/qcom/dcvs/qcom_scmi_client"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/debug_symbol": {
+  "name": "drivers/soc/qcom/debug_symbol",
+  "out": "debug_symbol.ko",
+  "config": "CONFIG_QCOM_DEBUG_SYMBOL",
+  "srcs": [
+   "drivers/soc/qcom/debug_symbol.c",
+   "drivers/soc/qcom/debug_symbol.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/dmesg_dumper": {
+  "name": "drivers/soc/qcom/dmesg_dumper",
+  "out": "dmesg_dumper.ko",
+  "config": "CONFIG_QCOM_VM_DMESG_DUMPER",
+  "srcs": [
+   "drivers/soc/qcom/dmesg_dumper.c",
+   "drivers/soc/qcom/dmesg_dumper_private.h"
+  ],
+  "deps": [
+   "drivers/virt/gunyah/gh_panic_notifier",
+   "drivers/virt/gunyah/gunyah_loader",
+   "drivers/soc/qcom/mdt_loader",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_ctrl",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {
+   "CONFIG_QCOM_VM_ALIVE_LOG_ENCRYPT": {
+    "true": [
+     "drivers/soc/qcom/dmesg_dumper_crypto.c"
+    ]
+   }
+  },
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/eud": {
+  "name": "drivers/soc/qcom/eud",
+  "out": "eud.ko",
+  "config": "CONFIG_QCOM_EUD",
+  "srcs": [
+   "drivers/soc/qcom/eud.c"
+  ],
+  "deps": [
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/fsa4480_i2c": {
+  "name": "drivers/soc/qcom/fsa4480_i2c",
+  "out": "fsa4480_i2c.ko",
+  "config": "CONFIG_QCOM_FSA4480_I2C",
+  "srcs": [
+   "drivers/soc/qcom/fsa4480-i2c.c"
+  ],
+  "deps": [
+   "drivers/usb/typec/ucsi/ucsi_qti_glink",
+   "drivers/base/regmap/qti-regmap-debugfs",
+   "drivers/soc/qcom/qti_pmic_glink",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/gh_tlmm_vm_mem_access": {
+  "name": "drivers/soc/qcom/gh_tlmm_vm_mem_access",
+  "out": "gh_tlmm_vm_mem_access.ko",
+  "config": "CONFIG_GH_TLMM_VM_MEM_ACCESS",
+  "srcs": [
+   "drivers/soc/qcom/gh_tlmm_vm_mem_access.c"
+  ],
+  "deps": [
+   "drivers/virt/gunyah/gh_mem_notifier",
+   "drivers/virt/gunyah/gunyah_loader",
+   "drivers/pinctrl/qcom/pinctrl-msm",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/glink_probe": {
+  "name": "drivers/soc/qcom/glink_probe",
+  "out": "glink_probe.ko",
+  "config": "CONFIG_QCOM_GLINK",
+  "srcs": [
+   "drivers/soc/qcom/glink_probe.c"
+  ],
+  "deps": [
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink_spss",
+   "drivers/rpmsg/qcom_glink",
+   "drivers/remoteproc/rproc_qcom_common",
+   "kernel/trace/qcom_ipc_logging"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/llcc-qcom": {
+  "name": "drivers/soc/qcom/llcc-qcom",
+  "out": "llcc-qcom.ko",
+  "config": "CONFIG_QCOM_LLCC",
+  "srcs": [
+   "drivers/soc/qcom/llcc-qcom.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/llcc_perfmon": {
+  "name": "drivers/soc/qcom/llcc_perfmon",
+  "out": "llcc_perfmon.ko",
+  "config": "CONFIG_QCOM_LLCC_PERFMON",
+  "srcs": [
+   "drivers/soc/qcom/llcc_events.h",
+   "drivers/soc/qcom/llcc_perfmon.c",
+   "drivers/soc/qcom/llcc_perfmon.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/mdt_loader": {
+  "name": "drivers/soc/qcom/mdt_loader",
+  "out": "mdt_loader.ko",
+  "config": "CONFIG_QCOM_MDT_LOADER",
+  "srcs": [
+   "drivers/soc/qcom/mdt_loader.c"
+  ],
+  "deps": [
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/mem-hooks": {
+  "name": "drivers/soc/qcom/mem-hooks",
+  "out": "mem-hooks.ko",
+  "config": "CONFIG_QCOM_MEM_HOOKS",
+  "srcs": [
+   "drivers/soc/qcom/mem-hooks.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/mem-offline": {
+  "name": "drivers/soc/qcom/mem-offline",
+  "out": "mem-offline.ko",
+  "config": "CONFIG_QCOM_MEM_OFFLINE",
+  "srcs": [
+   "drivers/soc/qcom/mem-offline.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qcom_aoss",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/mem-prot": {
+  "name": "drivers/soc/qcom/mem-prot",
+  "out": "mem-prot.ko",
+  "config": "CONFIG_MEM_PROT",
+  "srcs": [
+   "drivers/soc/qcom/mem-prot.c",
+   "include/linux/mem-prot.h"
+  ],
+  "deps": [
+   "drivers/firmware/qcom/qcom-scm"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/mem_buf/mem_buf": {
+  "name": "drivers/soc/qcom/mem_buf/mem_buf",
+  "out": "mem_buf.ko",
+  "config": "CONFIG_QCOM_MEM_BUF",
+  "srcs": [
+   "drivers/soc/qcom/mem_buf/mem-buf-dev.h",
+   "drivers/soc/qcom/mem_buf/mem-buf-gh.h",
+   "drivers/soc/qcom/mem_buf/mem-buf-ids.h",
+   "drivers/soc/qcom/mem_buf/mem-buf.c",
+   "drivers/dma-buf/heaps/deferred-free-helper.h"
+  ],
+  "deps": [
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/mem_buf/mem_buf_msgq",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gunyah_loader",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {
+   "CONFIG_QCOM_MEM_BUF_GH": {
+    "true": [
+     "drivers/soc/qcom/mem_buf/mem-buf-gh.c",
+     "drivers/dma-buf/heaps/qcom_dma_heap_priv.h",
+     "drivers/dma-buf/heaps/qcom_sg_ops.h",
+     "drivers/soc/qcom/mem_buf/mem-buf-msgq.h",
+     "drivers/soc/qcom/mem_buf/trace-mem-buf.h"
+    ]
+   }
+  },
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/mem_buf/mem_buf_dev": {
+  "name": "drivers/soc/qcom/mem_buf/mem_buf_dev",
+  "out": "mem_buf_dev.ko",
+  "config": "CONFIG_QCOM_MEM_BUF_DEV",
+  "srcs": [
+   "drivers/soc/qcom/mem_buf/mem-buf-dev.c",
+   "drivers/soc/qcom/mem_buf/mem-buf-dev.h",
+   "drivers/soc/qcom/mem_buf/mem-buf-gh.h",
+   "drivers/soc/qcom/mem_buf/mem-buf-ids.c",
+   "drivers/soc/qcom/mem_buf/mem-buf-ids.h",
+   "drivers/soc/qcom/mem_buf/mem_buf_dma_buf.c",
+   "drivers/dma-buf/heaps/qcom_sg_ops.h",
+   "drivers/dma-buf/heaps/qcom_dma_heap_priv.h",
+   "drivers/dma-buf/heaps/deferred-free-helper.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_mem_notifier",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv",
+   "drivers/virt/gunyah/gh_rm_heap_manager"
+  ],
+  "conditional_srcs": {
+   "CONFIG_QCOM_MEM_BUF_DEV_GH": {
+    "true": [
+     "drivers/soc/qcom/mem_buf/mem-buf-dev-gh.c",
+     "drivers/soc/qcom/mem_buf/mem-buf-msgq.h",
+     "drivers/soc/qcom/mem_buf/trace-mem-buf.h"
+    ]
+   }
+  },
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/mem_buf/mem_buf_msgq": {
+  "name": "drivers/soc/qcom/mem_buf/mem_buf_msgq",
+  "out": "mem_buf_msgq.ko",
+  "config": "CONFIG_QCOM_MEM_BUF_MSGQ",
+  "srcs": [
+   "drivers/soc/qcom/mem_buf/mem-buf-msgq.c",
+   "drivers/soc/qcom/mem_buf/mem-buf-msgq.h",
+   "drivers/soc/qcom/mem_buf/trace-mem-buf.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/memory_dump_v2": {
+  "name": "drivers/soc/qcom/memory_dump_v2",
+  "out": "memory_dump_v2.ko",
+  "config": "CONFIG_QCOM_MEMORY_DUMP_V2",
+  "srcs": [
+   "drivers/soc/qcom/memory_dump_v2.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/memshare/heap_mem_ext_v01": {
+  "name": "drivers/soc/qcom/memshare/heap_mem_ext_v01",
+  "out": "heap_mem_ext_v01.ko",
+  "config": "CONFIG_MEM_SHARE_QMI_SERVICE",
+  "srcs": [
+   "drivers/soc/qcom/memshare/heap_mem_ext_v01.c",
+   "drivers/soc/qcom/memshare/heap_mem_ext_v01.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qmi_helpers"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/memshare/msm_memshare": {
+  "name": "drivers/soc/qcom/memshare/msm_memshare",
+  "out": "msm_memshare.ko",
+  "config": "CONFIG_MEM_SHARE_QMI_SERVICE",
+  "srcs": [
+   "drivers/soc/qcom/memshare/heap_mem_ext_v01.h",
+   "drivers/soc/qcom/memshare/msm_memshare.c",
+   "drivers/soc/qcom/memshare/msm_memshare.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/memshare/heap_mem_ext_v01",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv",
+   "//vendor/oplus/kernel/boot:oplusboot"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/microdump_collector": {
+  "name": "drivers/soc/qcom/microdump_collector",
+  "out": "microdump_collector.ko",
+  "config": "CONFIG_QCOM_MICRODUMP",
+  "srcs": [
+   "drivers/soc/qcom/microdump_collector.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/qcom_ramdump",
+   "drivers/remoteproc/rproc_qcom_common"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/minidump": {
+  "name": "drivers/soc/qcom/minidump",
+  "out": "minidump.ko",
+  "config": "CONFIG_QCOM_MINIDUMP",
+  "srcs": [
+   "drivers/soc/qcom/debug_symbol.h",
+   "drivers/soc/qcom/elf.h",
+   "drivers/soc/qcom/minidump_log.c",
+   "drivers/soc/qcom/minidump_memory.h",
+   "drivers/soc/qcom/minidump_private.h",
+   "drivers/soc/qcom/msm_minidump.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {
+   "CONFIG_QCOM_MINIDUMP_PANIC_MEMORY_INFO": {
+    "true": [
+     "drivers/soc/qcom/minidump_memory.c"
+    ]
+   },
+   "CONFIG_QCOM_MINIDUMP_SMEM": {
+    "true": [
+     "drivers/soc/qcom/minidump_smem.c"
+    ]
+   },
+   "CONFIG_QCOM_MINIDUMP_RM": {
+    "true": [
+     "drivers/soc/qcom/minidump_rm.c"
+    ]
+   }
+  },
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/msm_performance": {
+  "name": "drivers/soc/qcom/msm_performance",
+  "out": "msm_performance.ko",
+  "config": "CONFIG_MSM_PERFORMANCE",
+  "srcs": [
+   "drivers/soc/qcom/msm_performance.c"
+  ],
+  "deps": [
+   "kernel/sched/walt/sched-walt",
+   "drivers/soc/qcom/socinfo",
+   "drivers/soc/qcom/dcvs/qcom-pmu-lib",
+   "drivers/perf/qcom_llcc_pmu",
+   "drivers/soc/qcom/cpu_phys_log_map",
+   "drivers/soc/qcom/dcvs/qcom_scmi_client",
+   "drivers/soc/qcom/smem"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/msm_show_epoch": {
+  "name": "drivers/soc/qcom/msm_show_epoch",
+  "out": "msm_show_epoch.ko",
+  "config": "CONFIG_SHOW_SUSPEND_EPOCH",
+  "srcs": [
+   "drivers/soc/qcom/msm_show_epoch.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/panel_event_notifier": {
+  "name": "drivers/soc/qcom/panel_event_notifier",
+  "out": "panel_event_notifier.ko",
+  "config": "CONFIG_QCOM_PANEL_EVENT_NOTIFIER",
+  "srcs": [
+   "drivers/soc/qcom/panel_event_notifier.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/pcie-pdc": {
+  "name": "drivers/soc/qcom/pcie-pdc",
+  "out": "pcie-pdc.ko",
+  "config": "CONFIG_QCOM_PCIE_PDC",
+  "srcs": [
+   "drivers/soc/qcom/pcie-pdc.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/pdr_interface": {
+  "name": "drivers/soc/qcom/pdr_interface",
+  "out": "pdr_interface.ko",
+  "config": "CONFIG_QCOM_PDR_HELPERS",
+  "srcs": [
+   "drivers/remoteproc/qcom_common.h",
+   "drivers/soc/qcom/pdr_interface.c",
+   "drivers/soc/qcom/pdr_internal.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/soc/qcom/qcom_pdr_msg",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/pmic-pon-log": {
+  "name": "drivers/soc/qcom/pmic-pon-log",
+  "out": "pmic-pon-log.ko",
+  "config": "CONFIG_QTI_PMIC_PON_LOG",
+  "srcs": [
+   "drivers/soc/qcom/pmic-pon-log.c"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qbt_handler": {
+  "name": "drivers/soc/qcom/qbt_handler",
+  "out": "qbt_handler.ko",
+  "config": "CONFIG_MSM_QBT_HANDLER",
+  "srcs": [
+   "drivers/soc/qcom/qbt_handler.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qcom_aoss": {
+  "name": "drivers/soc/qcom/qcom_aoss",
+  "out": "qcom_aoss.ko",
+  "config": "CONFIG_QCOM_AOSS_QMP",
+  "srcs": [
+   "drivers/soc/qcom/qcom_aoss.c",
+   "drivers/soc/qcom/trace-aoss.h"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qcom_cpu_vendor_hooks": {
+  "name": "drivers/soc/qcom/qcom_cpu_vendor_hooks",
+  "out": "qcom_cpu_vendor_hooks.ko",
+  "config": "CONFIG_QCOM_CPU_VENDOR_HOOKS",
+  "srcs": [
+   "drivers/soc/qcom/debug_symbol.h",
+   "drivers/soc/qcom/qcom_cpu_vendor_hooks.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qcom_wdt_core",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qcom_cpuss_sleep_stats": {
+  "name": "drivers/soc/qcom/qcom_cpuss_sleep_stats",
+  "out": "qcom_cpuss_sleep_stats.ko",
+  "config": "CONFIG_QCOM_CPUSS_SLEEP_STATS",
+  "srcs": [
+   "drivers/soc/qcom/qcom_cpuss_sleep_stats.c"
+  ],
+  "deps": [
+   "drivers/firmware/qcom/qcom-scm"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qcom_ice": {
+  "name": "drivers/soc/qcom/qcom_ice",
+  "out": "qcom_ice.ko",
+  "config": "CONFIG_QCOM_INLINE_CRYPTO_ENGINE",
+  "srcs": [
+   "drivers/soc/qcom/ice.c"
+  ],
+  "deps": [
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qcom_pdr_msg": {
+  "name": "drivers/soc/qcom/qcom_pdr_msg",
+  "out": "qcom_pdr_msg.ko",
+  "config": "CONFIG_QCOM_PDR_MSG",
+  "srcs": [
+   "drivers/soc/qcom/pdr_internal.h",
+   "drivers/soc/qcom/qcom_pdr_msg.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qmi_helpers"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qcom_ramdump": {
+  "name": "drivers/soc/qcom/qcom_ramdump",
+  "out": "qcom_ramdump.ko",
+  "config": "CONFIG_QCOM_RAMDUMP",
+  "srcs": [
+   "drivers/soc/qcom/qcom_ramdump.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qcom_rimps": {
+  "name": "drivers/soc/qcom/qcom_rimps",
+  "out": "qcom_rimps.ko",
+  "config": "CONFIG_QCOM_RIMPS",
+  "srcs": [
+   "drivers/soc/qcom/qcom_rimps.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qcom_rpmh": {
+  "name": "drivers/soc/qcom/qcom_rpmh",
+  "out": "qcom_rpmh.ko",
+  "config": "CONFIG_QCOM_RPMH",
+  "srcs": [
+   "drivers/soc/qcom/rpmh-internal.h",
+   "drivers/soc/qcom/rpmh-rsc.c",
+   "drivers/soc/qcom/rpmh.c",
+   "drivers/soc/qcom/trace-rpmh.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/cmd-db",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qcom_sdei": {
+  "name": "drivers/soc/qcom/qcom_sdei",
+  "out": "qcom_sdei.ko",
+  "config": "CONFIG_QCOM_SDEI",
+  "srcs": [
+   "drivers/soc/qcom/qcom_sdei.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/minidump"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qcom_va_minidump": {
+  "name": "drivers/soc/qcom/qcom_va_minidump",
+  "out": "qcom_va_minidump.ko",
+  "config": "CONFIG_QCOM_VA_MINIDUMP",
+  "srcs": [
+   "drivers/soc/qcom/elf.h",
+   "drivers/soc/qcom/qcom_va_minidump.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qcom_wdt_core": {
+  "name": "drivers/soc/qcom/qcom_wdt_core",
+  "out": "qcom_wdt_core.ko",
+  "config": "CONFIG_QCOM_WDT_CORE",
+  "srcs": [
+   "drivers/soc/qcom/qcom_wdt_core.c"
+  ],
+  "deps": [
+   "//vendor/oplus/kernel/boot:oplus_bsp_dfr_qcom_enhance_watchdog",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/soc/qcom/qcom_sdei",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [
+   "CONFIG_OPLUS_FEATURE_QCOM_WATCHDOG_MODULE"
+  ],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qmi_helpers": {
+  "name": "drivers/soc/qcom/qmi_helpers",
+  "out": "qmi_helpers.ko",
+  "config": "CONFIG_QCOM_QMI_HELPERS",
+  "srcs": [
+   "drivers/soc/qcom/qmi_encdec.c",
+   "drivers/soc/qcom/qmi_interface.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qsee_ipc_irq_bridge": {
+  "name": "drivers/soc/qcom/qsee_ipc_irq_bridge",
+  "out": "qsee_ipc_irq_bridge.ko",
+  "config": "CONFIG_QSEE_IPC_IRQ_BRIDGE",
+  "srcs": [
+   "drivers/soc/qcom/qsee_ipc_irq_bridge.c"
+  ],
+  "deps": [
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qti_battery_debug": {
+  "name": "drivers/soc/qcom/qti_battery_debug",
+  "out": "qti_battery_debug.ko",
+  "config": "CONFIG_QTI_BATTERY_GLINK_DEBUG",
+  "srcs": [
+   "drivers/soc/qcom/qti_battery_debug.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qti_pmic_glink",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/qti_pmic_glink": {
+  "name": "drivers/soc/qcom/qti_pmic_glink",
+  "out": "qti_pmic_glink.ko",
+  "config": "CONFIG_QTI_PMIC_GLINK",
+  "srcs": [
+   "drivers/soc/qcom/qti_pmic_glink.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/rq_stats": {
+  "name": "drivers/soc/qcom/rq_stats",
+  "out": "rq_stats.ko",
+  "config": "CONFIG_QCOM_RUN_QUEUE_STATS",
+  "srcs": [
+   "drivers/soc/qcom/rq_stats.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/secure_buffer": {
+  "name": "drivers/soc/qcom/secure_buffer",
+  "out": "secure_buffer.ko",
+  "config": "CONFIG_QCOM_SECURE_BUFFER",
+  "srcs": [
+   "drivers/soc/qcom/secure_buffer.c",
+   "drivers/soc/qcom/trace_secure_buffer.h"
+  ],
+  "deps": [
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/smem": {
+  "name": "drivers/soc/qcom/smem",
+  "out": "smem.ko",
+  "config": "CONFIG_QCOM_SMEM",
+  "srcs": [
+   "drivers/soc/qcom/smem.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/smp2p": {
+  "name": "drivers/soc/qcom/smp2p",
+  "out": "smp2p.ko",
+  "config": "CONFIG_QCOM_SMP2P",
+  "srcs": [
+   "drivers/soc/qcom/smp2p.c",
+   "drivers/soc/qcom/trace_smp2p.h"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/smp2p_sleepstate": {
+  "name": "drivers/soc/qcom/smp2p_sleepstate",
+  "out": "smp2p_sleepstate.ko",
+  "config": "CONFIG_QCOM_SMP2P_SLEEPSTATE",
+  "srcs": [
+   "drivers/soc/qcom/smp2p_sleepstate.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/smem"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/soc_sleep_stats": {
+  "name": "drivers/soc/qcom/soc_sleep_stats",
+  "out": "soc_sleep_stats.ko",
+  "config": "CONFIG_QCOM_SOC_SLEEP_STATS",
+  "srcs": [
+   "drivers/soc/qcom/soc_sleep_stats.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/smem"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/socinfo": {
+  "name": "drivers/soc/qcom/socinfo",
+  "out": "socinfo.ko",
+  "config": "CONFIG_QCOM_SOCINFO",
+  "srcs": [
+   "drivers/soc/qcom/socinfo.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/smem"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/sps/sps_drv": {
+  "name": "drivers/soc/qcom/sps/sps_drv",
+  "out": "sps_drv.ko",
+  "config": "CONFIG_SPS",
+  "srcs": [
+   "drivers/soc/qcom/sps/bam.c",
+   "drivers/soc/qcom/sps/bam.h",
+   "drivers/soc/qcom/sps/sps.c",
+   "drivers/soc/qcom/sps/sps_bam.c",
+   "drivers/soc/qcom/sps/sps_bam.h",
+   "drivers/soc/qcom/sps/sps_core.h",
+   "drivers/soc/qcom/sps/sps_dma.c",
+   "drivers/soc/qcom/sps/sps_map.c",
+   "drivers/soc/qcom/sps/sps_map.h",
+   "drivers/soc/qcom/sps/sps_mem.c",
+   "drivers/soc/qcom/sps/sps_rm.c",
+   "drivers/soc/qcom/sps/spsi.h"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/subsystem_sleep_stats": {
+  "name": "drivers/soc/qcom/subsystem_sleep_stats",
+  "out": "subsystem_sleep_stats.ko",
+  "config": "CONFIG_QCOM_SUBSYSTEM_SLEEP_STATS",
+  "srcs": [
+   "drivers/soc/qcom/subsystem_sleep_stats.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/smem"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/sys_pm_vx": {
+  "name": "drivers/soc/qcom/sys_pm_vx",
+  "out": "sys_pm_vx.ko",
+  "config": "CONFIG_QTI_SYS_PM_VX",
+  "srcs": [
+   "drivers/soc/qcom/sys_pm_vx.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qcom_stats",
+   "drivers/soc/qcom/qcom_aoss",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/sysmon_subsystem_stats": {
+  "name": "drivers/soc/qcom/sysmon_subsystem_stats",
+  "out": "sysmon_subsystem_stats.ko",
+  "config": "CONFIG_QCOM_SYSMON_SUBSYSTEM_STATS",
+  "srcs": [
+   "drivers/soc/qcom/sysmon_subsystem_stats.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/smem"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/tmecom/tmecom-intf": {
+  "name": "drivers/soc/qcom/tmecom/tmecom-intf",
+  "out": "tmecom-intf.ko",
+  "config": "CONFIG_MSM_TMECOM_QMP",
+  "srcs": [
+   "drivers/soc/qcom/tmecom/tmecom.c",
+   "drivers/soc/qcom/tmecom/tme_hwkm_master.c",
+   "drivers/soc/qcom/tmecom/tmecom.h",
+   "drivers/soc/qcom/tmecom/tme_hwkm_master_intf.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/usb_bam": {
+  "name": "drivers/soc/qcom/usb_bam",
+  "out": "usb_bam.ko",
+  "config": "CONFIG_USB_BAM",
+  "srcs": [
+   "drivers/soc/qcom/usb_bam.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/soc/qcom/wcd_usbss_i2c": {
+  "name": "drivers/soc/qcom/wcd_usbss_i2c",
+  "out": "wcd_usbss_i2c.ko",
+  "config": "CONFIG_QCOM_WCD_USBSS_I2C",
+  "srcs": [
+   "drivers/soc/qcom/wcd-usbss-priv.h",
+   "drivers/soc/qcom/wcd-usbss-reg-masks.h",
+   "drivers/soc/qcom/wcd-usbss-reg-shifts.h",
+   "drivers/soc/qcom/wcd-usbss-registers.h",
+   "drivers/soc/qcom/wcd-usbss-regmap.c",
+   "drivers/soc/qcom/wcd-usbss-tables.c",
+   "drivers/soc/qcom/wcd-usbss-utils.c",
+   "drivers/soc/qcom/wcd939x-i2c.c"
+  ],
+  "deps": [
+   "drivers/usb/typec/ucsi/ucsi_qti_glink",
+   "drivers/base/regmap/qti-regmap-debugfs",
+   "drivers/soc/qcom/qti_pmic_glink",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv",
+   "//vendor/oplus/kernel/multimedia/feedback/bazel:oplus_mm_kevent_fb"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [
+   "-DCONFIG_OPLUS_FEATURE_MM_FEEDBACK"
+  ],
+  "extra": []
+ },
+ "drivers/spi/spi-msm-geni": {
+  "name": "drivers/spi/spi-msm-geni",
+  "out": "spi-msm-geni.ko",
+  "config": "CONFIG_SPI_MSM_GENI",
+  "srcs": [
+   "drivers/spi/spi-msm-geni.c",
+   "drivers/spi/spi-qup-trace.h"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/spmi/spmi-glink-debug": {
+  "name": "drivers/spmi/spmi-glink-debug",
+  "out": "spmi-glink-debug.ko",
+  "config": "CONFIG_SPMI_QTI_GLINK_DEBUG",
+  "srcs": [
+   "drivers/spmi/spmi-glink-debug.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qti_pmic_glink"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/spmi/spmi-pmic-arb": {
+  "name": "drivers/spmi/spmi-pmic-arb",
+  "out": "spmi-pmic-arb.ko",
+  "config": "CONFIG_SPMI_MSM_PMIC_ARB",
+  "srcs": [
+   "drivers/spmi/spmi-pmic-arb.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/spmi/spmi-pmic-arb-debug": {
+  "name": "drivers/spmi/spmi-pmic-arb-debug",
+  "out": "spmi-pmic-arb-debug.ko",
+  "config": "CONFIG_SPMI_MSM_PMIC_ARB_DEBUG",
+  "srcs": [
+   "drivers/spmi/spmi-pmic-arb-debug.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/bcl_pmic5": {
+  "name": "drivers/thermal/qcom/bcl_pmic5",
+  "out": "bcl_pmic5.ko",
+  "config": "CONFIG_QTI_BCL_PMIC5",
+  "srcs": [
+   "drivers/thermal/qcom/bcl_pmic5.c",
+   "drivers/thermal/qcom/thermal_zone_internal.h",
+   "drivers/thermal/qcom/trace.h"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/bcl_soc": {
+  "name": "drivers/thermal/qcom/bcl_soc",
+  "out": "bcl_soc.ko",
+  "config": "CONFIG_QTI_BCL_SOC_DRIVER",
+  "srcs": [
+   "drivers/thermal/qcom/bcl_soc.c",
+   "drivers/thermal/qcom/thermal_zone_internal.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/cpu_hotplug": {
+  "name": "drivers/thermal/qcom/cpu_hotplug",
+  "out": "cpu_hotplug.ko",
+  "config": "CONFIG_QTI_CPU_HOTPLUG_COOLING_DEVICE",
+  "srcs": [
+   "drivers/thermal/qcom/cpu_hotplug.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/cpu_voltage_cooling": {
+  "name": "drivers/thermal/qcom/cpu_voltage_cooling",
+  "out": "cpu_voltage_cooling.ko",
+  "config": "CONFIG_QTI_CPU_VOLTAGE_COOLING_DEVICE",
+  "srcs": [
+   "drivers/thermal/qcom/cpu_voltage_cooling.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/ddr_cdev": {
+  "name": "drivers/thermal/qcom/ddr_cdev",
+  "out": "ddr_cdev.ko",
+  "config": "CONFIG_QTI_DDR_COOLING_DEVICE",
+  "srcs": [
+   "drivers/thermal/qcom/ddr_cdev.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/msm_lmh_dcvs": {
+  "name": "drivers/thermal/qcom/msm_lmh_dcvs",
+  "out": "msm_lmh_dcvs.ko",
+  "config": "CONFIG_QTI_THERMAL_LIMITS_DCVS",
+  "srcs": [
+   "drivers/thermal/qcom/msm_lmh_dcvs.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/policy_engine": {
+  "name": "drivers/thermal/qcom/policy_engine",
+  "out": "policy_engine.ko",
+  "config": "CONFIG_QTI_POLICY_ENGINE_SENSOR",
+  "srcs": [
+   "drivers/thermal/qcom/policy_engine.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/qcom-spmi-temp-alarm": {
+  "name": "drivers/thermal/qcom/qcom-spmi-temp-alarm",
+  "out": "qcom-spmi-temp-alarm.ko",
+  "config": "CONFIG_QCOM_SPMI_TEMP_ALARM",
+  "srcs": [
+   "drivers/thermal/qcom/qcom-spmi-temp-alarm.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/qcom_tsens": {
+  "name": "drivers/thermal/qcom/qcom_tsens",
+  "out": "qcom_tsens.ko",
+  "config": "CONFIG_QCOM_TSENS",
+  "srcs": [
+   "drivers/thermal/qcom/thermal_zone_internal.h",
+   "drivers/thermal/qcom/tsens-8960.c",
+   "drivers/thermal/qcom/tsens-v0_1.c",
+   "drivers/thermal/qcom/tsens-v1.c",
+   "drivers/thermal/qcom/tsens-v2.c",
+   "drivers/thermal/qcom/tsens.c",
+   "drivers/thermal/qcom/tsens.h"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/qti_cpufreq_cdev": {
+  "name": "drivers/thermal/qcom/qti_cpufreq_cdev",
+  "out": "qti_cpufreq_cdev.ko",
+  "config": "CONFIG_QTI_CPUFREQ_CDEV",
+  "srcs": [
+   "drivers/thermal/qcom/qti_cpufreq_cdev.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/qti_devfreq_cdev": {
+  "name": "drivers/thermal/qcom/qti_devfreq_cdev",
+  "out": "qti_devfreq_cdev.ko",
+  "config": "CONFIG_QTI_DEVFREQ_CDEV",
+  "srcs": [
+   "drivers/thermal/qcom/qti_devfreq_cdev.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/qti_qmi_cdev": {
+  "name": "drivers/thermal/qcom/qti_qmi_cdev",
+  "out": "qti_qmi_cdev.ko",
+  "config": "CONFIG_QTI_QMI_COOLING_DEVICE",
+  "srcs": [
+   "drivers/thermal/qcom/qmi_cooling.c",
+   "drivers/thermal/qcom/thermal_mitigation_device_service_v01.c",
+   "drivers/thermal/qcom/thermal_mitigation_device_service_v01.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qmi_helpers"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/qti_qmi_sensor_v2": {
+  "name": "drivers/thermal/qcom/qti_qmi_sensor_v2",
+  "out": "qti_qmi_sensor_v2.ko",
+  "config": "CONFIG_QTI_QMI_SENSOR_V2",
+  "srcs": [
+   "drivers/thermal/qcom/qmi_sensors.h",
+   "drivers/thermal/qcom/qmi_sensors_v2.c",
+   "drivers/thermal/qcom/thermal_sensor_service_v02.c",
+   "drivers/thermal/qcom/thermal_sensor_service_v02.h",
+   "drivers/thermal/qcom/thermal_zone_internal.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qmi_helpers"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/qti_userspace_cdev": {
+  "name": "drivers/thermal/qcom/qti_userspace_cdev",
+  "out": "qti_userspace_cdev.ko",
+  "config": "CONFIG_QTI_USERSPACE_CDEV",
+  "srcs": [
+   "drivers/thermal/qcom/qti_userspace_cdev.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/sdpm_clk": {
+  "name": "drivers/thermal/qcom/sdpm_clk",
+  "out": "sdpm_clk.ko",
+  "config": "CONFIG_QTI_SDPM_CLOCK_MONITOR",
+  "srcs": [
+   "drivers/thermal/qcom/sdpm_clk.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/thermal/qcom/thermal_pause": {
+  "name": "drivers/thermal/qcom/thermal_pause",
+  "out": "thermal_pause.ko",
+  "config": "CONFIG_QTI_CPU_PAUSE_COOLING_DEVICE",
+  "srcs": [
+   "drivers/thermal/qcom/thermal_pause.c"
+  ],
+  "deps": [
+   "kernel/sched/walt/sched-walt",
+   "drivers/soc/qcom/socinfo",
+   "drivers/soc/qcom/smem"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/tty/hvc/hvc_gunyah": {
+  "name": "drivers/tty/hvc/hvc_gunyah",
+  "out": "hvc_gunyah.ko",
+  "config": "CONFIG_HVC_GUNYAH",
+  "srcs": [
+   "drivers/tty/hvc/hvc_gunyah.c"
+  ],
+  "deps": [
+   "drivers/virt/gunyah/gunyah_loader",
+   "drivers/soc/qcom/mdt_loader",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/tty/serial/msm_geni_serial": {
+  "name": "drivers/tty/serial/msm_geni_serial",
+  "out": "msm_geni_serial.ko",
+  "config": "CONFIG_SERIAL_MSM_GENI",
+  "srcs": [
+   "drivers/tty/serial/msm_geni_serial.c",
+   "drivers/tty/serial/serial_trace.h"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/ufs/host/ufs-qcom": {
+  "name": "drivers/ufs/host/ufs-qcom",
+  "out": "ufs-qcom.ko",
+  "config": "CONFIG_SCSI_UFS_QCOM",
+  "srcs": [
+   "drivers/ufs/host/ufs-qcom-trace.h",
+   "drivers/ufs/host/ufs-qcom.c",
+   "drivers/ufs/host/ufs-qcom.h"
+  ],
+  "deps": [
+   "drivers/ufs/host/ufshcd-crypto-qti",
+   "drivers/soc/qcom/qcom_ice",
+   "kernel/sched/walt/sched-walt",
+   "drivers/soc/qcom/socinfo",
+   "drivers/phy/qualcomm/phy-qcom-ufs",
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv",
+   "//vendor/oplus/kernel/storage:ufs-oplus-dbg"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/ufs/host/ufshcd-crypto-qti": {
+  "name": "drivers/ufs/host/ufshcd-crypto-qti",
+  "out": "ufshcd-crypto-qti.ko",
+  "config": "CONFIG_SCSI_UFS_CRYPTO_QTI",
+  "srcs": [
+   "drivers/ufs/host/ufs-qcom.h",
+   "drivers/ufs/host/ufshcd-crypto-qti.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qcom_ice",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/uio/msm_sharedmem/msm_sharedmem": {
+  "name": "drivers/uio/msm_sharedmem/msm_sharedmem",
+  "out": "msm_sharedmem.ko",
+  "config": "CONFIG_UIO_MSM_SHAREDMEM",
+  "srcs": [
+   "drivers/uio/msm_sharedmem/msm_sharedmem.c"
+  ],
+  "deps": [
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/dwc3/dwc3-msm": {
+  "name": "drivers/usb/dwc3/dwc3-msm",
+  "out": "dwc3-msm.ko",
+  "config": "CONFIG_USB_DWC3_MSM",
+  "srcs": [
+   "drivers/usb/dwc3/debug-ipc.h",
+   "drivers/usb/dwc3/debug_ipc.c",
+   "drivers/usb/dwc3/dwc3-msm-core.c",
+   "drivers/usb/dwc3/dwc3-msm-ops.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/wcd_usbss_i2c",
+   "drivers/usb/typec/ucsi/ucsi_qti_glink",
+   "drivers/usb/redriver/redriver",
+   "drivers/usb/repeater/repeater",
+   "drivers/base/regmap/qti-regmap-debugfs",
+   "drivers/soc/qcom/qti_pmic_glink",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [
+   "OPLUS_FEATURE_CHG_BASIC"
+  ],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/gadget/function/f_fs_ipc_log": {
+  "name": "drivers/usb/gadget/function/f_fs_ipc_log",
+  "out": "f_fs_ipc_log.ko",
+  "config": "CONFIG_USB_F_FS_IPC_LOGGING",
+  "srcs": [
+   "drivers/usb/gadget/function/f_fs_ipc_log.c"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/gadget/function/usb_f_ccid": {
+  "name": "drivers/usb/gadget/function/usb_f_ccid",
+  "out": "usb_f_ccid.ko",
+  "config": "CONFIG_USB_F_CCID",
+  "srcs": [
+   "drivers/usb/gadget/function/f_ccid.c",
+   "drivers/usb/gadget/function/f_ccid.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/gadget/function/usb_f_cdev": {
+  "name": "drivers/usb/gadget/function/usb_f_cdev",
+  "out": "usb_f_cdev.ko",
+  "config": "CONFIG_USB_F_CDEV",
+  "srcs": [
+   "drivers/usb/gadget/function/f_cdev.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/gadget/function/usb_f_gsi": {
+  "name": "drivers/usb/gadget/function/usb_f_gsi",
+  "out": "usb_f_gsi.ko",
+  "config": "CONFIG_USB_F_GSI",
+  "srcs": [
+   "drivers/usb/gadget/function/f_gsi.c",
+   "drivers/usb/gadget/function/f_gsi.h",
+   "drivers/usb/gadget/function/ndis.h",
+   "drivers/usb/gadget/function/rndis.c",
+   "drivers/usb/gadget/function/rndis.h",
+   "drivers/usb/gadget/function/u_rndis.h"
+  ],
+  "deps": [
+   "drivers/usb/dwc3/dwc3-msm",
+   "drivers/soc/qcom/wcd_usbss_i2c",
+   "drivers/usb/typec/ucsi/ucsi_qti_glink",
+   "drivers/usb/redriver/redriver",
+   "drivers/usb/repeater/repeater",
+   "drivers/base/regmap/qti-regmap-debugfs",
+   "drivers/soc/qcom/qti_pmic_glink",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/gadget/function/usb_f_qdss": {
+  "name": "drivers/usb/gadget/function/usb_f_qdss",
+  "out": "usb_f_qdss.ko",
+  "config": "CONFIG_USB_F_QDSS",
+  "srcs": [
+   "drivers/usb/gadget/function/f_qdss.c",
+   "drivers/usb/gadget/function/f_qdss.h",
+   "drivers/usb/gadget/function/u_qdss.c"
+  ],
+  "deps": [
+   "drivers/usb/dwc3/dwc3-msm",
+   "drivers/soc/qcom/wcd_usbss_i2c",
+   "drivers/usb/typec/ucsi/ucsi_qti_glink",
+   "drivers/usb/redriver/redriver",
+   "drivers/usb/repeater/repeater",
+   "drivers/base/regmap/qti-regmap-debugfs",
+   "drivers/soc/qcom/qti_pmic_glink",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/phy/phy-generic": {
+  "name": "drivers/usb/phy/phy-generic",
+  "out": "phy-generic.ko",
+  "config": "CONFIG_NOP_USB_XCEIV",
+  "srcs": [
+   "drivers/usb/phy/phy-generic.c",
+   "drivers/usb/phy/phy-generic.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/phy/phy-msm-m31-eusb2": {
+  "name": "drivers/usb/phy/phy-msm-m31-eusb2",
+  "out": "phy-msm-m31-eusb2.ko",
+  "config": "CONFIG_USB_M31_MSM_EUSB2_PHY",
+  "srcs": [
+   "drivers/usb/phy/phy-msm-m31-eusb2.c"
+  ],
+  "deps": [
+   "drivers/usb/repeater/repeater",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/phy/phy-msm-snps-eusb2": {
+  "name": "drivers/usb/phy/phy-msm-snps-eusb2",
+  "out": "phy-msm-snps-eusb2.ko",
+  "config": "CONFIG_USB_MSM_EUSB2_PHY",
+  "srcs": [
+   "drivers/usb/phy/phy-msm-snps-eusb2.c"
+  ],
+  "deps": [
+   "drivers/usb/repeater/repeater",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/phy/phy-msm-ssusb-qmp": {
+  "name": "drivers/usb/phy/phy-msm-ssusb-qmp",
+  "out": "phy-msm-ssusb-qmp.ko",
+  "config": "CONFIG_USB_MSM_SSPHY_QMP",
+  "srcs": [
+   "drivers/usb/phy/phy-msm-ssusb-qmp.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/phy/phy-qcom-emu": {
+  "name": "drivers/usb/phy/phy-qcom-emu",
+  "out": "phy-qcom-emu.ko",
+  "config": "CONFIG_USB_QCOM_EMU_PHY",
+  "srcs": [
+   "drivers/usb/phy/phy-qcom-emu.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/redriver/nb7vpq904m": {
+  "name": "drivers/usb/redriver/nb7vpq904m",
+  "out": "nb7vpq904m.ko",
+  "config": "CONFIG_USB_REDRIVER_NB7VPQ904M",
+  "srcs": [
+   "drivers/usb/redriver/nb7vpq904m.c"
+  ],
+  "deps": [
+   "drivers/usb/redriver/redriver"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/redriver/redriver": {
+  "name": "drivers/usb/redriver/redriver",
+  "out": "redriver.ko",
+  "config": "CONFIG_USB_REDRIVER",
+  "srcs": [
+   "drivers/usb/redriver/redriver.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/repeater/repeater": {
+  "name": "drivers/usb/repeater/repeater",
+  "out": "repeater.ko",
+  "config": "CONFIG_USB_REPEATER",
+  "srcs": [
+   "drivers/usb/repeater/repeater.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/repeater/repeater-qti-pmic-eusb2": {
+  "name": "drivers/usb/repeater/repeater-qti-pmic-eusb2",
+  "out": "repeater-qti-pmic-eusb2.ko",
+  "config": "CONFIG_QTI_PMIC_EUSB2_REPEATER",
+  "srcs": [
+   "drivers/usb/repeater/repeater-qti-pmic-eusb2.c"
+  ],
+  "deps": [
+   "drivers/usb/repeater/repeater"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [
+   "OPLUS_FEATURE_CHG_BASIC"
+  ],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/usb/typec/ucsi/ucsi_qti_glink": {
+  "name": "drivers/usb/typec/ucsi/ucsi_qti_glink",
+  "out": "ucsi_qti_glink.ko",
+  "config": "CONFIG_UCSI_QTI_GLINK",
+  "srcs": [
+   "drivers/usb/typec/ucsi/ucsi_qti_glink.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qti_pmic_glink",
+   "drivers/soc/qcom/pdr_interface",
+   "drivers/soc/qcom/qmi_helpers",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/virt/gunyah/gh_ctrl": {
+  "name": "drivers/virt/gunyah/gh_ctrl",
+  "out": "gh_ctrl.ko",
+  "config": "CONFIG_GH_CTRL",
+  "srcs": [
+   "drivers/virt/gunyah/gh_ctrl.c",
+   "drivers/virt/gunyah/hcall_ctrl.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/virt/gunyah/gh_dbl": {
+  "name": "drivers/virt/gunyah/gh_dbl",
+  "out": "gh_dbl.ko",
+  "config": "CONFIG_GH_DBL",
+  "srcs": [
+   "drivers/virt/gunyah/gh_dbl.c",
+   "drivers/virt/gunyah/hcall_dbl.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/virt/gunyah/gh_irq_lend": {
+  "name": "drivers/virt/gunyah/gh_irq_lend",
+  "out": "gh_irq_lend.ko",
+  "config": "CONFIG_GH_IRQ_LEND",
+  "srcs": [
+   "drivers/virt/gunyah/gh_irq_lend.c",
+   "drivers/virt/gunyah/gh_rm_drv_private.h"
+  ],
+  "deps": [
+   "drivers/virt/gunyah/gunyah_loader",
+   "drivers/soc/qcom/mdt_loader",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/virt/gunyah/gh_mem_notifier": {
+  "name": "drivers/virt/gunyah/gh_mem_notifier",
+  "out": "gh_mem_notifier.ko",
+  "config": "CONFIG_GH_MEM_NOTIFIER",
+  "srcs": [
+   "drivers/virt/gunyah/gh_mem_notifier.c"
+  ],
+  "deps": [
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/virt/gunyah/gh_msgq": {
+  "name": "drivers/virt/gunyah/gh_msgq",
+  "out": "gh_msgq.ko",
+  "config": "CONFIG_GH_MSGQ",
+  "srcs": [
+   "drivers/virt/gunyah/gh_msgq.c",
+   "drivers/virt/gunyah/hcall_msgq.h"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/virt/gunyah/gh_panic_notifier": {
+  "name": "drivers/virt/gunyah/gh_panic_notifier",
+  "out": "gh_panic_notifier.ko",
+  "config": "CONFIG_GH_PANIC_NOTIFIER",
+  "srcs": [
+   "drivers/virt/gunyah/gh_panic_notifier.c"
+  ],
+  "deps": [
+   "drivers/virt/gunyah/gunyah_loader",
+   "drivers/virt/gunyah/gh_vcpu_mgr",
+   "drivers/soc/qcom/mdt_loader",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/virt/gunyah/gh_rm_drv": {
+  "name": "drivers/virt/gunyah/gh_rm_drv",
+  "out": "gh_rm_drv.ko",
+  "config": "CONFIG_GH_RM_DRV",
+  "srcs": [
+   "drivers/virt/gunyah/gh_rm_core.c",
+   "drivers/virt/gunyah/gh_rm_drv_private.h",
+   "drivers/virt/gunyah/gh_rm_iface.c"
+  ],
+  "deps": [
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/virt/gunyah/gh_rm_heap_manager": {
+  "name": "drivers/virt/gunyah/gh_rm_heap_manager",
+  "out": "gh_rm_heap_manager.ko",
+  "config": "CONFIG_GH_RM_HEAP_MANAGER",
+  "srcs": [
+   "drivers/virt/gunyah/gh_rm_heap_manager.c",
+   "include/linux/gunyah/gh_rm_heap_manager.h",
+   "drivers/virt/gunyah/gh_rm_drv_private.h",
+   "include/linux/mem-prot.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/mem-prot",
+   "drivers/virt/gunyah/gh_rm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/virt/gunyah/gh_vcpu_mgr": {
+  "name": "drivers/virt/gunyah/gh_vcpu_mgr",
+  "out": "gh_vcpu_mgr.ko",
+  "config": "CONFIG_GH_VCPU_MGR",
+  "srcs": [
+   "drivers/virt/gunyah/gh_vcpu_mgr.c",
+   "drivers/virt/gunyah/gh_vcpu_mgr.h",
+   "drivers/virt/gunyah/gh_vcpu_mgr_trace.h"
+  ],
+  "deps": [
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "drivers/virt/gunyah/gh_virt_wdt": {
+  "name": "drivers/virt/gunyah/gh_virt_wdt",
+  "out": "gh_virt_wdt.ko",
+  "config": "CONFIG_GH_VIRT_WATCHDOG",
+  "srcs": [
+   "drivers/virt/gunyah/gh_virt_wdt.c"
+  ],
+  "deps": [
+   "drivers/soc/qcom/qcom_wdt_core",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "kernel/msm_sysstats": {
+  "name": "kernel/msm_sysstats",
+  "out": "msm_sysstats.ko",
+  "config": "CONFIG_MSM_SYSSTATS",
+  "srcs": [
+   "kernel/msm_sysstats.c"
+  ],
+  "deps": [
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "kernel/trace/qcom_ipc_logging": {
+  "name": "kernel/trace/qcom_ipc_logging",
+  "out": "qcom_ipc_logging.ko",
+  "config": "CONFIG_IPC_LOGGING",
+  "srcs": [
+   "kernel/trace/ipc_logging.c",
+   "kernel/trace/ipc_logging_debug.c",
+   "kernel/trace/ipc_logging_private.h"
+  ],
+  "deps": [
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {
+   "CONFIG_IPC_LOGGING_CDEV": {
+    "true": [
+     "kernel/trace/ipc_logging_cdev.c"
+    ]
+   }
+  },
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "net/mac80211/mac80211": {
+  "name": "net/mac80211/mac80211",
+  "out": "mac80211.ko",
+  "config": "CONFIG_MAC80211",
+  "srcs": [
+   "net/mac80211/aead_api.c",
+   "net/mac80211/aead_api.h",
+   "net/mac80211/aes_ccm.h",
+   "net/mac80211/aes_cmac.c",
+   "net/mac80211/aes_cmac.h",
+   "net/mac80211/aes_gcm.h",
+   "net/mac80211/aes_gmac.c",
+   "net/mac80211/aes_gmac.h",
+   "net/mac80211/agg-rx.c",
+   "net/mac80211/agg-tx.c",
+   "net/mac80211/airtime.c",
+   "net/mac80211/cfg.c",
+   "net/mac80211/chan.c",
+   "net/mac80211/debug.h",
+   "net/mac80211/debugfs.h",
+   "net/mac80211/debugfs_key.h",
+   "net/mac80211/debugfs_netdev.h",
+   "net/mac80211/debugfs_sta.h",
+   "net/mac80211/driver-ops.c",
+   "net/mac80211/driver-ops.h",
+   "net/mac80211/drop.h",
+   "net/mac80211/eht.c",
+   "net/mac80211/nan.c",
+   "net/mac80211/ethtool.c",
+   "net/mac80211/fils_aead.c",
+   "net/mac80211/fils_aead.h",
+   "net/mac80211/he.c",
+   "net/mac80211/ht.c",
+   "net/mac80211/ibss.c",
+   "net/mac80211/ieee80211_i.h",
+   "net/mac80211/iface.c",
+   "net/mac80211/key.c",
+   "net/mac80211/key.h",
+   "net/mac80211/led.h",
+   "net/mac80211/link.c",
+   "net/mac80211/main.c",
+   "net/mac80211/mesh.h",
+   "net/mac80211/michael.c",
+   "net/mac80211/michael.h",
+   "net/mac80211/mlme.c",
+   "net/mac80211/ocb.c",
+   "net/mac80211/offchannel.c",
+   "net/mac80211/parse.c",
+   "net/mac80211/rate.c",
+   "net/mac80211/rate.h",
+   "net/mac80211/rx.c",
+   "net/mac80211/s1g.c",
+   "net/mac80211/scan.c",
+   "net/mac80211/spectmgmt.c",
+   "net/mac80211/sta_info.c",
+   "net/mac80211/sta_info.h",
+   "net/mac80211/status.c",
+   "net/mac80211/tdls.c",
+   "net/mac80211/tkip.c",
+   "net/mac80211/tkip.h",
+   "net/mac80211/trace.c",
+   "net/mac80211/trace.h",
+   "net/mac80211/trace_msg.h",
+   "net/mac80211/tx.c",
+   "net/mac80211/util.c",
+   "net/mac80211/vht.c",
+   "net/mac80211/wbrf.c",
+   "net/mac80211/wep.c",
+   "net/mac80211/wep.h",
+   "net/mac80211/wme.c",
+   "net/mac80211/wme.h",
+   "net/mac80211/wpa.c",
+   "net/mac80211/wpa.h"
+  ],
+  "deps": [
+   "net/wireless/cfg80211",
+   "net/rfkill/rfkill",
+   "lib/crypto/libarc4"
+  ],
+  "conditional_srcs": {
+   "CONFIG_MAC80211_LEDS": {
+    "true": [
+     "net/mac80211/led.c"
+    ]
+   },
+   "CONFIG_MAC80211_DEBUGFS": {
+    "true": [
+     "net/mac80211/debugfs.c",
+     "net/mac80211/debugfs_sta.c",
+     "net/mac80211/debugfs_netdev.c",
+     "net/mac80211/debugfs_key.c"
+    ]
+   },
+   "CONFIG_MAC80211_MESH": {
+    "true": [
+     "net/mac80211/mesh.c",
+     "net/mac80211/mesh_pathtbl.c",
+     "net/mac80211/mesh_plink.c",
+     "net/mac80211/mesh_hwmp.c",
+     "net/mac80211/mesh_sync.c",
+     "net/mac80211/mesh_ps.c"
+    ]
+   },
+   "CONFIG_PM": {
+    "true": [
+     "net/mac80211/pm.c"
+    ]
+   },
+   "CONFIG_MAC80211_RC_MINSTREL": {
+    "true": [
+     "net/mac80211/rc80211_minstrel_ht.c",
+     "net/mac80211/rc80211_minstrel_ht.h"
+    ]
+   }
+  },
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "net/qrtr/qrtr": {
+  "name": "net/qrtr/qrtr",
+  "out": "qrtr.ko",
+  "config": "CONFIG_QRTR",
+  "srcs": [
+   "net/qrtr/af_qrtr.c",
+   "net/qrtr/ns.c",
+   "net/qrtr/qrtr.h"
+  ],
+  "deps": [
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "net/qrtr/qrtr-gunyah": {
+  "name": "net/qrtr/qrtr-gunyah",
+  "out": "qrtr-gunyah.ko",
+  "config": "CONFIG_QRTR_GUNYAH",
+  "srcs": [
+   "net/qrtr/gunyah.c",
+   "net/qrtr/qrtr.h"
+  ],
+  "deps": [
+   "net/qrtr/qrtr",
+   "drivers/virt/gunyah/gunyah_loader",
+   "drivers/soc/qcom/mdt_loader",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "net/qrtr/qrtr-mhi": {
+  "name": "net/qrtr/qrtr-mhi",
+  "out": "qrtr-mhi.ko",
+  "config": "CONFIG_QRTR_MHI",
+  "srcs": [
+   "net/qrtr/mhi.c",
+   "net/qrtr/qrtr.h"
+  ],
+  "deps": [
+   "net/qrtr/qrtr",
+   "drivers/bus/mhi/host/mhi",
+   "drivers/pci/controller/pci-msm-drv",
+   "drivers/remoteproc/rproc_qcom_common",
+   "drivers/rpmsg/qcom_smd",
+   "drivers/rpmsg/qcom_glink_smem",
+   "drivers/rpmsg/qcom_glink",
+   "drivers/soc/qcom/pcie-pdc",
+   "drivers/pinctrl/qcom/pinctrl-msm",
+   "drivers/clk/qcom/clk-qcom",
+   "drivers/clk/qcom/gdsc-regulator",
+   "drivers/regulator/debug-regulator",
+   "drivers/regulator/proxy-consumer",
+   "drivers/soc/qcom/crm-v2",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "net/qrtr/qrtr-smd": {
+  "name": "net/qrtr/qrtr-smd",
+  "out": "qrtr-smd.ko",
+  "config": "CONFIG_QRTR_SMD",
+  "srcs": [
+   "net/qrtr/qrtr.h",
+   "net/qrtr/smd.c"
+  ],
+  "deps": [
+   "net/qrtr/qrtr",
+   "drivers/rpmsg/qcom_glink",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "net/wireless/cfg80211": {
+  "name": "net/wireless/cfg80211",
+  "out": "cfg80211.ko",
+  "config": "CONFIG_CFG80211",
+  "srcs": [
+   "net/wireless/ap.c",
+   "net/wireless/chan.c",
+   "net/wireless/core.c",
+   "net/wireless/core.h",
+   "net/wireless/debugfs.h",
+   "net/wireless/ethtool.c",
+   "net/wireless/ibss.c",
+   "net/wireless/mesh.c",
+   "net/wireless/mlme.c",
+   "net/wireless/nl80211.c",
+   "net/wireless/nl80211.h",
+   "net/wireless/ocb.c",
+   "net/wireless/pmsr.c",
+   "net/wireless/radiotap.c",
+   "net/wireless/rdev-ops.h",
+   "net/wireless/reg.c",
+   "net/wireless/reg.h",
+   "net/wireless/scan.c",
+   "net/wireless/sme.c",
+   "net/wireless/sysfs.c",
+   "net/wireless/sysfs.h",
+   "net/wireless/trace.c",
+   "net/wireless/trace.h",
+   "net/wireless/util.c",
+   "net/wireless/wext-compat.h",
+   "net/wireless/shipped-certs"
+  ],
+  "deps": [
+   "net/rfkill/rfkill"
+  ],
+  "conditional_srcs": {
+   "CONFIG_OF": {
+    "true": [
+     "net/wireless/of.c"
+    ]
+   },
+   "CONFIG_CFG80211_DEBUGFS": {
+    "true": [
+     "net/wireless/debugfs.c"
+    ]
+   },
+   "CONFIG_CFG80211_WEXT": {
+    "true": [
+     "net/wireless/wext-compat.c",
+     "net/wireless/wext-sme.c"
+    ]
+   }
+  },
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "sound/soc/codecs/snd-soc-hdmi-codec": {
+  "name": "sound/soc/codecs/snd-soc-hdmi-codec",
+  "out": "snd-soc-hdmi-codec.ko",
+  "config": "CONFIG_SND_SOC_HDMI_CODEC",
+  "srcs": [
+   "sound/soc/codecs/hdmi-codec.c"
+  ],
+  "deps": [],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [],
+  "copts": [],
+  "extra": []
+ },
+ "sound/usb/snd-usb-audio-qmi": {
+  "name": "sound/usb/snd-usb-audio-qmi",
+  "out": "snd-usb-audio-qmi.ko",
+  "config": "CONFIG_SND_USB_AUDIO_QMI",
+  "srcs": [
+   "sound/usb/usb_audio_qmi_svc.c",
+   "sound/usb/usb_audio_qmi_v01.c",
+   "sound/usb/usb_audio_qmi_v01.h"
+  ],
+  "deps": [
+   "drivers/usb/host/xhci-sideband",
+   "drivers/soc/qcom/qmi_helpers",
+   "kernel/trace/qcom_ipc_logging",
+   "drivers/soc/qcom/minidump",
+   "drivers/soc/qcom/smem",
+   "drivers/soc/qcom/debug_symbol",
+   "drivers/dma-buf/heaps/qcom_dma_heaps",
+   "drivers/iommu/msm_dma_iommu_mapping",
+   "drivers/soc/qcom/mem_buf/mem_buf_dev",
+   "drivers/soc/qcom/secure_buffer",
+   "drivers/firmware/qcom/qcom-scm",
+   "drivers/virt/gunyah/gh_rm_drv",
+   "drivers/virt/gunyah/gh_msgq",
+   "drivers/virt/gunyah/gh_dbl",
+   "arch/arm64/gunyah/gh_arm_drv"
+  ],
+  "conditional_srcs": {},
+  "includes": [],
+  "local_defines": [
+   "OPLUS_FEATURE_CHG_BASIC"
+  ],
+  "copts": [],
+  "extra": []
+ }
+}

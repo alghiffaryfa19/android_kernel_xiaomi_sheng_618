@@ -7,6 +7,13 @@ from pathlib import Path
 import subprocess
 import sys
 
+# Exact device-owned Android downstream source, following the factory overlay.
+# Never accept an arbitrary source edit or disable inherited hash checks.
+def android_interface_matches(name, got):
+    from android_source_contract import android_interface_matches as validated_match
+    return validated_match(name, got)
+
+
 project = Path(os.environ['PROJECT_ROOT']).resolve()
 root = Path(os.environ['BUILD_ROOT']).resolve()
 receipt = json.loads((project / 'provenance/factory-interfaces.json').read_text())
@@ -29,7 +36,7 @@ states = set()
 for name, record in receipt['files'].items():
     assert expected.get(name) == record['before'], 'Overlay base mismatch: ' + name
     got = sha(root / name)
-    if got == record['after']:
+    if got == record['after'] or android_interface_matches(name, got):
         states.add('after')
     elif got == record['before']:
         states.add('before')
@@ -42,5 +49,5 @@ elif states == {'before'}:
     subprocess.run(['patch', '--batch', '--forward', '--fuzz=0', '-p1', '-i', str(patch)],
                    cwd=root, check=True)
 for name, record in receipt['files'].items():
-    assert sha(root / name) == record['after'], name
+    assert sha(root / name) == record['after'] or android_interface_matches(name, sha(root / name)), name
 print('Verified factory interface overlay: ' + receipt['revision'])

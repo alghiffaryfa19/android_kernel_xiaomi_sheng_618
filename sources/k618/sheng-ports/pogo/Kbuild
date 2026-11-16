@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: GPL-2.0-only
+ccflags-y += -I$(src)/include
+obj-m += xm_utils.o
+xm_utils-y := battmngr_voter.o battmngr_notifier.o platform_class.o
+
+obj-m += nanosic_platform.o
+
+ccflags-y += -I$(src)/battmngr -DCONFIG_QTI_POGO_CHG=1
+obj-m += xm_charger.o xm_battmngr_init.o virtual_fg.o
+xm_charger-y := battmngr/xm_charger_core.o battmngr/xm_charger_votable.o battmngr/xm_charger_ffc.o battmngr/xm_charger_thermal.o battmngr/step-chg-jeita.o battmngr/main_charge.o
+xm_battmngr_init-y := init/xm_battmngr_init.o
+virtual_fg-y := extSOC/virtual_fg.o
+
+ccflags-y += -DCONFIG_NTAG5_I2C=1 -I$(SOC)/include
+obj-m += ntag5_i2c.o qcom_ipc_lite.o
+ntag5_i2c-y := ntag/ntag_i2c_drv.o ntag/ntag_common.o
+qcom_ipc_lite-y := ipc/qcom_ipc_lite.o
+
+obj-m += xiaomi_wifi_gpio.o
+xiaomi_wifi_gpio-y := sar/xiaomi_wifi_gpio.o
+
+# Actually bound sheng crash-record and CPUCP firmware-log providers.
+ccflags-y += -I$(src)/diagnostics
+obj-m += dump_display.o rimps_log.o
+dump_display-y := diagnostics/dump_display.o
+rimps_log-y := diagnostics/rimps_log.o
+
+# Shipping SCMI 0x84 frequency/residency statistics, bound as scmi_dev.3.
+ccflags-y += -I$(SOC)/drivers/firmware/arm_scmi
+obj-m += cpufreq_stats_scmi.o cpufreq_stats_vendor.o
+cpufreq_stats_scmi-y := diagnostics/cpufreq_stats_scmi.o
+cpufreq_stats_vendor-y := diagnostics/cpufreq_stats_vendor.o

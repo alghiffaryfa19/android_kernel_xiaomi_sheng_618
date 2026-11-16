@@ -24,13 +24,14 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
 
 
+from android_source_contract import android_interface_matches
 states = set()
 for name, record in receipt['files'].items():
     assert expected.get(name) == record['before'], 'WALT base mismatch: ' + name
     got = sha(root / name)
     if record['before'] == record['after']:
         assert got == record['after'], name
-    elif got == record['after']:
+    elif got == record['after'] or android_interface_matches(name, got):
         states.add('after')
     elif got == record['before']:
         states.add('before')
@@ -43,5 +44,5 @@ elif states == {'before'}:
     subprocess.run(['patch', '--batch', '--forward', '--fuzz=0', '-p1', '-i', str(patch)],
                    cwd=root, check=True)
 for name, record in receipt['files'].items():
-    assert sha(root / name) == record['after'], name
+    assert sha(root / name) == record['after'] or android_interface_matches(name, sha(root / name)), name
 print('Verified Qualcomm WALT overlay: ' + receipt['revision'])

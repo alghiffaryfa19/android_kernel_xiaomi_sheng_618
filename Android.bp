@@ -1,0 +1,2 @@
+// Kernel-side tools are private to this source tree.
+soong_namespace {}

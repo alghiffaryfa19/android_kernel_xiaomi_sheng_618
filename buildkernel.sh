@@ -7,9 +7,11 @@ if [ "${1:-}" = --config-only ] && [ "$#" = 1 ]; then config_only=1
 elif [ "$#" != 0 ]; then echo 'Usage: bash buildkernel.sh [--config-only]'; exit 2; fi
 start_stage buildkernel "$@"
 require_toolchain
+if [ ! -f "$BUILD_ROOT/.sheng618-ready.json" ]; then bash "$PROJECT_ROOT/scripts/prepare.sh"; fi
+"$PYTHON" "$PROJECT_ROOT/scripts/android_lts_contract.py"
 require_commands flex bison bc
 if [ ! -f "$BUILD_ROOT/.sheng618-ready.json" ]; then bash "$PROJECT_ROOT/scripts/prepare.sh"; fi
-"$PYTHON" "$PROJECT_ROOT/scripts/apply-droidspaces-fix.py"
+"$PYTHON" "$PROJECT_ROOT/scripts/apply-droidspaces-fix-lts.py"
 "$PYTHON" "$PROJECT_ROOT/scripts/apply-scene-socinfo-fix.py"
 "$PYTHON" "$PROJECT_ROOT/scripts/apply-pen-release-fix.py"
 "$PYTHON" "$PROJECT_ROOT/scripts/apply-repair-r85.py"

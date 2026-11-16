@@ -1,0 +1,1 @@
+Kernel sources are built by Kbuild through the device kernel rules.

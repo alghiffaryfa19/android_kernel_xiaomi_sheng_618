@@ -1,70 +1,27 @@
 #!/usr/bin/env python3
-"""Prepare the verified release source snapshot in an independent build root."""
-import hashlib
-import json
-import os
+"""Verify and copy the complete adapted source tree to a new build directory."""
+import hashlib, json, os, shutil
 from pathlib import Path
-import shutil
-import subprocess
-import sys
-import tarfile
-
 project = Path(os.environ['PROJECT_ROOT']).resolve()
 root = Path(os.environ['BUILD_ROOT']).resolve()
-marker = root / '.sheng618-ready.json'
-inputs = json.loads((project / 'provenance/source-cache.json').read_text())
+manifest_path = project/'SOURCE-SHA256.json'
+manifest = json.loads(manifest_path.read_text())
+snapshot = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+marker = root/'.sheng618-ready.json'
 if marker.exists():
-    if json.loads(marker.read_text())['archive_sha256'] != inputs['sha256']:
-        raise SystemExit('Build root belongs to a different snapshot; choose a new BUILD_ROOT')
-    print('Already prepared: ' + str(root))
-    subprocess.run([sys.executable, project / 'scripts/apply-charging-fix.py'], check=True)
-    subprocess.run([sys.executable, project / 'scripts/apply-droidspaces-fix.py'], check=True)
-    subprocess.run([sys.executable, project / 'scripts/apply-scene-socinfo-fix.py'], check=True)
-    subprocess.run([sys.executable, project / 'scripts/apply-pen-release-fix.py'], check=True)
-    subprocess.run([sys.executable, project / 'scripts/apply-repair-r85.py'], check=True)
-    subprocess.run([sys.executable, project / 'scripts/apply-pen-stability.py'], check=True)
-    subprocess.run([sys.executable, project / 'scripts/apply-factory-interfaces.py'], check=True)
-    subprocess.run([sys.executable, project / 'scripts/apply-walt-compatibility.py'], check=True)
+    assert json.loads(marker.read_text())['snapshot_sha256'] == snapshot, 'Different source snapshot; use a new BUILD_ROOT'
+    print('Prepared R2 source already present: '+str(root))
     raise SystemExit(0)
-if root.exists() and any(root.iterdir()):
-    raise SystemExit('Unprepared BUILD_ROOT is nonempty; choose an empty directory')
-archive = project / inputs['path']
-with archive.open('rb') as stream:
-    digest = hashlib.file_digest(stream, 'sha256').hexdigest()
-if digest != inputs['sha256']:
-    raise SystemExit('Source cache SHA256 mismatch')
+assert not root.exists() or not any(root.iterdir()), 'BUILD_ROOT must be empty'
+for name, row in manifest.items():
+    path = project/'sources'/name
+    if 'symlink' in row:
+        assert path.is_symlink() and os.readlink(path) == row['symlink'], name
+    else:
+        assert path.is_file() and not path.is_symlink(), name
+        with path.open('rb') as stream:
+            assert hashlib.file_digest(stream,'sha256').hexdigest() == row['sha256'], name
 root.mkdir(parents=True, exist_ok=True)
-with tarfile.open(archive, 'r|gz') as stream:
-    prefix = inputs['prefix'] + '/k618/'
-    for member in stream:
-        if not member.name.startswith(prefix):
-            continue
-        relative = Path(member.name[len(inputs['prefix']) + 1:])
-        if relative.is_absolute() or '..' in relative.parts:
-            raise SystemExit('Invalid source cache path: ' + member.name)
-        member.name = relative.as_posix()
-        if member.islnk():
-            if not member.linkname.startswith(prefix):
-                raise SystemExit('Escaping source hardlink')
-            member.linkname = member.linkname[len(inputs['prefix']) + 1:]
-        stream.extract(member, path=root, filter='data')
-subprocess.run([sys.executable, project / 'scripts/relocate-inputs.py', root], check=True)
-expected = json.loads((project / 'provenance/source-files.json').read_text())
-for name, want in expected.items():
-    with (root / name).open('rb') as stream:
-        got = hashlib.file_digest(stream, 'sha256').hexdigest()
-    if got != want:
-        raise SystemExit('Source mismatch: ' + name)
-for path in (root / 'k618').rglob('*'):
-    if path.is_symlink() and not path.resolve().is_relative_to(root):
-        raise SystemExit('Escaping source symlink: ' + str(path))
-subprocess.run([sys.executable, project / 'scripts/apply-charging-fix.py'], check=True)
-subprocess.run([sys.executable, project / 'scripts/apply-droidspaces-fix.py'], check=True)
-subprocess.run([sys.executable, project / 'scripts/apply-scene-socinfo-fix.py'], check=True)
-subprocess.run([sys.executable, project / 'scripts/apply-pen-release-fix.py'], check=True)
-subprocess.run([sys.executable, project / 'scripts/apply-repair-r85.py'], check=True)
-subprocess.run([sys.executable, project / 'scripts/apply-pen-stability.py'], check=True)
-subprocess.run([sys.executable, project / 'scripts/apply-factory-interfaces.py'], check=True)
-subprocess.run([sys.executable, project / 'scripts/apply-walt-compatibility.py'], check=True)
-marker.write_text(json.dumps({'archive_sha256': digest, 'source_files': len(expected)}, indent=2) + '\n')
-print('Prepared and hash-verified ' + str(len(expected)) + ' source files: ' + str(root / 'k618'))
+shutil.copytree(project/'sources/k618', root/'k618', symlinks=True)
+marker.write_text(json.dumps({'snapshot_sha256':snapshot, 'source_files':len(manifest)},indent=2)+'\n')
+print('Prepared and verified %d R2 source entries' % len(manifest))

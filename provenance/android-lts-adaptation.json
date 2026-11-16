@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "base_contract_sha256": "79221866a128924c43534e85fdd6f32f4e8c552bb45ba3d692a6fc3f287e6c00",
+  "patch": "patches/android-lts-kcompressd.patch",
+  "patch_sha256": "5a0b0af23a6ac33fa58006e17e4b62c8fd9946134155eae30299cd32ea5fce08",
+  "files": {
+    "k618/ws/common/mm/vmscan.c": {
+      "before": "177842ffba406e38132b84f14d71348382f5722de5a989ecbb02f7fb4e80f111",
+      "after": "48d68c22a70ffeb3b5d6b6deddd4c959fda5a64d847385eaa7f434bf9b6fe474"
+    }
+  },
+  "reason": "The downstream kcompressd second reclaim pass must use the new do_rotate=true argument, matching upstream shrink_inactive_list reclaim semantics for eligible clean unreferenced folios."
+}

@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# Character device configuration
+#
+
+menu "Character devices"
+
+config MSM_RDBG
+	tristate "QTI Remote debug driver"
+	help
+	Implements a shared memory based transport mechanism that allows
+	for a debugger running on a host PC to communicate with a remote
+	stub running on peripheral subsystems such as the ADSP, MODEM etc.
+		Say M if you want to enable this module.
+
+endmenu
+
+# from Xiaomi's 13 Pro tree (5.15)
+config XLOGCHAR
+    tristate "xlogchar driver"
+    help
+      Implements a high performance log driver

@@ -18,8 +18,8 @@ try:
     if missing:
         (mount / 'cgroup.subtree_control').write_text(' '.join('+' + c for c in sorted(missing)))
     group.mkdir()
-    for name, value in {'memory.max': str(12 * 1024**3), 'memory.high': str(10 * 1024**3),
-                        'memory.swap.max': str(1024**3), 'cpu.max': '400000 100000',
+    for name, value in {'memory.max': str(18 * 1024**3), 'memory.high': str(16 * 1024**3),
+                        'memory.swap.max': str(48 * 1024**3), 'cpu.max': '400000 100000',
                         'memory.oom.group': '1'}.items():
         (group / name).write_text(value)
 except PermissionError:
