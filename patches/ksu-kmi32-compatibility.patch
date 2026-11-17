@@ -1,0 +1,339 @@
+--- a/k618/ws/common/arch/arm64/include/asm/thread_info.h
++++ b/k618/ws/common/arch/arm64/include/asm/thread_info.h
+@@ -17,7 +17,6 @@
+ #include <asm/memory.h>
+ #include <asm/stack_pointer.h>
+ #include <asm/types.h>
+-#include <linux/android_kabi.h>
+ 
+ /*
+  * low level task data that entry.S needs immediate access to.
+@@ -44,9 +43,6 @@
+ 	void			*scs_sp;
+ #endif
+ 	u32			cpu;
+-
+-	ANDROID_KABI_RESERVE(1);
+-	ANDROID_KABI_RESERVE(2);
+ };
+ 
+ #define thread_saved_pc(tsk)	\
+--- a/k618/ws/common/include/linux/sched.h
++++ b/k618/ws/common/include/linux/sched.h
+@@ -593,10 +593,15 @@
+ 	u64				sum_exec_runtime;
+ 	u64				prev_sum_exec_runtime;
+ 	u64				vruntime;
+-	/* Approximated virtual lag: */
+-	s64				vlag;
+-	/* 'Protected' deadline, to give out minimum quantums: */
+-	u64				vprot;
++	union {
++		/*
++		 * When !@on_rq this field is vlag.
++		 * When cfs_rq->curr == se (which implies @on_rq)
++		 * this field is vprot. See protect_slice().
++		 */
++		s64                     vlag;
++		u64                     vprot;
++	};
+ 	u64				slice;
+ 
+ 	u64				nr_migrations;
+@@ -1037,9 +1042,6 @@
+ 	unsigned			sched_rt_mutex:1;
+ #endif
+ 
+-	/* Save user-dumpable when mm goes away */
+-	unsigned			user_dumpable:1;
+-
+ 	/* Bit to tell TOMOYO we're in execve(): */
+ 	unsigned			in_execve:1;
+ 	unsigned			in_iowait:1;
+@@ -1287,6 +1289,7 @@
+ 	struct blocked_on_lock		blocked_on;	/* lock we're blocked on */
+ 	raw_spinlock_t			blocked_lock;
+ #ifdef CONFIG_SCHED_PROXY_EXEC
++	struct list_head		migration_node;
+ 	struct list_head		blocked_head;  /* tasks blocked on this task */
+ 	struct list_head		blocked_node;  /* our entry on someone elses blocked_head */
+ 	/* Node for list of tasks to process blocked_head list for blocked entitiy activations */
+@@ -1665,10 +1668,6 @@
+ 	unsigned long			prev_lowest_stack;
+ #endif
+ 
+-#ifdef CONFIG_RANDOMIZE_KSTACK_OFFSET
+-	u32				kstack_offset;
+-#endif
+-
+ #ifdef CONFIG_X86_MCE
+ 	void __user			*mce_vaddr;
+ 	__u64				mce_kflags;
+@@ -1698,10 +1697,22 @@
+ 	 */
+ 	struct callback_head		l1d_flush_kill;
+ #endif
+-	ANDROID_KABI_RESERVE(1);
++	ANDROID_KABI_USE(1, struct {
++		/* Save user-dumpable when mm goes away */
++		unsigned	user_dumpable:1;
++		});
++
++#ifdef CONFIG_RANDOMIZE_KSTACK_OFFSET
++	ANDROID_KABI_USE(2, u32 kstack_offset);
++#else
+ 	ANDROID_KABI_RESERVE(2);
++#endif
+ 	ANDROID_KABI_RESERVE(3);
+ 	ANDROID_KABI_RESERVE(4);
++	ANDROID_KABI_RESERVE(5);
++	ANDROID_KABI_RESERVE(6);
++	ANDROID_KABI_RESERVE(7);
++	ANDROID_KABI_RESERVE(8);
+ 
+ #ifdef CONFIG_RV
+ 	/*
+--- a/k618/ws/common/include/linux/mm_types.h
++++ b/k618/ws/common/include/linux/mm_types.h
+@@ -1263,16 +1263,13 @@
+ 
+ 		struct task_dma_buf_info *dmabuf_info;
+ 
++#ifdef CONFIG_PTSHARE
++		ANDROID_KABI_USE(1, struct ptshare_desc __rcu *ptshare_desc);
++		ANDROID_BACKPORT_USE(1, refcount_t ptshare_vmas);
++#else
+ 		ANDROID_KABI_RESERVE(1);
+-
+-#ifdef CONFIG_PTSHARE
+-		ANDROID_BACKPORT_USE(1, struct ptshare_desc __rcu *ptshare_desc);
+-		ANDROID_BACKPORT_USE(2, refcount_t ptshare_vmas);
+-#else
+ 		ANDROID_BACKPORT_RESERVE(1);
+-		ANDROID_BACKPORT_RESERVE(2);
+-#endif
+-		ANDROID_BACKPORT_RESERVE(3);
++#endif
+ 		ANDROID_VENDOR_DATA(1);
+ 	} __randomize_layout;
+ 
+--- a/k618/ws/common/kernel/sched/fair.c
++++ b/k618/ws/common/kernel/sched/fair.c
+@@ -4005,7 +4005,8 @@
+ 	 *	   = V  - vl * w / w'
+ 	 *	   = V  - vl'
+ 	 */
+-	se->vlag = div64_long(se->vlag * old_weight, weight);
++	if (!se->on_rq)
++		se->vlag = div64_long(se->vlag * old_weight, weight);
+ 
+ 	/*
+ 	 * DEADLINE
+@@ -4032,12 +4033,15 @@
+ 	bool curr = cfs_rq->curr == se;
+ 	bool rel_vprot = false;
+ 	u64 avruntime = 0;
++	s64 vlag = 0;
++	unsigned long old_weight;
+ 
+ 	if (se->on_rq) {
+ 		/* commit outstanding execution time */
+ 		update_curr(cfs_rq);
+ 		avruntime = avg_vruntime(cfs_rq);
+-		se->vlag = entity_lag(cfs_rq, se, avruntime);
++		vlag = entity_lag(cfs_rq, se, avruntime);
++
+ 		se->deadline -= avruntime;
+ 		se->rel_deadline = 1;
+ 		if (curr && protect_slice(se)) {
+@@ -4054,6 +4058,7 @@
+ 
+ 	trace_android_vh_reweight_entity(se, &weight);
+ 
++	old_weight = se->load.weight;
+ 	rescale_entity(se, weight, rel_vprot);
+ 
+ 	update_load_set(&se->load, weight);
+@@ -4069,7 +4074,9 @@
+ 			se->vprot += avruntime;
+ 		se->deadline += avruntime;
+ 		se->rel_deadline = 0;
+-		se->vruntime = avruntime - se->vlag;
++		/* scale local vlag here because rescale_entity() didn't */
++		vlag = div64_long(vlag * old_weight, weight);
++		se->vruntime = avruntime - vlag;
+ 
+ 		update_load_add(&cfs_rq->load, se->load.weight);
+ 		if (!curr)
+--- a/k618/ws/common/kernel/reboot.c
++++ b/k618/ws/common/kernel/reboot.c
+@@ -14,6 +14,7 @@
+ #include <linux/kmod.h>
+ #include <linux/kmsg_dump.h>
+ #include <linux/reboot.h>
++#include <linux/sheng_bootlog.h>
+ #include <linux/suspend.h>
+ #include <linux/syscalls.h>
+ #include <linux/syscore_ops.h>
+@@ -96,7 +97,10 @@
+ {
+ 	kmsg_dump(KMSG_DUMP_EMERG);
+ 	system_state = SYSTEM_RESTART;
+-	machine_emergency_restart();
++	if (sheng_bootlog_test_mode())
++		machine_restart("bootloader");
++	else
++		machine_emergency_restart();
+ }
+ EXPORT_SYMBOL_GPL(emergency_restart);
+ 
+@@ -289,6 +293,9 @@
+  */
+ void kernel_restart(char *cmd)
+ {
++	sheng_bootlog_before_restart(cmd);
++	if (sheng_bootlog_test_mode())
++		cmd = "bootloader";
+ 	kernel_restart_prepare(cmd);
+ 	do_kernel_restart_prepare();
+ 	migrate_to_reboot_cpu();
+--- a/k618/ws/common/kernel/panic.c
++++ b/k618/ws/common/kernel/panic.c
+@@ -21,6 +21,7 @@
+ #include <linux/random.h>
+ #include <linux/ftrace.h>
+ #include <linux/reboot.h>
++#include <linux/sheng_bootlog.h>
+ #include <linux/delay.h>
+ #include <linux/kexec.h>
+ #include <linux/panic_notifier.h>
+@@ -496,6 +497,7 @@
+ 	 * the other CPUs or else we won't be able to debug processes left
+ 	 * running on them.
+ 	 */
++	sheng_bootlog_panic_pause();
+ 	kgdb_panic(buf);
+ 
+ 	/*
+--- a/k618/ws/common/arch/arm64/kernel/traps.c
++++ b/k618/ws/common/arch/arm64/kernel/traps.c
+@@ -15,6 +15,7 @@
+ #include <linux/uaccess.h>
+ #include <linux/hardirq.h>
+ #include <linux/kdebug.h>
++#include <linux/sheng_bootlog.h>
+ #include <linux/module.h>
+ #include <linux/kexec.h>
+ #include <linux/delay.h>
+@@ -196,6 +197,7 @@
+ 		return ret;
+ 
+ 	dump_kernel_instr(addr);
++	sheng_bootlog_fault_pause();
+ 
+ 	return ret;
+ }
+--- a/k618/ws/common/drivers/misc/sheng_bootlog.c
++++ b/k618/ws/common/drivers/misc/sheng_bootlog.c
+@@ -78,9 +78,7 @@
+ static u64 early_next_seq;
+ static u64 run_id, sequence;
+ static unsigned long began;
+-static void save_snapshot(struct work_struct *work);
+ static void save_fault_snapshot(struct work_struct *work);
+-static DECLARE_DELAYED_WORK(snapshot_work, save_snapshot);
+ static DECLARE_WORK(fault_work, save_fault_snapshot);
+ static DEFINE_MUTEX(snapshot_lock);
+ static atomic_t fault_pause_used = ATOMIC_INIT(0);
+@@ -202,7 +200,9 @@
+             strstr(line, "k618_load:") || strstr(line, "init first stage") ||
+             strstr(line, "init second stage") || strstr(line, "Wait for '") ||
+             strstr(line, "Direct firmware load") ||
+-            strstr(line, "SHENG_EARLY_TRACE_TEST")) {
++            strstr(line, "SHENG_EARLY_TRACE_TEST") || strstr(line, "KernelSU") ||
++            strstr(line, "kernelsu") || strstr(line, "ksuinit") ||
++            strstr(line, "ksu:")) {
+             bytes = min(bytes, sizeof(line) - 1);
+             if (bytes > EARLY_TRACE_BYTES - early_trace_bytes)
+                 break;
+@@ -362,21 +362,36 @@
+     return HRTIMER_NORESTART;
+ }
+ 
+-static void save_snapshot(struct work_struct *work)
+-{
+-    bool fast;
+-    unsigned int interval;
+-
+-    mutex_lock(&snapshot_lock);
+-    capture_snapshot();
+-    fast = time_before(jiffies, began + msecs_to_jiffies(
+-            test_timeout ? (test_timeout + 20) * 1000 : LIFE_MS));
+-    /* Keep the bounded slots and exception writer available after boot.
+-     * Slow down steady-state I/O instead of losing every late fault.
+-     */
+-    interval = fast ? (destination ? 250 : 100) : STEADY_INTERVAL_MS;
+-    queue_delayed_work(system_unbound_wq, &snapshot_work, msecs_to_jiffies(interval));
+-    mutex_unlock(&snapshot_lock);
++void sheng_bootlog_before_restart(const char *cmd)
++{
++    if (!enabled || !snapshot)
++        return;
++    pr_emerg("sheng_bootlog: RESTART_REQUEST pid=%d comm=%s original_cmd=%s\n",
++             task_pid_nr(current), current->comm, cmd ? cmd : "(null)");
++    dump_stack();
++    if (mutex_trylock(&snapshot_lock)) {
++        capture_snapshot();
++        mutex_unlock(&snapshot_lock);
++    } else {
++        pr_emerg("sheng_bootlog: final snapshot busy; recorder may be in I/O\n");
++    }
++}
++
++static int snapshot_thread(void *unused)
++{
++    while (!kthread_should_stop()) {
++        bool fast;
++        unsigned int interval;
++
++        mutex_lock(&snapshot_lock);
++        capture_snapshot();
++        fast = time_before(jiffies, began + msecs_to_jiffies(
++                test_timeout ? (test_timeout + 20) * 1000 : LIFE_MS));
++        interval = fast ? (destination ? 250 : 100) : STEADY_INTERVAL_MS;
++        mutex_unlock(&snapshot_lock);
++        msleep(interval);
++    }
++    return 0;
+ }
+ 
+ /* Same DT resource and bootloader magic as this device's shipping 5.15
+@@ -438,7 +453,12 @@
+     run_id = get_random_u64();
+     began = jiffies;
+     pr_notice("sheng_bootlog: built-in capture armed, run %016llx; waiting for rawdump\n", run_id);
+-    queue_delayed_work(system_unbound_wq, &snapshot_work, msecs_to_jiffies(100));
++    {
++        struct task_struct *writer = kthread_run(snapshot_thread, NULL, "sheng-log");
++
++        if (IS_ERR(writer))
++            return PTR_ERR(writer);
++    }
+     if (test_timeout) {
+         struct task_struct *reset;
+ 
+--- a/k618/ws/common/include/linux/sheng_bootlog.h
++++ b/k618/ws/common/include/linux/sheng_bootlog.h
+@@ -8,10 +8,12 @@
+ void sheng_bootlog_fault_pause(void);
+ bool sheng_bootlog_test_mode(void);
+ void sheng_bootlog_panic_pause(void);
++void sheng_bootlog_before_restart(const char *cmd);
+ #else
+ static inline void sheng_bootlog_fault_pause(void) { }
+ static inline bool sheng_bootlog_test_mode(void) { return false; }
+ static inline void sheng_bootlog_panic_pause(void) { }
++static inline void sheng_bootlog_before_restart(const char *cmd) { }
+ #endif
+ 
+ #endif

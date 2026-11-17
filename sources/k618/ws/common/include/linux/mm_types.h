@@ -1263,16 +1263,13 @@ struct mm_struct {
 
 		struct task_dma_buf_info *dmabuf_info;
 
-		ANDROID_KABI_RESERVE(1);
-
 #ifdef CONFIG_PTSHARE
-		ANDROID_BACKPORT_USE(1, struct ptshare_desc __rcu *ptshare_desc);
-		ANDROID_BACKPORT_USE(2, refcount_t ptshare_vmas);
+		ANDROID_KABI_USE(1, struct ptshare_desc __rcu *ptshare_desc);
+		ANDROID_BACKPORT_USE(1, refcount_t ptshare_vmas);
 #else
+		ANDROID_KABI_RESERVE(1);
 		ANDROID_BACKPORT_RESERVE(1);
-		ANDROID_BACKPORT_RESERVE(2);
 #endif
-		ANDROID_BACKPORT_RESERVE(3);
 		ANDROID_VENDOR_DATA(1);
 	} __randomize_layout;
 

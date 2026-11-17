@@ -20,6 +20,14 @@ def validated_files():
     for name,item in delta['files'].items():
         assert expected[name]['after']==item['before']
         expected[name]=item
+    compatibility=project/'provenance/ksu-kmi32-compatibility.json'
+    assert hashlib.sha256(compatibility.read_bytes()).hexdigest()=='ce29a23bc414e4d9255d6851552db1682189ab116ed34a065e1bdb525b689f82'
+    kmi=json.loads(compatibility.read_text())
+    assert hashlib.sha256((project/kmi['patch']).read_bytes()).hexdigest()==kmi['patch_sha256']
+    for name,item in kmi['files'].items():
+        if name in expected:
+            assert expected[name]['after']==item['before']
+        expected[name]=item
     for name,item in expected.items():
         path=root/name
         got=hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None

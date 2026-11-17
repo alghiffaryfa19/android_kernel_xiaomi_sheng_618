@@ -21,6 +21,7 @@
 #include <linux/random.h>
 #include <linux/ftrace.h>
 #include <linux/reboot.h>
+#include <linux/sheng_bootlog.h>
 #include <linux/delay.h>
 #include <linux/kexec.h>
 #include <linux/panic_notifier.h>
@@ -496,6 +497,7 @@ void vpanic(const char *fmt, va_list args)
 	 * the other CPUs or else we won't be able to debug processes left
 	 * running on them.
 	 */
+	sheng_bootlog_panic_pause();
 	kgdb_panic(buf);
 
 	/*

@@ -15,6 +15,7 @@
 #include <linux/uaccess.h>
 #include <linux/hardirq.h>
 #include <linux/kdebug.h>
+#include <linux/sheng_bootlog.h>
 #include <linux/module.h>
 #include <linux/kexec.h>
 #include <linux/delay.h>
@@ -196,6 +197,7 @@ static int __die(const char *str, long err, struct pt_regs *regs)
 		return ret;
 
 	dump_kernel_instr(addr);
+	sheng_bootlog_fault_pause();
 
 	return ret;
 }

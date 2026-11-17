@@ -1,8 +1,10 @@
 {
   "kernel_release": "6.18.39-android17-0-peiyuesheng-sheng-kernel",
   "upstream_commit": "44c4d19047cd3c9c51c6fa3930c35844b10b5f9a",
-  "variant": "android-lts-iotlb-r2",
-  "source_manifest_sha256": "da80a62e82c55104ab06318a7d826e96990ef7782c46687b2a6b57f215c59ba8",
+  "variant": "android-lts-kmi32-compatibility",
+  "source_manifest_sha256": "74f37e83116dce6d93d4ae6f55f32f7417614edec931e3f3b037d8903f6d82ea",
   "source_entries": 103857,
-  "original_build_image_sha256": "44931b59128a2ecacb5e513eba3bfbd868607f2a52e18bf13287c93b49893e31"
+  "original_build_image_sha256": "44931b59128a2ecacb5e513eba3bfbd868607f2a52e18bf13287c93b49893e31",
+  "validated_image_sha256": "1f3b24687431bf935b125efa5aeda14167072e125ceeaf3330ad00013975e0a4",
+  "init_boot_includes_ksu_by_default": false
 }

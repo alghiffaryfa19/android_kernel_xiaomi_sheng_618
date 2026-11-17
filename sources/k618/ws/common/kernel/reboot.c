@@ -14,6 +14,7 @@
 #include <linux/kmod.h>
 #include <linux/kmsg_dump.h>
 #include <linux/reboot.h>
+#include <linux/sheng_bootlog.h>
 #include <linux/suspend.h>
 #include <linux/syscalls.h>
 #include <linux/syscore_ops.h>
@@ -96,7 +97,10 @@ void emergency_restart(void)
 {
 	kmsg_dump(KMSG_DUMP_EMERG);
 	system_state = SYSTEM_RESTART;
-	machine_emergency_restart();
+	if (sheng_bootlog_test_mode())
+		machine_restart("bootloader");
+	else
+		machine_emergency_restart();
 }
 EXPORT_SYMBOL_GPL(emergency_restart);
 
@@ -289,6 +293,9 @@ static void do_kernel_restart_prepare(void)
  */
 void kernel_restart(char *cmd)
 {
+	sheng_bootlog_before_restart(cmd);
+	if (sheng_bootlog_test_mode())
+		cmd = "bootloader";
 	kernel_restart_prepare(cmd);
 	do_kernel_restart_prepare();
 	migrate_to_reboot_cpu();

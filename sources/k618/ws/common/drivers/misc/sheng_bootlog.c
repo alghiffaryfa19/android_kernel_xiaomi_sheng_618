@@ -78,9 +78,7 @@ static size_t early_trace_bytes;
 static u64 early_next_seq;
 static u64 run_id, sequence;
 static unsigned long began;
-static void save_snapshot(struct work_struct *work);
 static void save_fault_snapshot(struct work_struct *work);
-static DECLARE_DELAYED_WORK(snapshot_work, save_snapshot);
 static DECLARE_WORK(fault_work, save_fault_snapshot);
 static DEFINE_MUTEX(snapshot_lock);
 static atomic_t fault_pause_used = ATOMIC_INIT(0);
@@ -202,7 +200,9 @@ static void capture_early_trace(void)
             strstr(line, "k618_load:") || strstr(line, "init first stage") ||
             strstr(line, "init second stage") || strstr(line, "Wait for '") ||
             strstr(line, "Direct firmware load") ||
-            strstr(line, "SHENG_EARLY_TRACE_TEST")) {
+            strstr(line, "SHENG_EARLY_TRACE_TEST") || strstr(line, "KernelSU") ||
+            strstr(line, "kernelsu") || strstr(line, "ksuinit") ||
+            strstr(line, "ksu:")) {
             bytes = min(bytes, sizeof(line) - 1);
             if (bytes > EARLY_TRACE_BYTES - early_trace_bytes)
                 break;
@@ -362,21 +362,36 @@ static enum hrtimer_restart test_restart_fallback(struct hrtimer *timer)
     return HRTIMER_NORESTART;
 }
 
-static void save_snapshot(struct work_struct *work)
+void sheng_bootlog_before_restart(const char *cmd)
 {
-    bool fast;
-    unsigned int interval;
+    if (!enabled || !snapshot)
+        return;
+    pr_emerg("sheng_bootlog: RESTART_REQUEST pid=%d comm=%s original_cmd=%s\n",
+             task_pid_nr(current), current->comm, cmd ? cmd : "(null)");
+    dump_stack();
+    if (mutex_trylock(&snapshot_lock)) {
+        capture_snapshot();
+        mutex_unlock(&snapshot_lock);
+    } else {
+        pr_emerg("sheng_bootlog: final snapshot busy; recorder may be in I/O\n");
+    }
+}
 
-    mutex_lock(&snapshot_lock);
-    capture_snapshot();
-    fast = time_before(jiffies, began + msecs_to_jiffies(
-            test_timeout ? (test_timeout + 20) * 1000 : LIFE_MS));
-    /* Keep the bounded slots and exception writer available after boot.
-     * Slow down steady-state I/O instead of losing every late fault.
-     */
-    interval = fast ? (destination ? 250 : 100) : STEADY_INTERVAL_MS;
-    queue_delayed_work(system_unbound_wq, &snapshot_work, msecs_to_jiffies(interval));
-    mutex_unlock(&snapshot_lock);
+static int snapshot_thread(void *unused)
+{
+    while (!kthread_should_stop()) {
+        bool fast;
+        unsigned int interval;
+
+        mutex_lock(&snapshot_lock);
+        capture_snapshot();
+        fast = time_before(jiffies, began + msecs_to_jiffies(
+                test_timeout ? (test_timeout + 20) * 1000 : LIFE_MS));
+        interval = fast ? (destination ? 250 : 100) : STEADY_INTERVAL_MS;
+        mutex_unlock(&snapshot_lock);
+        msleep(interval);
+    }
+    return 0;
 }
 
 /* Same DT resource and bootloader magic as this device's shipping 5.15
@@ -438,7 +453,12 @@ static int __init sheng_bootlog_init(void)
     run_id = get_random_u64();
     began = jiffies;
     pr_notice("sheng_bootlog: built-in capture armed, run %016llx; waiting for rawdump\n", run_id);
-    queue_delayed_work(system_unbound_wq, &snapshot_work, msecs_to_jiffies(100));
+    {
+        struct task_struct *writer = kthread_run(snapshot_thread, NULL, "sheng-log");
+
+        if (IS_ERR(writer))
+            return PTR_ERR(writer);
+    }
     if (test_timeout) {
         struct task_struct *reset;
 
