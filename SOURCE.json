@@ -1,10 +1,11 @@
 {
   "kernel_release": "6.18.39-android17-0-peiyuesheng-sheng-kernel",
   "upstream_commit": "44c4d19047cd3c9c51c6fa3930c35844b10b5f9a",
-  "variant": "android-lts-kmi32-compatibility",
-  "source_manifest_sha256": "74f37e83116dce6d93d4ae6f55f32f7417614edec931e3f3b037d8903f6d82ea",
+  "variant": "android-lts-kmi32-sp-el0-compatibility",
+  "source_manifest_sha256": "19f250554a15dc6512ba497719f6072844bc7817e57dd311acead538a34c9453",
   "source_entries": 103857,
   "original_build_image_sha256": "44931b59128a2ecacb5e513eba3bfbd868607f2a52e18bf13287c93b49893e31",
-  "validated_image_sha256": "1f3b24687431bf935b125efa5aeda14167072e125ceeaf3330ad00013975e0a4",
-  "init_boot_includes_ksu_by_default": false
+  "validated_image_sha256": "79e82a8118e4edd571f6ce438104f5107b0de82180e68b44be4eb9b27372e745",
+  "init_boot_includes_ksu_by_default": false,
+  "ksu_compatibility_provenance": "provenance/ksu-sp-el0-compatibility.json"
 }

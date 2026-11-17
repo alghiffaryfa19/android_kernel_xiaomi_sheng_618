@@ -28,6 +28,14 @@ def validated_files():
         if name in expected:
             assert expected[name]['after']==item['before']
         expected[name]=item
+    current_abi=project/'provenance/ksu-sp-el0-compatibility.json'
+    assert hashlib.sha256(current_abi.read_bytes()).hexdigest()=='360e396b94cb91ef45ffe049f611942f2a21e7294ec517f57b57f1e178209339'
+    current=json.loads(current_abi.read_text())
+    assert hashlib.sha256((project/current['patch']).read_bytes()).hexdigest()==current['patch_sha256']
+    for name,item in current['files'].items():
+        if name in expected:
+            assert expected[name]['after']==item['before'], name
+        expected[name]=item
     for name,item in expected.items():
         path=root/name
         got=hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None

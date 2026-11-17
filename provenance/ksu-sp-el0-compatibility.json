@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "diagnostic_only": false,
+  "files": {
+    "k618/ws/common/arch/arm64/Kconfig": {
+      "before": "e0f1f0d702632f829aa547c4c3e6bf53cf73a38f80bec0ed6a8f02b2675b7569",
+      "after": "719e207ed08c75c3b30ea0563a5c285762f478b3ee7364f9c4af48fb1efdffa9"
+    },
+    "k618/ws/common/arch/arm64/Makefile": {
+      "before": "21dd29b6a0863ba3f7aa28641f09f3c984704f641a64611914d8220328eaf23a",
+      "after": "803b387e1c1e1fb6d8157666fbd5656a89eebed16d49b3004f614b277dde2a67"
+    },
+    "k618/ws/common/arch/arm64/include/asm/assembler.h": {
+      "before": "212c83ca779a68cdbdb528854a96c65e9889dd9685543322eb70f3f867251cc6",
+      "after": "52acda0c3d1bcdaec864a5d63f9482e0a78a7398905bdae2e0577603df3e73ba"
+    },
+    "k618/ws/common/arch/arm64/include/asm/current.h": {
+      "before": "f6ab6452db56c8f7b4f30ccf33d0856a73a0af9447ebd06ce009b3120e11c21a",
+      "after": "848c2a2e0a262d970e60e201fbcbea7cac82d374ef665da4c666283f27595f54"
+    },
+    "k618/ws/common/arch/arm64/include/asm/percpu.h": {
+      "before": "8565a132b6e1f864d6f65eaef5694e4c92e18985f6f56eda350e2f56504c50a0",
+      "after": "3268702cc785cb613de6d6ec681900cbdace4ace971b8f6c7de473d5c95fff3f"
+    },
+    "k618/ws/common/arch/arm64/kernel/entry-common.c": {
+      "before": "8a9166b6a2f07ce48657906c696f34c43539f0aafa08e55ebf2c1d6b74097d9d",
+      "after": "7b92c77de913e4707293b52e6a29929b6d82a68359fcb7e7309e74fea75da2b4"
+    },
+    "k618/ws/common/arch/arm64/kernel/entry.S": {
+      "before": "0330b4f54a49c862def1f912634bf33f4397e1deb129165c0ba9115f044973a7",
+      "after": "1db96dc7904e4a1688492b395aea4eb01e6388f516f342e415ce03fd39c1554d"
+    },
+    "k618/ws/common/arch/arm64/kernel/head.S": {
+      "before": "a899a13350c2efa36da9624504da65bcb2194309990e046ba4d33703ad389ff7",
+      "after": "db56887baf6cb87c24974609ffdb76ed5765a3756739c50a44384e384925977d"
+    },
+    "k618/ws/common/arch/arm64/kernel/process.c": {
+      "before": "a08f992404d04f82f451c8d7eba7086aa887ebf9f177aaf9da0727d347609934",
+      "after": "b24a3396cc5da9be26ff45452e4ecbbad54f68e2b368ef6f9807b0d7e00a4b06"
+    },
+    "k618/ws/common/arch/arm64/kernel/smp.c": {
+      "before": "7d1dd3ca2707b2c52d1fac0ce1b36086bdb55288190b2082ce5641c3ed5639d4",
+      "after": "9bdc8e6b111eacc78cbf042dd7e5186b0ec68f248af7e187fddd33390f7b166c"
+    },
+    "k618/ws/common/arch/arm64/kernel/sys_compat.c": {
+      "before": "bccc5fe5d0e1f9121386637146df1417c1f6d06a87a5947cf724a556fe0ed103",
+      "after": "8c31cf411fee8644e121b77f3fca108549ed603f0ff9c94fd296121561e3060b"
+    },
+    "k618/ws/common/arch/arm64/kvm/hyp/entry.S": {
+      "before": "dbb873ff9a6ef2e033f010b8d1d70d4ce616b48c44d5f0faae795d7eca75250a",
+      "after": "15ea2b4bacf90c07a16100baaa4d8d2c5f23d1792febebde6fc448bcc91f434c"
+    },
+    "k618/ws/common/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h": {
+      "before": "c7f36846996e31ccf402c9b3a53b0fe614cb91f8557521ae2c2524c1148f74b8",
+      "after": "af4f7485c5dcaa3ec87c512a5c8e5d9f44bf07390d5ba6198db10a58c34ba812"
+    },
+    "k618/ws/common/arch/arm64/mm/proc.S": {
+      "before": "fd8c3d26b95547338b5d9d8c2f3b54f58e697d24dd120a7bdc188da4368ec395",
+      "after": "6aab7c171c323e19a60f7377fbba0e49f1d2e27294f72ec1fc22f818ef88a7c9"
+    },
+    "k618/ws/common/arch/arm64/net/bpf_jit_comp.c": {
+      "before": "e1175088bab936057ebceb52878f192723922e6b01b325b6db5184f9efc5c227",
+      "after": "1df1be32d26fa58e4e21d7848775bf44cdbb1f0b51275d16b2bec7f292defeab"
+    }
+  },
+  "patch": "patches/ksu-sp-el0-compatibility.patch",
+  "patch_sha256": "ff299a2893ffbc00c1038f9f71a7033145eae76701e0abcf76b8d23e4a96644b",
+  "kernel_release": "6.18.39-android17-0-peiyuesheng-sheng-kernel",
+  "current_task_register": "SP_EL0",
+  "stack_protector_guard_register": "SP_EL0",
+  "init_boot_includes_ksu_by_default": false,
+  "default_diagnostic_timeout_seconds": 0,
+  "validated_image_sha256": "79e82a8118e4edd571f6ce438104f5107b0de82180e68b44be4eb9b27372e745",
+  "validation": {
+    "manager_version": "3.3.1 (32680)",
+    "original_patched_init_boot_sha256": "f150f7fa4481867daffb97f7fde6be02899eee6c433628584a0d94d469b663ca",
+    "original_module_sha256": "d848bcbeb3f4daffeea4b2ad2d70aac8f79211ce9f15f200dd87c7b8d68ebe30",
+    "original_module_current_reads": {
+      "SP_EL0": 260,
+      "TPIDRRO_EL0": 0
+    },
+    "module_binary_adaptation": false,
+    "namespace_load": true,
+    "bounded_android_boots": 3,
+    "production_parameters_rooted_boots": 2,
+    "production_parameters_unrooted_boots": 2,
+    "matching_modules_abi_btf_dependencies_namespaces": true
+  },
+  "compatibility_scope": "Validated extracted 6.18.32 KSU LKM and original patched init_boot; arbitrary kernel-module ABIs are not guaranteed"
+}

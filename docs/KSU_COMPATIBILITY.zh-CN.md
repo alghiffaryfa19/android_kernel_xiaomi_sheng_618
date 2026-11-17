@@ -1,16 +1,14 @@
-# 6.18.39 KSU 兼容修复
+# 6.18.39 KSU 兼容性
 
-2026-11-17 已合入本地 6.18.32 的 task/thread/mm ABI 兼容布局及已测试的 rawdump 记录器改进。
-保留 6.18.39 内核版本；板级模块必须与此布局成套重建，禁止混用旧 .39 模块。
+内核保留已验证的 6.18.32 task/thread/mm 布局，并恢复 SP_EL0 的 current 与每任务栈保护约定。
+启动、异常与溢出栈、任务切换、兼容 TLS、KVM、休眠恢复和 BPF 的相关路径同步保持一致；其余 6.18.39 更新保留。
+板级模块必须与该内核成套重建，不能混用先前 TPIDRRO_EL0 版本的模块。
 
-实机已正常进入 Android，用户确认 KSU 管理器显示工作中。独立 namespace 的原 ksuinit 加载、配套模块 ABI/BTF 检查均通过。
-源码校验清单和 Android LTS 校验链同步更新，不跳过校验。
+KernelSU 管理器 3.3.1（32680）生成的原始 init_boot 与提取的 6.18.32 LKM 已验证加载及 Android 启动。
+测试未对 KSU 模块做寄存器指令替换，包括正式启动参数下的重启回归。
+匹配模块通过 ABI、BTF、依赖与命名空间检查；源码清单和 Android LTS 校验链同步更新。
+完整技术校验范围与镜像、模块哈希见 provenance/ksu-sp-el0-compatibility.json。
 
-默认交付的 init_boot 不内置 KSU。用户需要 root 时再选用匹配的 LKM。
-此前提取的 .32 预编译模块使用 SP_EL0，而 .39 的 current 使用 TPIDRRO_EL0；仅恢复字段偏移并不能让任意旧模块兼容。
-实机成功路径使用了经过精确哈希、280 条 MRS 指令校验的模块适配；该二进制适配不是通用补丁器。
-后续可从本内核的源码、配置重编 LKM。不得只改 vermagic 或把任意官方预编译模块标记为已验收。
-
-默认启动不启用诊断自动返回时限。需要诊断时单独启用 bootlog 并按每轮参数设置 60 秒；不把超时带入普通启动。
-完整 ROM 必须同时更新 boot、vendor_boot、recovery、vendor_dlkm、system_dlkm 及对应 AVB 描述符，不能仅更换内核或混用旧模块。
-未修补的 init_boot 与 KSU 兼容内核可以配套交付；兼容性修复不代表系统已预置 Root。
+默认 init_boot 不内置 KSU，不预装 root。正式启动的诊断自动返回时限为 0，不应进入限时 Fastboot。
+需要 root 时可再修补 init_boot；这里只验证上述版本和模块，不保证任意其他内核 ABI 的预编译模块。
+禁止仅改 vermagic 或跳过类型布局校验。

@@ -1,0 +1,562 @@
+--- a/k618/ws/common/arch/arm64/Kconfig
++++ b/k618/ws/common/arch/arm64/Kconfig
+@@ -2409,7 +2409,7 @@
+ 	  exhaustion, modules might be able to fall back to a larger 2GB area.
+ 
+ config CC_HAVE_STACKPROTECTOR_SYSREG
+-	def_bool $(cc-option,-mstack-protector-guard=sysreg -mstack-protector-guard-reg=tpidrro_el0 -mstack-protector-guard-offset=0)
++	def_bool $(cc-option,-mstack-protector-guard=sysreg -mstack-protector-guard-reg=sp_el0 -mstack-protector-guard-offset=0)
+ 
+ config STACKPROTECTOR_PER_TASK
+ 	def_bool y
+--- a/k618/ws/common/arch/arm64/Makefile
++++ b/k618/ws/common/arch/arm64/Makefile
+@@ -69,7 +69,7 @@
+ prepare: stack_protector_prepare
+ stack_protector_prepare: prepare0
+ 	$(eval KBUILD_CFLAGS += -mstack-protector-guard=sysreg		  \
+-				-mstack-protector-guard-reg=tpidrro_el0	  \
++				-mstack-protector-guard-reg=sp_el0	  \
+ 				-mstack-protector-guard-offset=$(shell	  \
+ 			awk '{if ($$2 == "TSK_STACK_CANARY") print $$3;}' \
+ 				$(objtree)/include/generated/asm-offsets.h))
+--- a/k618/ws/common/arch/arm64/include/asm/assembler.h
++++ b/k618/ws/common/arch/arm64/include/asm/assembler.h
+@@ -591,7 +591,7 @@
+  * Return the current task_struct.
+  */
+ 	.macro	get_current_task, rd
+-	mrs	\rd, tpidrro_el0
++	mrs	\rd, sp_el0
+ 	.endm
+ 
+ /*
+--- a/k618/ws/common/arch/arm64/include/asm/current.h
++++ b/k618/ws/common/arch/arm64/include/asm/current.h
+@@ -14,11 +14,11 @@
+  */
+ static __always_inline struct task_struct *get_current(void)
+ {
+-	unsigned long tpidrro_el0;
++	unsigned long sp_el0;
+ 
+-	asm ("mrs %0, tpidrro_el0" : "=r" (tpidrro_el0));
++	asm ("mrs %0, sp_el0" : "=r" (sp_el0));
+ 
+-	return (struct task_struct *)tpidrro_el0;
++	return (struct task_struct *)sp_el0;
+ }
+ 
+ #define current get_current()
+--- a/k618/ws/common/arch/arm64/include/asm/percpu.h
++++ b/k618/ws/common/arch/arm64/include/asm/percpu.h
+@@ -12,6 +12,14 @@
+ #include <asm/cmpxchg.h>
+ #include <asm/stack_pointer.h>
+ #include <asm/sysreg.h>
++
++static inline void set_my_cpu_offset(unsigned long off)
++{
++	asm volatile(ALTERNATIVE("msr tpidr_el1, %0",
++				 "msr tpidr_el2, %0",
++				 ARM64_HAS_VIRT_HOST_EXTN)
++			:: "r" (off) : "memory");
++}
+ 
+ static inline unsigned long __hyp_my_cpu_offset(void)
+ {
+--- a/k618/ws/common/arch/arm64/kernel/entry-common.c
++++ b/k618/ws/common/arch/arm64/kernel/entry-common.c
+@@ -317,45 +317,10 @@
+ }
+ NOKPROBE_SYMBOL(debug_exception_exit);
+ 
+-static void noinstr el1t_64_check_overflow_stack(struct pt_regs *regs)
+-{
+-	unsigned long sp = kernel_stack_pointer(regs) - sizeof(*regs);
+-	unsigned long ovf_stack = (unsigned long)this_cpu_ptr(overflow_stack);
+-
+-	/*
+-	 * We're in big trouble if we've overflowed the overflow stack
+-	 * so perform a best-effort check before we proceed. If our SP
+-	 * is outside of the overflow stack for this CPU then presumably
+-	 * we're already corrupting memory, so park ourselves here in an
+-	 * attempt to contain the damage.
+-	 */
+-	if (sp < ovf_stack || sp > ovf_stack + OVERFLOW_STACK_SIZE)
+-		cpu_park_loop();
+-}
+-
+-asmlinkage void noinstr el1t_64_sync_handler(struct pt_regs *regs)
+-{
+-	el1t_64_check_overflow_stack(regs);
+-	el1h_64_sync_handler(regs);
+-}
+-
+-asmlinkage void noinstr el1t_64_irq_handler(struct pt_regs *regs)
+-{
+-	el1t_64_check_overflow_stack(regs);
+-	el1h_64_irq_handler(regs);
+-}
+-
+-asmlinkage void noinstr el1t_64_fiq_handler(struct pt_regs *regs)
+-{
+-	el1t_64_check_overflow_stack(regs);
+-	el1h_64_fiq_handler(regs);
+-}
+-
+-asmlinkage void noinstr el1t_64_error_handler(struct pt_regs *regs)
+-{
+-	el1t_64_check_overflow_stack(regs);
+-	el1h_64_error_handler(regs);
+-}
++UNHANDLED(el1t, 64, sync)
++UNHANDLED(el1t, 64, irq)
++UNHANDLED(el1t, 64, fiq)
++UNHANDLED(el1t, 64, error)
+ 
+ static void noinstr el1_abort(struct pt_regs *regs, unsigned long esr)
+ {
+--- a/k618/ws/common/arch/arm64/kernel/entry.S
++++ b/k618/ws/common/arch/arm64/kernel/entry.S
+@@ -36,60 +36,67 @@
+ 	.endr
+ 	.endm
+ 
+-	.macro kernel_ventry_el0, ht:req, regsize:req, label:req
+-	/*
+-	 * This must be the first instruction of the EL0 vector entries. It is
+-	 * skipped by the trampoline vectors, to trigger the cleanup.
+-	 */
+-	b	.Lskip_tramp_vectors_cleanup\@
+-	.if	\regsize == 64
+-	mrs	x30, tpidrro_el0
+-	.else
+-	mov	x30, xzr
+-	.endif
+-.Lskip_tramp_vectors_cleanup\@:
+-	sub	sp, sp, #PT_REGS_SIZE
+-	b	el0\ht\()_\regsize\()_\label
+-	.endm
+-
+-	.macro kernel_ventry_el1h, regsize:req, label:req
+-	sub	sp, sp, #PT_REGS_SIZE
+-
+-	/*
+-	 * Test whether the SP has overflowed, without corrupting a GPR.
+-	 * Task and IRQ stacks are aligned so that SP & (1 << THREAD_SHIFT)
+-	 * should always be zero.
+-	 */
+-	add	sp, sp, x0			// sp' = sp + x0
+-	sub	x0, sp, x0			// x0' = sp' - x0 = (sp + x0) - x0 = sp
+-	tbnz	x0, #THREAD_SHIFT, __bad_stack
+-	sub	x0, sp, x0			// x0'' = sp' - x0' = (sp + x0) - sp = x0
+-	sub	sp, sp, x0			// sp'' = sp' - x0 = (sp + x0) - x0 = sp
+-	b	el1h_\regsize\()_\label
+-	.endm
+-
+-	.macro kernel_ventry_el1t, regsize:req, label:req
+-	msr	spsel, #0			// Stay on the overflow stack
+-	sub	sp, sp, #PT_REGS_SIZE
+-	b	el1t_\regsize\()_\label
+-	.endm
+-
+-	.macro kernel_ventry_el1, ht:req, regsize:req, label:req
+-	.ifc	\ht, h
+-	kernel_ventry_el1h	\regsize, \label
+-	.else
+-	kernel_ventry_el1t	\regsize, \label
+-	.endif
+-	.endm
+-
+ 	.macro kernel_ventry, el:req, ht:req, regsize:req, label:req
+ 	.align 7
+ .Lventry_start\@:
+ 	.if	\el == 0
+-	kernel_ventry_el0	\ht, \regsize, \label
++	/*
++	 * This must be the first instruction of the EL0 vector entries. It is
++	 * skipped by the trampoline vectors, to trigger the cleanup.
++	 */
++	b	.Lskip_tramp_vectors_cleanup\@
++	.if	\regsize == 64
++	mrs	x30, tpidrro_el0
++	msr	tpidrro_el0, xzr
+ 	.else
+-	kernel_ventry_el1	\ht, \regsize, \label
+-	.endif
++	mov	x30, xzr
++	.endif
++.Lskip_tramp_vectors_cleanup\@:
++	.endif
++
++	sub	sp, sp, #PT_REGS_SIZE
++	/*
++	 * Test whether the SP has overflowed, without corrupting a GPR.
++	 * Task and IRQ stacks are aligned so that SP & (1 << THREAD_SHIFT)
++	 * should always be zero.
++	 */
++	add	sp, sp, x0			// sp' = sp + x0
++	sub	x0, sp, x0			// x0' = sp' - x0 = (sp + x0) - x0 = sp
++	tbnz	x0, #THREAD_SHIFT, 0f
++	sub	x0, sp, x0			// x0'' = sp' - x0' = (sp + x0) - sp = x0
++	sub	sp, sp, x0			// sp'' = sp' - x0 = (sp + x0) - x0 = sp
++	b	el\el\ht\()_\regsize\()_\label
++
++0:
++	/*
++	 * Either we've just detected an overflow, or we've taken an exception
++	 * while on the overflow stack. Either way, we won't return to
++	 * userspace, and can clobber EL0 registers to free up GPRs.
++	 */
++
++	/* Stash the original SP (minus PT_REGS_SIZE) in tpidr_el0. */
++	msr	tpidr_el0, x0
++
++	/* Recover the original x0 value and stash it in tpidrro_el0 */
++	sub	x0, sp, x0
++	msr	tpidrro_el0, x0
++
++	/* Switch to the overflow stack */
++	adr_this_cpu sp, overflow_stack + OVERFLOW_STACK_SIZE, x0
++
++	/*
++	 * Check whether we were already on the overflow stack. This may happen
++	 * after panic() re-enables interrupts.
++	 */
++	mrs	x0, tpidr_el0			// sp of interrupted context
++	sub	x0, sp, x0			// delta with top of overflow stack
++	tst	x0, #~(OVERFLOW_STACK_SIZE - 1)	// within range?
++	b.ne	__bad_stack			// no? -> bad stack pointer
++
++	/* We were already on the overflow stack. Restore sp/x0 and carry on. */
++	sub	sp, sp, x0
++	mrs	x0, tpidrro_el0
++	b	el\el\ht\()_\regsize\()_\label
+ .org .Lventry_start\@ + 128	// Did we overflow the ventry slot?
+ 	.endm
+ 
+@@ -214,9 +221,7 @@
+ 	clear_gp_regs
+ 	mrs	x21, sp_el0
+ 	ldr_this_cpu	tsk, __entry_task, x20
+-	msr	tpidrro_el0, tsk
+-	adr_this_cpu	x19, overflow_stack + OVERFLOW_STACK_SIZE, x20
+-	msr	sp_el0, x19
++	msr	sp_el0, tsk
+ 
+ 	/*
+ 	 * Ensure MDSCR_EL1.SS is clear, since we can unmask debug exceptions
+@@ -359,12 +364,9 @@
+ 	.if	\el == 0
+ 	ldr	x23, [sp, #S_SP]		// load return stack pointer
+ 	msr	sp_el0, x23
+-	msr	tpidrro_el0, xzr
+ 	tst	x22, #PSR_MODE32_BIT		// native task?
+ 	b.eq	3f
+ 
+-	ldr	x0, [tsk, #THREAD_TP_VALUE]
+-	msr	tpidrro_el0, x0
+ #ifdef CONFIG_ARM64_ERRATUM_845719
+ alternative_if ARM64_WORKAROUND_845719
+ #ifdef CONFIG_PID_IN_CONTEXTIDR
+@@ -538,24 +540,22 @@
+ 
+ SYM_CODE_START_LOCAL(__bad_stack)
+ 	/*
+-	 * We detected an overflow in kernel_ventry.
+-	 * Restore SP and X0.
+-	 */
+-	sub	x0, sp, x0
+-	sub	sp, sp, x0
+-	add	sp, sp, #PT_REGS_SIZE
+-
+-	/* Switch to the overflow stack */
+-	msr	spsel, #0
+-
+-	/* Stash the exception regs */
++	 * We detected an overflow in kernel_ventry, which switched to the
++	 * overflow stack. Stash the exception regs, and head to our overflow
++	 * handler.
++	 */
++
++	/* Restore the original x0 value */
++	mrs	x0, tpidrro_el0
++
++	/*
++	 * Store the original GPRs to the new stack. The orginal SP (minus
++	 * PT_REGS_SIZE) was stashed in tpidr_el0 by kernel_ventry.
++	 */
+ 	sub	sp, sp, #PT_REGS_SIZE
+ 	kernel_entry 1
+-
+-	/* Fix-up the saved SP */
+-	msr	spsel, #1
+-	mov	x0, sp
+-	msr	spsel, #0
++	mrs	x0, tpidr_el0
++	add	x0, x0, #PT_REGS_SIZE
+ 	str	x0, [sp, #S_SP]
+ 
+ 	/* Stash the regs for handle_bad_stack */
+@@ -841,7 +841,7 @@
+ 	ldp	x29, x9, [x8], #16
+ 	ldr	lr, [x8]
+ 	mov	sp, x9
+-	msr	tpidrro_el0, x1
++	msr	sp_el0, x1
+ 	ptrauth_keys_install_kernel x1, x8, x9, x10
+ 	scs_save x0
+ 	scs_load_current
+@@ -1029,11 +1029,11 @@
+ 
+ 	/*
+ 	 * We may have interrupted userspace, or a guest, or exit-from or
+-	 * return-to either of these. We can't trust tpidrro_el0, restore it.
+-	 */
+-	mrs	x28, tpidrro_el0
++	 * return-to either of these. We can't trust sp_el0, restore it.
++	 */
++	mrs	x28, sp_el0
+ 	ldr_this_cpu	dst=x0, sym=__entry_task, tmp=x1
+-	msr	tpidrro_el0, x0
++	msr	sp_el0, x0
+ 
+ 	/* If we interrupted the kernel point to the previous stack/frame. */
+ 	and     x0, x3, #0xc
+@@ -1049,7 +1049,7 @@
+ 	mov	x1, x19
+ 	bl	__sdei_handler
+ 
+-	msr	tpidrro_el0, x28
++	msr	sp_el0, x28
+ 	/* restore regs >x17 that we clobbered */
+ 	mov	x4, x19         // keep x4 for __sdei_asm_exit_trampoline
+ 	ldp	x28, x29, [x4, #SDEI_EVENT_INTREGS + 16 * 14]
+--- a/k618/ws/common/arch/arm64/kernel/head.S
++++ b/k618/ws/common/arch/arm64/kernel/head.S
+@@ -193,7 +193,7 @@
+ 	 * for consistency with user tasks and kthreads.
+ 	 */
+ 	.macro	init_cpu_task tsk, tmp1, tmp2
+-	msr	tpidrro_el0, \tsk
++	msr	sp_el0, \tsk
+ 
+ 	ldr	\tmp1, [\tsk, #TSK_STACK]
+ 	add	sp, \tmp1, #THREAD_SIZE
+@@ -210,9 +210,6 @@
+ 	ldr	w\tmp2, [\tsk, #TSK_TI_CPU]
+ 	ldr	\tmp1, [\tmp1, \tmp2, lsl #3]
+ 	set_this_cpu_offset \tmp1
+-
+-	adr_this_cpu	\tmp1, overflow_stack + OVERFLOW_STACK_SIZE, \tmp2
+-	msr	sp_el0, \tmp1
+ 	.endm
+ 
+ /*
+--- a/k618/ws/common/arch/arm64/kernel/process.c
++++ b/k618/ws/common/arch/arm64/kernel/process.c
+@@ -258,8 +258,17 @@
+ 	if (system_supports_tpidr2())
+ 		write_sysreg_s(0, SYS_TPIDR2_EL0);
+ 
+-	if (is_compat_task())
++	if (is_compat_task()) {
+ 		current->thread.uw.tp_value = 0;
++
++		/*
++		 * We need to ensure ordering between the shadow state and the
++		 * hardware state, so that we don't corrupt the hardware state
++		 * with a stale shadow state during context switch.
++		 */
++		barrier();
++		write_sysreg(0, tpidrro_el0);
++	}
+ }
+ 
+ static void flush_tagged_addr_state(void)
+@@ -524,6 +533,11 @@
+ {
+ 	tls_preserve_current_state();
+ 
++	if (is_compat_thread(task_thread_info(next)))
++		write_sysreg(next->thread.uw.tp_value, tpidrro_el0);
++	else
++		write_sysreg(0, tpidrro_el0);
++
+ 	write_sysreg(*task_user_tls(next), tpidr_el0);
+ 	if (system_supports_tpidr2())
+ 		write_sysreg_s(next->thread.tpidr2_el0, SYS_TPIDR2_EL0);
+@@ -553,9 +567,8 @@
+ }
+ 
+ /*
+- * We store our current task in tpidrro_el0, which is clobbered when returning
+- * to userspace. Keep a shadow copy so that we can restore this upon entry from
+- * userspace.
++ * We store our current task in sp_el0, which is clobbered by userspace. Keep a
++ * shadow copy so that we can restore this upon entry from userspace.
+  *
+  * This is *only* for exception entry from EL0, and is not valid until we
+  * __switch_to() a user task.
+--- a/k618/ws/common/arch/arm64/kernel/smp.c
++++ b/k618/ws/common/arch/arm64/kernel/smp.c
+@@ -49,7 +49,6 @@
+ #include <asm/processor.h>
+ #include <asm/smp_plat.h>
+ #include <asm/sections.h>
+-#include <asm/stacktrace.h>
+ #include <asm/tlbflush.h>
+ #include <asm/ptrace.h>
+ #include <asm/virt.h>
+@@ -451,19 +450,6 @@
+ 	mark_linear_text_alias_ro();
+ }
+ 
+-static void __init set_boot_cpu_offset(void)
+-{
+-	u64 ovf_sp = (u64)raw_cpu_ptr(overflow_stack) + OVERFLOW_STACK_SIZE;
+-
+-	asm volatile(
+-	"	msr	tpidr_el1, %1\n"
+-	"	add	%0, %0, %1\n"
+-	"	msr	sp_el0, %0" /* Update the overflow stack pointer */
+-	: "+r" (ovf_sp)
+-	: "r" (per_cpu_offset(0))
+-	: "memory");
+-}
+-
+ void __init smp_prepare_boot_cpu(void)
+ {
+ 	/*
+@@ -471,7 +457,7 @@
+ 	 * setup_per_cpu_areas(), and CPU0's boot time per-cpu area will be
+ 	 * freed shortly, so we must move over to the runtime per-cpu area.
+ 	 */
+-	set_boot_cpu_offset();
++	set_my_cpu_offset(per_cpu_offset(smp_processor_id()));
+ 
+ 	cpuinfo_store_boot_cpu();
+ 	setup_boot_cpu_features();
+--- a/k618/ws/common/arch/arm64/kernel/sys_compat.c
++++ b/k618/ws/common/arch/arm64/kernel/sys_compat.c
+@@ -89,6 +89,13 @@
+ 
+ 	case __ARM_NR_compat_set_tls:
+ 		current->thread.uw.tp_value = regs->regs[0];
++
++		/*
++		 * Protect against register corruption from context switch.
++		 * See comment in tls_thread_flush.
++		 */
++		barrier();
++		write_sysreg(regs->regs[0], tpidrro_el0);
+ 		return 0;
+ 
+ 	default:
+--- a/k618/ws/common/arch/arm64/kvm/hyp/entry.S
++++ b/k618/ws/common/arch/arm64/kvm/hyp/entry.S
+@@ -31,9 +31,8 @@
+ 	// Store the hyp regs
+ 	save_callee_saved_regs x1
+ 
+-	// Save hyp's sp_el0 and tpidrro_el0
++	// Save hyp's sp_el0
+ 	save_sp_el0	x1, x2
+-	save_tpidrro_el0 x1, x2
+ 
+ 	// Now the hyp state is stored if we have a pending RAS SError it must
+ 	// affect the host or hyp. If any asynchronous exception is pending we
+@@ -68,9 +67,8 @@
+ 	// when this feature is enabled for kernel code.
+ 	ptrauth_switch_to_guest x29, x0, x1, x2
+ 
+-	// Restore the guest's sp_el0 and tpidrro_el0
++	// Restore the guest's sp_el0
+ 	restore_sp_el0 x29, x0
+-	restore_tpidrro_el0 x29, x0
+ 
+ 	// Restore guest regs x0-x17
+ 	ldp	x0, x1,   [x29, #CPU_XREG_OFFSET(0)]
+@@ -149,9 +147,8 @@
+ 	// Store the guest regs x18-x29, lr
+ 	save_callee_saved_regs x1
+ 
+-	// Store the guest's sp_el0 and tpidrro_el0
++	// Store the guest's sp_el0
+ 	save_sp_el0	x1, x2
+-	save_tpidrro_el0 x1, x2
+ 
+ 	adr_this_cpu x2, kvm_hyp_ctxt, x3
+ 
+@@ -165,9 +162,8 @@
+ 	// mte_switch_to_hyp(g_ctxt, h_ctxt, reg1)
+ 	mte_switch_to_hyp x1, x2, x3
+ 
+-	// Restore hyp's sp_el0 and tpidrro_el0
++	// Restore hyp's sp_el0
+ 	restore_sp_el0 x2, x3
+-	restore_tpidrro_el0 x2, x3
+ 
+ 	// Now restore the hyp regs
+ 	restore_callee_saved_regs x2
+--- a/k618/ws/common/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
++++ b/k618/ws/common/arch/arm64/kvm/hyp/include/hyp/sysreg-sr.h
+@@ -66,6 +66,7 @@
+ static inline void __sysreg_save_user_state(struct kvm_cpu_context *ctxt)
+ {
+ 	ctxt_sys_reg(ctxt, TPIDR_EL0)	= read_sysreg(tpidr_el0);
++	ctxt_sys_reg(ctxt, TPIDRRO_EL0)	= read_sysreg(tpidrro_el0);
+ }
+ 
+ static inline bool ctxt_has_mte(struct kvm_cpu_context *ctxt)
+@@ -204,6 +205,7 @@
+ static inline void __sysreg_restore_user_state(struct kvm_cpu_context *ctxt)
+ {
+ 	write_sysreg(ctxt_sys_reg(ctxt, TPIDR_EL0),	tpidr_el0);
++	write_sysreg(ctxt_sys_reg(ctxt, TPIDRRO_EL0),	tpidrro_el0);
+ }
+ 
+ static inline void __sysreg_restore_el1_state(struct kvm_cpu_context *ctxt,
+--- a/k618/ws/common/arch/arm64/mm/proc.S
++++ b/k618/ws/common/arch/arm64/mm/proc.S
+@@ -123,10 +123,6 @@
+ 	ldp	x9, x10, [x0, #48]
+ 	ldp	x11, x12, [x0, #64]
+ 	ldp	x13, x14, [x0, #80]
+-
+-	/* Move 'current' somewhere safe */
+-	mov	x15, x3
+-
+ 	/*
+ 	 * Restore x18, as it may be used as a platform register, and clear
+ 	 * the buffer to minimize the risk of exposure when used for shadow
+@@ -171,7 +167,7 @@
+ 	msr_s	SYS_DISR_EL1, xzr
+ alternative_else_nop_endif
+ 
+-	ptrauth_keys_install_kernel_nosync x15, x1, x2, x3
++	ptrauth_keys_install_kernel_nosync x14, x1, x2, x3
+ 	isb
+ 	ret
+ SYM_FUNC_END(cpu_do_resume)
+--- a/k618/ws/common/arch/arm64/net/bpf_jit_comp.c
++++ b/k618/ws/common/arch/arm64/net/bpf_jit_comp.c
+@@ -1579,7 +1579,7 @@
+ 		if (insn->src_reg == 0 && insn->imm == BPF_FUNC_get_smp_processor_id) {
+ 			cpu_offset = offsetof(struct thread_info, cpu);
+ 
+-			emit(A64_MRS_TPIDRRO_EL0(tmp), ctx);
++			emit(A64_MRS_SP_EL0(tmp), ctx);
+ 			if (is_lsi_offset(cpu_offset, 2)) {
+ 				emit(A64_LDR32I(r0, tmp, cpu_offset), ctx);
+ 			} else {
+@@ -1592,7 +1592,7 @@
+ 		/* Implement helper call to bpf_get_current_task/_btf() inline */
+ 		if (insn->src_reg == 0 && (insn->imm == BPF_FUNC_get_current_task ||
+ 					   insn->imm == BPF_FUNC_get_current_task_btf)) {
+-			emit(A64_MRS_TPIDRRO_EL0(r0), ctx);
++			emit(A64_MRS_SP_EL0(r0), ctx);
+ 			break;
+ 		}
+ 
